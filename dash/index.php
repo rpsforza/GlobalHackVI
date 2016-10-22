@@ -39,14 +39,14 @@ if (isset($_SESSION["user"])) {
 	<meta name="msapplication-config" content="../favicon/browserconfig.xml">
 	<meta name="theme-color" content="#ffffff">
 	<meta name="mobile-web-app-capable" content="yes">
-	<link rel="icon" sizes="192x192" href="images/android-desktop.png">
+	<link rel="icon" sizes="192x192" href="/favicon/android-chrome-192x192.png">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-title" content="Material Design Lite">
-	<link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+	<link rel="apple-touch-icon-precomposed" href="/favicon/apple-touch-icon-precomposed.png">
 	<meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
 	<meta name="msapplication-TileColor" content="#3372DF">
-	<link rel="shortcut icon" href="images/favicon.png">
+	<link rel="shortcut icon" href="/favicon/favicon.ico">
 
 	<link rel="stylesheet"
 		  href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
@@ -93,15 +93,15 @@ if (isset($_SESSION["user"])) {
 				</div>
 			</header>
 			<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-				<a href="../dash/" class="active-nav mdl-navigation__link" href=""><i
+				<a href="../dash/" class="active-nav mdl-navigation__link"><i
 						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Dash</a>
-				<a href="../groups/" class="mdl-navigation__link" href=""><i
+				<a href="../groups/" class="mdl-navigation__link"><i
 						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Groups</a>
-				<a href="../news/" class="mdl-navigation__link" href=""><i
+				<a href="../news/" class="mdl-navigation__link"><i
 						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">view_list</i>News</a>
-				<a href="../market/" class="mdl-navigation__link" href=""><i
+				<a href="../market/" class="mdl-navigation__link"><i
 						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">store</i>Market</a>
-				<a href="../settings/" class="mdl-navigation__link" href=""><i
+				<a href="../settings/" class="mdl-navigation__link"><i
 						class="mdl-color-text--blue-grey-400 material-icons"
 						role="presentation">settings</i>Settings</a>
 				<div class="mdl-layout-spacer"></div>

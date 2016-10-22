@@ -6,10 +6,10 @@
     </schema>
     <schema id="2" name="information_schema"/>
     <table id="3" parent="1" name="client"/>
-    <table id="4" parent="1" name="coc"/>
-    <table id="5" parent="1" name="services"/>
-    <table id="6" parent="1" name="host"/>
-    <table id="7" parent="1" name="login_accounts"/>
+    <table id="4" parent="1" name="services"/>
+    <table id="5" parent="1" name="host"/>
+    <table id="6" parent="1" name="login_accounts"/>
+    <table id="7" parent="1" name="coc"/>
     <column id="8" parent="3" name="id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
@@ -137,177 +137,172 @@
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="48" parent="4" name="latitude">
+    <column id="48" parent="4" name="name">
       <data-type>text|0</data-type>
     </column>
-    <column id="49" parent="4" name="longitude">
-      <data-type>text|0</data-type>
-    </column>
-    <column id="50" parent="4" name="name">
-      <data-type>text|0</data-type>
-    </column>
-    <column id="51" parent="4" name="phone">
-      <data-type>text|0</data-type>
-    </column>
-    <column id="52" parent="4" name="services">
-      <data-type>text|0</data-type>
-    </column>
-    <column id="53" parent="4" name="condition_minage">
-      <data-type>int(11)|0</data-type>
-      <default-expression>&apos;0&apos;</default-expression>
-    </column>
-    <column id="54" parent="4" name="condition_maxage">
-      <data-type>int(11)|0</data-type>
-      <default-expression>&apos;1000&apos;</default-expression>
-    </column>
-    <column id="55" parent="4" name="condition_male">
-      <data-type>int(11)|0</data-type>
-      <default-expression>&apos;1&apos;</default-expression>
-    </column>
-    <column id="56" parent="4" name="condition_female">
-      <data-type>int(11)|0</data-type>
-      <default-expression>&apos;1&apos;</default-expression>
-    </column>
-    <column id="57" parent="4" name="condition_abuse">
-      <data-type>int(11)|0</data-type>
-      <default-expression>&apos;1&apos;</default-expression>
-    </column>
-    <column id="58" parent="4" name="condition_veteran">
-      <data-type>int(11)|0</data-type>
-      <default-expression>&apos;1&apos;</default-expression>
-    </column>
-    <column id="59" parent="4" name="address">
-      <data-type>text|0</data-type>
-    </column>
-    <column id="60" parent="4" name="city">
-      <data-type>text|0</data-type>
-    </column>
-    <column id="61" parent="4" name="state">
-      <data-type>text|0</data-type>
-    </column>
-    <column id="62" parent="4" name="zipcode">
-      <data-type>int(11)|0</data-type>
-    </column>
-    <index id="63" parent="4" name="idcoc_UNIQUE">
+    <index id="49" parent="4" name="id_UNIQUE">
       <columns>id</columns>
       <desc-columns></desc-columns>
       <unique>1</unique>
     </index>
-    <key id="64" parent="4" name="PRIMARY">
+    <key id="50" parent="4" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <key id="65" parent="4" name="idcoc_UNIQUE">
-      <columns>id</columns>
-      <underlying-index>idcoc_UNIQUE</underlying-index>
-    </key>
-    <column id="66" parent="5" name="id">
-      <mandatory>1</mandatory>
-      <data-type>int(11)|0</data-type>
-      <sequence-identity>1</sequence-identity>
-    </column>
-    <column id="67" parent="5" name="name">
-      <data-type>text|0</data-type>
-    </column>
-    <index id="68" parent="5" name="id_UNIQUE">
-      <columns>id</columns>
-      <desc-columns></desc-columns>
-      <unique>1</unique>
-    </index>
-    <key id="69" parent="5" name="PRIMARY">
-      <columns>id</columns>
-      <primary>1</primary>
-    </key>
-    <key id="70" parent="5" name="id_UNIQUE">
+    <key id="51" parent="4" name="id_UNIQUE">
       <columns>id</columns>
       <underlying-index>id_UNIQUE</underlying-index>
     </key>
-    <column id="71" parent="6" name="id">
+    <column id="52" parent="5" name="id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="72" parent="6" name="latitude">
+    <column id="53" parent="5" name="latitude">
       <data-type>text|0</data-type>
     </column>
-    <column id="73" parent="6" name="longitude">
+    <column id="54" parent="5" name="longitude">
       <data-type>text|0</data-type>
     </column>
-    <column id="74" parent="6" name="name">
+    <column id="55" parent="5" name="name">
       <data-type>text|0</data-type>
     </column>
-    <column id="75" parent="6" name="phone">
+    <column id="56" parent="5" name="phone">
       <data-type>text|0</data-type>
     </column>
-    <column id="76" parent="6" name="coccol1">
+    <column id="57" parent="5" name="coccol1">
       <data-type>varchar(45)|0</data-type>
     </column>
-    <column id="77" parent="6" name="condition_minage">
+    <column id="58" parent="5" name="condition_minage">
       <data-type>int(11)|0</data-type>
       <default-expression>&apos;0&apos;</default-expression>
     </column>
-    <column id="78" parent="6" name="condition_maxage">
+    <column id="59" parent="5" name="condition_maxage">
       <data-type>int(11)|0</data-type>
       <default-expression>&apos;1000&apos;</default-expression>
     </column>
-    <column id="79" parent="6" name="condition_male">
+    <column id="60" parent="5" name="condition_male">
       <data-type>int(11)|0</data-type>
       <default-expression>&apos;1&apos;</default-expression>
     </column>
-    <column id="80" parent="6" name="condition_female">
+    <column id="61" parent="5" name="condition_female">
       <data-type>int(11)|0</data-type>
       <default-expression>&apos;1&apos;</default-expression>
     </column>
-    <column id="81" parent="6" name="condition_abuse">
+    <column id="62" parent="5" name="condition_abuse">
       <data-type>int(11)|0</data-type>
       <default-expression>&apos;1&apos;</default-expression>
     </column>
-    <column id="82" parent="6" name="condition_veteran">
+    <column id="63" parent="5" name="condition_veteran">
       <data-type>int(11)|0</data-type>
       <default-expression>&apos;1&apos;</default-expression>
     </column>
-    <index id="83" parent="6" name="idcoc_UNIQUE">
+    <column id="64" parent="5" name="capacity">
+      <data-type>int(11)|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="65" parent="5" name="vacancy">
+      <data-type>int(11)|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <index id="66" parent="5" name="idcoc_UNIQUE">
       <columns>id</columns>
       <desc-columns></desc-columns>
       <unique>1</unique>
     </index>
-    <key id="84" parent="6" name="PRIMARY">
+    <key id="67" parent="5" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <key id="85" parent="6" name="idcoc_UNIQUE">
+    <key id="68" parent="5" name="idcoc_UNIQUE">
       <columns>id</columns>
       <underlying-index>idcoc_UNIQUE</underlying-index>
     </key>
-    <column id="86" parent="7" name="id">
+    <column id="69" parent="6" name="id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="87" parent="7" name="username">
+    <column id="70" parent="6" name="username">
       <data-type>text|0</data-type>
     </column>
-    <column id="88" parent="7" name="password">
+    <column id="71" parent="6" name="password">
       <data-type>text|0</data-type>
     </column>
-    <column id="89" parent="7" name="user_type">
+    <column id="72" parent="6" name="user_type">
       <data-type>text|0</data-type>
     </column>
-    <column id="90" parent="7" name="table_id">
+    <column id="73" parent="6" name="table_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <index id="91" parent="7" name="id_UNIQUE">
+    <index id="74" parent="6" name="id_UNIQUE">
       <columns>id</columns>
       <desc-columns></desc-columns>
       <unique>1</unique>
     </index>
-    <key id="92" parent="7" name="PRIMARY">
+    <key id="75" parent="6" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <key id="93" parent="7" name="id_UNIQUE">
+    <key id="76" parent="6" name="id_UNIQUE">
       <columns>id</columns>
       <underlying-index>id_UNIQUE</underlying-index>
     </key>
+    <column id="77" parent="7" name="id">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="78" parent="7" name="name">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="79" parent="7" name="address">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="80" parent="7" name="city">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="81" parent="7" name="state">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="82" parent="7" name="zipcode">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="83" parent="7" name="phone">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="84" parent="7" name="latitude">
+      <data-type>float|0</data-type>
+    </column>
+    <column id="85" parent="7" name="longitude">
+      <data-type>float|0</data-type>
+    </column>
+    <column id="86" parent="7" name="services">
+      <data-type>text|0</data-type>
+    </column>
+    <column id="87" parent="7" name="condition_minage">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="88" parent="7" name="condition_maxage">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="89" parent="7" name="condition_male">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="90" parent="7" name="condition_female">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="91" parent="7" name="condition_abuse">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="92" parent="7" name="condition_veteran">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="93" parent="7" name="capacity">
+      <data-type>int(11)|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="94" parent="7" name="vacancy">
+      <data-type>int(11)|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
   </database-model>
 </dataSource>
