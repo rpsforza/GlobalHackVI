@@ -59,7 +59,7 @@ if (isset($_SESSION["user_id"])) {
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
 			<div class="mdl-layout__header-row">
-				<span class="mdl-layout-title">Availability</span>
+				<span class="mdl-layout-title">Available</span>
 				<div class="mdl-layout-spacer"></div>
 
 				<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
@@ -93,7 +93,7 @@ if (isset($_SESSION["user_id"])) {
 				</div>
 			</header>
 			<?php
-			if(isset($_SESSION["user_id"])) {
+			if (isset($_SESSION["user_id"])) {
 				$userType = getUserType($_SESSION["user_id"]);
 			} else {
 				$userType = "clientNoAuth";
@@ -118,16 +118,16 @@ if (isset($_SESSION["user_id"])) {
 
 			?>
 			<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-			<?php
-			foreach ($a as $arr) {
-				$active="";
-				if ($arr[2]) $active="active-nav ";
-				echo "<a href=../".$arr[0]." class=\"".$active."mdl-navigation__link\"><i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">".$arr[1]."</i>".ucwords($arr[0])."</a>";
-			}
-			?>
+				<?php
+				foreach ($a as $arr) {
+					$active = "";
+					if ($arr[2]) $active = "active-nav ";
+					echo "<a href=../" . $arr[0] . " class=\"" . $active . "mdl-navigation__link\"><i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">" . $arr[1] . "</i>" . ucwords($arr[0]) . "</a>";
+				}
+				?>
 				<div class="mdl-layout-spacer"></div>
 				<a class="mdl-navigation__link" href="../faq/"><i class="mdl-color-text--blue-grey-400 material-icons"
-														   role="presentation">help_outline</i><span>FAQ</span></a>
+																  role="presentation">help_outline</i><span>FAQ</span></a>
 			</nav>
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">

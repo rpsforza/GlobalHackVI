@@ -38,14 +38,26 @@ function newServiceReport($client_id, $service_id, $host_or_coc, $provider_id, $
 
 // report a client moving out of temporary shelter and into their own housing / a permanent housing service
 // $rehousing_or_permanent_housing is either "rehousing" or "permanent_housing"
-function clientMoveOut($client_id, $rehousing_or_permanent_housing, $new_address) {
+function clientMoveOut($client_id, $rehousing_or_permanent_housing, $new_address, $coc_or_host, $provider_id) {
 	$mysqli = getDB();
 
 	$date = date("m/d/y");
 
-	$statement = $mysqli->prepare("INSERT INTO shelter_outputs (date, client_id, rehousing_or_permanent_housing, home_address) VALUES (?,?)");
-	$statement->bind_param("siss", $date, $client_id, $rehousing_or_permanent_housing, $new_address);
+	$statement = $mysqli->prepare("INSERT INTO output_records (date, client_id, rehousing_or_permanent_housing, home_address, coc_or_host, provider_id) 							VALUES (?,?,?,?,?,?)");
+	$statement->bind_param("sisssi", $date, $client_id, $rehousing_or_permanent_housing, $new_address, $coc_or_host, $provider_id);
 	$statement->execute();
 
 	$mysqli->query("UPDATE client SET moved_on=1 WHERE id=$client_id");
+}
+
+function clientMoveIn($client_id, $coc_or_host, $provider_id) {
+	$mysqli = getDB();
+
+	$date = date("m/d/y");
+
+	$statement = $mysqli->prepare("INSERT INTO intake_records (date, client_id, coc_or_host, provider_id) VALUES (?,?,?,?)");
+	$statement->bind_param("sisi", $date, $client_id, $coc_or_host, $provider_id);
+	$statement->execute();
+
+	$mysqli->query("UPDATE client SET moved_on=0 WHERE id=$client_id");
 }

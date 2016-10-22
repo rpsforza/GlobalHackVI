@@ -25,5 +25,3 @@ if (isset($_POST)) {
 } else {
 	echo "POST data not set.";
 }
-
-?>

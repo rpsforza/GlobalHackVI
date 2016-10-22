@@ -43,8 +43,6 @@ function getCompatibleShelters($client_id)
 
 		$vacancy = $shelter["vacancy"];
 
-		$
-
 		// doesn't add this shelter if the conditions aren't met
 		if ($client_age < $minage || $client_age > $maxage) continue;
 		if (($male && !$client_male) || ($female && !$client_female)) continue;
