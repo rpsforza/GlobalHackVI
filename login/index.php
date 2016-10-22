@@ -3,7 +3,7 @@
 	<?php
 	require '../db_manager.php';
 
-	if (isset($_SESSION["user"])) {
+	if (isset($_SESSION["user_id"])) {
 		header('Location: ../');
 	}
 
@@ -22,9 +22,10 @@
 
 		<?php
 	} else {
-		if (isset($_POST["Email"]) && isset($_POST["Password"])) {
-			if (validateUser($_POST["Email"], $_POST["Password"])) {
-				$_SESSION["user"] = getUser($_POST["Email"], 1)[0][0];
+		if (isset($_POST["Username"]) && isset($_POST["Password"])) {
+			$user_id = validateUser($_POST["Username"], $_POST["Password"]);
+			if ($user_id) {
+				$_SESSION["user_id"] = $user_id;
 				header('Location: ../');
 			} else {
 				header('Location: ./?error=1');
@@ -52,7 +53,7 @@
 </head>
 <body>
 	<form method="post" action="./">
-		<input type="text" name="Email" value="" placeholder="Email">
+		<input type="text" name="Username" value="" placeholder="Email">
 		<input type="password" name="Password" value="" placeholder="Password">
 		<input type="submit" name="commit" value="Login">
 	</form>

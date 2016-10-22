@@ -23,55 +23,39 @@ function getDB()
 	return ($mysqli = new mysqli($db_server, $db_username, $db_password, $db_name));
 }
 
-// Users, General User Actions, Get User Information\
-
-// TODO MYSQL SHA1 for Password Encrption
-function addUser($firstname, $lastname, $email, $dateofbirth, $ssn, $username, $password)
+function validateUser($username, $password)
 {
 	$mysqli = getDB();
-
-	$insert = $mysqli->prepare("INSERT INTO users (ID, FirstName, LastName, Email, DateOfBirth, SSN, Username, Password) VALUES (?,?,?,?,?,?,?,?)");
-
-	$insert->bind_param('isssssss', $x = 0, $firstname, $lastname, $email, $dateofbirth, $ssn, $username, $password);
-	$insert->execute();
-}
-
-function getUser($Identifier, $Method)
-{
-	$mysqli = getDB();
-
-	switch ($Method) {
-		case 0: // By User ID
-			$statement = $mysqli->prepare("SELECT * FROM users WHERE ID='$Identifier'");
-			break;
-		case 1: // By Email Address
-			$statement = $mysqli->prepare("SELECT * FROM users WHERE Email='$Identifier'");
-			break;
-		case 2: // By Username
-			$statement = $mysqli->prepare("SELECT * FROM users WHERE Username='$Identifier'");
-			break;
-		default:
-			$statement = $mysqli->prepare("SELECT * FROM users WHERE Username='$Identifier'");
-	}
-
-	$statement->execute();
-	$result = $statement->get_result();
-	$resultArray = $result->fetch_all(MYSQLI_NUM);
-
-	return $resultArray;
-}
-
-function validateUser($Email, $Password)
-{
-	if (getUser($Email, 1)[0][7] == $Password) {
-		return true;
+	$statement = $mysqli->prepare("SELECT * FROM login_accounts WHERE username = ? AND password = ?");
+	$statement->bind_param("ss", $username, $password);
+	if (!$statement) {
+		return false;
 	} else {
+		$statement->store_result();
+		return $statement->fetch_assoc()["id"];
+	}
+}
+
+function getType($user_id) {
+	$mysqli = getDB();
+	return $mysqli->query("SELECT * FROM login_accounts WHERE id=$user_id")->fetch_assoc()["user_type"];
+}
+
+function getUserData($username, $password) {
+	$mysqli = getDB();
+	$statement = $mysqli->prepare("SELECT * FROM login_accounts WHERE username = ? AND password = ?");
+	$statement->bind_param("ss", $username, $password);
+	$statement->execute();
+	
+	if (!$statement) {
 		return false;
 	}
-}
 
-function getUsersName($Identifier)
-{
-	$x = getUser($Identifier, 0);
-	return $x[0][1] . " " . $x[0][2];
+	$statement->store_result();
+	$result = $statement->fetch_assoc();
+	$user_type = $result["user_type"];
+	$table_id = $result["table_id"];
+
+	$user_row = $mysqli->query("SELECT * FROM `$user_type` WHERE id=$table_id")->fetch_assoc();
+	return $user_row;
 }
