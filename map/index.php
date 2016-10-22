@@ -151,9 +151,15 @@ if (isset($_SESSION["user_id"])) {
 						var lat = pos.coords.latitude;
 						var lon = pos.coords.longitude;
 
-						console.log([lat, lon]);
-
-						// TODO: Send via AJAX
+						$.ajax({
+							type: "POST",
+							url: "../shelter_lookup.php",
+							data: pos.coords,
+							success: function (result) {
+								var locs = JSON.parse(result);
+								// TODO: Render Map
+							}
+						});
 					}
 
 					getGeolocation();
