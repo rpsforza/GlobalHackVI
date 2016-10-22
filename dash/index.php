@@ -94,54 +94,54 @@ if (isset($_SESSION["user_id"])) {
 			</header>
 			<?php
 			$userType = getUserType($_SESSION["user_id"]);
-			switch ($userType) {
+			switch ($userType) { // [alt text, mdl font icon, current page]
 				case "client":
-					$a = "manage";
-					$b = "b";
-					$c = "c";
-					$d = "d";
-					$e = "e";
+					$a = ["dash", "home", true];
+					$b = ["manage", "home", false];
+					$c = ["map", "map", false];
+					$d = ["manage", "home", false];
+					$e = ["manage", "home", false];
 					break;
 				case "coc":
-					$a = "manage";
-					$b = "b";
-					$c = "c";
-					$d = "d";
-					$e = "e";
+					$a = ["dash", "home", true];
+					$b = ["manage", "home", false];
+					$c = ["map", "map", false];
+					$d = ["manage", "home", false];
+					$e = ["manage", "home", false];
 					break;
 				case "host":
-					$a = "manage";
-					$b = "b";
-					$c = "c";
-					$d = "d";
-					$e = "e";
+					$a = ["dash", "home", true];
+					$b = ["manage", "home", false];
+					$c = ["map", "map", false];
+					$d = ["manage", "home", false];
+					$e = ["manage", "home", false];
 					break;
 				default:
-					$a = "manage";
-					$b = "b";
-					$c = "c";
-					$d = "d";
-					$e = "e";
+					$a = ["dash", "home", true];
+					$b = ["manage", "home", false];
+					$c = ["map", "map", false];
+					$d = ["manage", "home", false];
+					$e = ["manage", "home", false];
 					break;
 			}
 
 			?>
 			<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-				<a href="<?php echo "\"../" . $a . "/\""; ?>" class="active-nav mdl-navigation__link"><i
+				<a href="<?php echo "\"../" . $a[0] . "/\""; ?>" class="<?php if($a[2]) { echo "active-nav";} ?>mdl-navigation__link"><i
 						class="mdl-color-text--blue-grey-400 material-icons"
-						role="presentation">home</i><?php echo ucwords($a); ?></a>
-				<a href="<?php echo "\"../" . $b . "/\""; ?>" class="mdl-navigation__link"><i
+						role="presentation"><?php echo $a[1]; ?></i><?php echo ucwords($a[0]); ?></a>
+				<a href="<?php echo "\"../" . $b[0] . "/\""; ?>" class="<?php if($a[2]) { echo "active-nav";} ?>mdl-navigation__link"><i
 						class="mdl-color-text--blue-grey-400 material-icons"
-						role="presentation">people</i><?php echo ucwords($b); ?></a>
-				<a href="<?php echo "\"../" . $c . "/\""; ?>" class="mdl-navigation__link"><i
+						role="presentation"><?php echo $b[1]; ?></i><?php echo ucwords($b[0]); ?></a>
+				<a href="<?php echo "\"../" . $c[0] . "/\""; ?>" class="<?php if($a[2]) { echo "active-nav";} ?>mdl-navigation__link"><i
 						class="mdl-color-text--blue-grey-400 material-icons"
-						role="presentation">view_list</i><?php echo ucwords($c); ?></a>
-				<a href="<?php echo "\"../" . $d . "/\""; ?>" class="mdl-navigation__link"><i
+						role="presentation"><?php echo $c[1]; ?></i><?php echo ucwords($c[0]); ?></a>
+				<a href="<?php echo "\"../" . $d[0] . "/\""; ?>" class="<?php if($a[2]) { echo "active-nav";} ?>mdl-navigation__link"><i
 						class="mdl-color-text--blue-grey-400 material-icons"
-						role="presentation">store</i><?php echo ucwords($d); ?></a>
-				<a href="<?php echo "\"../" . $e . "/\""; ?>" class="mdl-navigation__link"><i
+						role="presentation"><?php echo $d[1]; ?></i><?php echo ucwords($d[0]); ?></a>
+				<a href="<?php echo "\"../" . $e[0] . "/\""; ?>" class="<?php if($a[2]) { echo "active-nav";} ?>mdl-navigation__link"><i
 						class="mdl-color-text--blue-grey-400 material-icons"
-						role="presentation">settings</i><?php echo ucwords($e); ?></a>
+						role="presentation"><?php echo $e[1]; ?></i><?php echo ucwords($e[0]); ?></a>
 				<div class="mdl-layout-spacer"></div>
 				<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons"
 														   role="presentation">help_outline</i><span
