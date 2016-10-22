@@ -53,7 +53,7 @@ if (isset($_SESSION["user_id"])) {
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="../css/colors.css">
 	<link rel="stylesheet" href="../css/styles.css">
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
 <body>
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -140,11 +140,14 @@ if (isset($_SESSION["user_id"])) {
 					}
 
 					function onGeoFail() {
-						// TODO: Get location by IP & send to onGeoSuccess
+						// Resort to location by IP
+						$.getJSON('http://ipinfo.io', function (data) {
+							var pos = data.loc.split(',').map(Number);
+							onGeoSuccess({coords: {latitude: pos[0], longitude: pos[1]}});
+						});
 					}
 
 					function onGeoSuccess(pos) {
-						var accuracy = pos.coords.accuracy;
 						var lat = pos.coords.latitude;
 						var lon = pos.coords.longitude;
 
