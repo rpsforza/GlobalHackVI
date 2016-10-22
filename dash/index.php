@@ -39,14 +39,14 @@ if (isset($_SESSION["user_id"])) {
 	<meta name="msapplication-config" content="../favicon/browserconfig.xml">
 	<meta name="theme-color" content="#ffffff">
 	<meta name="mobile-web-app-capable" content="yes">
-	<link rel="icon" sizes="192x192" href="images/android-desktop.png">
+	<link rel="icon" sizes="192x192" href="/favicon/android-chrome-192x192.png">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-title" content="Material Design Lite">
-	<link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+	<link rel="apple-touch-icon-precomposed" href="/favicon/apple-touch-icon-precomposed.png">
 	<meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
 	<meta name="msapplication-TileColor" content="#3372DF">
-	<link rel="shortcut icon" href="images/favicon.png">
+	<link rel="shortcut icon" href="/favicon/favicon.ico">
 
 	<link rel="stylesheet"
 		  href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
@@ -92,53 +92,59 @@ if (isset($_SESSION["user_id"])) {
 					</ul>
 				</div>
 			</header>
-			<?php 
-				$UserType = getType($_SESSION["user_id"]);
-				switch ($UserType) {
-					case "client":
-						$a = "manage";
-						$b = "b";
-						$c = "c";
-						$d = "d";
-						$e = "e";
-						break;
-					case "coc":
-						$a = "manage";
-						$b = "b";
-						$c = "c";
-						$d = "d";
-						$e = "e";
-						break;
-					case "host": 
-						$a = "manage";
-						$b = "b";
-						$c = "c";
-						$d = "d";
-						$e = "e";
-						break;
-					default:
-						$a = "manage";
-						$b = "b";
-						$c = "c";
-						$d = "d";
-						$e = "e";
-						break;
-				}
+			<?php
+			$userType = getType($_SESSION["user_id"]);
+			switch ($userType) {
+				case "client":
+					$a = "manage";
+					$b = "b";
+					$c = "c";
+					$d = "d";
+					$e = "e";
+					break;
+				case "coc":
+					$a = "manage";
+					$b = "b";
+					$c = "c";
+					$d = "d";
+					$e = "e";
+					break;
+				case "host":
+					$a = "manage";
+					$b = "b";
+					$c = "c";
+					$d = "d";
+					$e = "e";
+					break;
+				default:
+					$a = "manage";
+					$b = "b";
+					$c = "c";
+					$d = "d";
+					$e = "e";
+					break;
+			}
 
-			?> 
+			?>
 			<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-				<a href=<?php echo "\"../".$a."/\""; ?> class="active-nav mdl-navigation__link" href=""><i
-						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i><?php echo ucwords($a); ?></a>
-				<a href=<?php echo "\"../".$b."/\""; ?> class="mdl-navigation__link" href=""><i
-						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i><?php echo ucwords($b); ?></a>
-				<a href=<?php echo "\"../".$c."/\""; ?> class="mdl-navigation__link" href=""><i
-						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">view_list</i><?php echo ucwords($c); ?></a>
-				<a href=<?php echo "\"../".$d."/\""; ?> class="mdl-navigation__link" href=""><i
-						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">store</i><?php echo ucwords($d); ?></a>
-				<a href=<?php echo "\"../".$e."/\""; ?> class="mdl-navigation__link" href=""><i
-						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">settings</i><?php echo ucwords($e); ?></a>
+				<a href="<?php echo "\"../" . $a . "/\""; ?>" class="active-nav mdl-navigation__link"><i
+						class="mdl-color-text--blue-grey-400 material-icons"
+						role="presentation">home</i><?php echo ucwords($a); ?></a>
+				<a href="<?php echo "\"../" . $b . "/\""; ?>" class="mdl-navigation__link"><i
+						class="mdl-color-text--blue-grey-400 material-icons"
+						role="presentation">people</i><?php echo ucwords($b); ?></a>
+				<a href="<?php echo "\"../" . $c . "/\""; ?>" class="mdl-navigation__link"><i
+						class="mdl-color-text--blue-grey-400 material-icons"
+						role="presentation">view_list</i><?php echo ucwords($c); ?></a>
+				<a href="<?php echo "\"../" . $d . "/\""; ?>" class="mdl-navigation__link"><i
+						class="mdl-color-text--blue-grey-400 material-icons"
+						role="presentation">store</i><?php echo ucwords($d); ?></a>
+				<a href="<?php echo "\"../" . $e . "/\""; ?>" class="mdl-navigation__link"><i
+						class="mdl-color-text--blue-grey-400 material-icons"
+						role="presentation">settings</i><?php echo ucwords($e); ?></a>
 				<div class="mdl-layout-spacer"></div>
-				<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons"role="presentation">help_outline</i><span
+				<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons"
+														   role="presentation">help_outline</i><span
 						class="visuallyhidden">Help</span></a>
 			</nav>
 		</div>
