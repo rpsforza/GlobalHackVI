@@ -59,7 +59,7 @@ function getUserData($username, $password)
 	$user_type = $result["user_type"];
 	$table_id = $result["table_id"];
 
-	$user_row = $mysqli->query("SELECT * FROM $user_type WHERE login_accounts.id=$table_id")->fetch_assoc();
+	$user_row = $mysqli->query("SELECT * FROM $user_type WHERE id=$table_id")->fetch_assoc();
 	return $user_row;
 }
 
@@ -78,10 +78,9 @@ function getUsersName($login_id)
 	$user_type = $result["user_type"];
 	$table_id = $result["table_id"];
 
-	$user_row = $mysqli->query("SELECT * FROM $user_type WHERE login_accounts.id=$table_id");
+	$user_row = $mysqli->query("SELECT * FROM $user_type WHERE id=$table_id")->fetch_assoc();
 
 	if ($user_row) {
-		$user_row->fetch_assoc();
 		return $user_type === "client" ? $user_row["First_Name"] . " " . $user_row["Last_Name"] : $user_row["name"];
 	}
 
