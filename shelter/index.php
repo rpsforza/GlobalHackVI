@@ -98,19 +98,19 @@ if (isset($_SESSION["user_id"])) {
 			}
 			switch ($userType) { // [alt text, mdl font icon, current page]
 				case "clientNoAuth":
-					$a = [["dash", "dashboard", false], ["map", "map", false], ["shelter", "hotel", true], ["housing", "home", false], ["services", "domain", false]];
+					$a = [["dash", "dashboard", false], ["map", "map", false], ["shelter", "hotel", true], ["services", "domain", false], ["housing", "home", false]];
 					break;
 				case "client":
-					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", true], ["housing", "home", false], ["services", "domain", false]];
+					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", true], ["services", "domain", false], ["housing", "home", false]];
 					break;
 				case "coc":
-					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", true], ["housing", "home", false], ["services", "domain", false], ["availability", "people", false], ["statistics", "timeline", false]];
+					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["map", "map", false], ["shelter", "hotel", true], ["services", "domain", false], ["housing", "home", false], ["availability", "people", false], ["statistics", "timeline", false]];
 					break;
-				case "host":
-					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", true], ["availability", "people", false]];
+				case "host":["profile", "account_box", false], 
+					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["map", "map", false], ["shelter", "hotel", true], ["availability", "people", false]];
 					break;
 				default:
-					$a = [["dash", "dashboard", false], ["map", "map", false], ["shelter", "hotel", true], ["housing", "home", false], ["servtrue", "domain", false]];
+					$a = [["dash", "dashboard", false], ["map", "map", false], ["shelter", "hotel", true], ["services", "domain", false], ["housing", "home", false]];
 					break;
 			}
 
