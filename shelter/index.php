@@ -112,7 +112,7 @@ if (isset($_SESSION["user_id"])) {
 					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", true], ["availability", "people", false]];
 					break;
 				default:
-					$a = [["dash", "dashboard", false], ["map", "map", false], ["shelter", "hotel", true], ["housing", "home", false], ["servtrue, "domain", false]];
+					$a = [["dash", "dashboard", false], ["map", "map", false], ["shelter", "hotel", true], ["housing", "home", false], ["servtrue", "domain", false]];
 					break;
 			}
 
