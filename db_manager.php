@@ -31,22 +31,23 @@ function validateUser($username, $password)
 	if (!$statement) {
 		return false;
 	} else {
-		$statement->store_result();
-		return $statement->fetch_assoc()["id"];
+		return $statement->get_result()->fetch_assoc()["id"];
 	}
 }
 
-function getUserType($user_id) {
+function getUserType($user_id)
+{
 	$mysqli = getDB();
 	return $mysqli->query("SELECT * FROM login_accounts WHERE id=$user_id")->fetch_assoc()["user_type"];
 }
 
-function getUserData($username, $password) {
+function getUserData($username, $password)
+{
 	$mysqli = getDB();
 	$statement = $mysqli->prepare("SELECT * FROM login_accounts WHERE username = ? AND password = ?");
 	$statement->bind_param("ss", $username, $password);
 	$statement->execute();
-	
+
 	if (!$statement) {
 		return false;
 	}
