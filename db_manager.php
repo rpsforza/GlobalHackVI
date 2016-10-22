@@ -36,7 +36,7 @@ function validateUser($username, $password)
 	}
 }
 
-function getType($user_id) {
+function getUserType($user_id) {
 	$mysqli = getDB();
 	return $mysqli->query("SELECT * FROM login_accounts WHERE id=$user_id")->fetch_assoc()["user_type"];
 }

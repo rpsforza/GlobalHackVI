@@ -93,7 +93,7 @@ if (isset($_SESSION["user_id"])) {
 				</div>
 			</header>
 			<?php
-			$userType = getType($_SESSION["user_id"]);
+			$userType = getUserType($_SESSION["user_id"]);
 			switch ($userType) {
 				case "client":
 					$a = "manage";
