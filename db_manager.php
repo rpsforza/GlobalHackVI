@@ -86,3 +86,12 @@ function getUsersName($login_id)
 
 	return "Guest";
 }
+function newClient($first_name, $middle_name, $last_name, $dob, $gender) {
+	$mysqli = getDB();
+	if($gender == "Male") { $gender = 1; } else { $gender = 0; }
+	$statement = $mysqli->prepare("INSERT INTO client (First_Name, Middle_Name, Last_Name, DOB, Gender)
+									VALUES (?, ?, ?, ?, ?)");
+	$statement->bind_param("ssssi", $first_name, $middle_name, $last_name, $dob, $gender);
+	$statement->execute();
+	return true;
+}
