@@ -1,2 +1,0 @@
-# GlobalHackVI
-the best repo
