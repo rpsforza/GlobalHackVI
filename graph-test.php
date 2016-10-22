@@ -2,7 +2,7 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
+
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
 		  integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -19,83 +19,85 @@
 </head>
 <body>
 	<canvas id="myChart" width="1000" height="600"></canvas>
-<script>
-var ctx = document.getElementById("myChart");
-var scatterChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        datasets: [
-	        {
-	        	label: 'Scatter Dataset',
-	            data: [{
-	                x: -10,
-	                y: 0
-	            }, {
-	                x: 0,
-	                y: 10
-	            }, {
-	                x: 10,
-	                y: 5
-	            }]
-	        },
-	        {
-	        	label: 'Scatter Dataset 2',
-	        	data: [{
-	        		x: -10,
-	        		y: 9
-	        	}, {
-	        		x: 5,
-	        		y: 3
-	        	}, {
-	        		x: 10,
-	        		y: 14
-	        	}],
-	        	backgroundColor: [
-                	'rgba(255, 99, 132, 0.2)',
-                ]
-	        }
-        ]
-    },
-    options: {
-    	responsive: false,
-        scales: {
-            xAxes: [{
-                type: 'linear',
-                position: 'bottom',
-                scaleLabel: {
-                	display: true,
-                	labelString: 'time'
-                }
-            }]
-        }
-    }
-});
+	<script>
+		var ctx = document.getElementById("myChart");
+		var scatterChart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				datasets: [
+					{
+						label: 'Scatter Dataset',
+						data: [{
+							x: -10,
+							y: 0
+						}, {
+							x: 0,
+							y: 10
+						}, {
+							x: 10,
+							y: 5
+						}]
+					},
+					{
+						label: 'Scatter Dataset 2',
+						data: [{
+							x: -10,
+							y: 9
+						}, {
+							x: 5,
+							y: 3
+						}, {
+							x: 10,
+							y: 14
+						}],
+						backgroundColor: [
+							'rgba(255, 99, 132, 0.2)'
+						]
+					}
+				]
+			},
+			options: {
+				responsive: false,
+				scales: {
+					xAxes: [{
+						type: 'linear',
+						position: 'bottom',
+						scaleLabel: {
+							display: true,
+							labelString: 'time'
+						}
+					}]
+				}
+			}
+		});
 
-</script>
+	</script>
 
- <script>
-  $( function() {
-    $( "#slider-range" ).slider({
-      range: true,
-      min: 0,
-      max: 500,
-      values: [ 75, 300 ],
-      slide: function( event, ui ) {
-        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-      }
-    });
-    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-      " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-  } );
-  </script>
-</head>
-<body>
- 
-<p>
-  <label for="amount">Price range:</label>
-  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-</p>
- 
-<div id="slider-range"></div>
+	<script>
+		$(function () {
+			var sliderRange = $("#slider-range");
+			var amt = $("#amount");
+
+			sliderRange.slider({
+				range: true,
+				min: 0,
+				max: 500,
+				values: [75, 300],
+				slide: function (event, ui) {
+					amt.val("$" + ui.values[0] + " - $" + ui.values[1]);
+				}
+			});
+
+			amt.val("$" + sliderRange.slider("values", 0) +
+				" - $" + sliderRange.slider("values", 1));
+		});
+	</script>
+
+	<p>
+		<label for="amount">Price range:</label>
+		<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+	</p>
+
+	<div id="slider-range"></div>
 </body>
 </html>
