@@ -124,7 +124,7 @@ if (isset($_SESSION["user_id"])) {
 			}
 			?>
 				<div class="mdl-layout-spacer"></div>
-				<a class="mdl-navigation__link" href="../faq/"><i class="active-nav mdl-color-text--blue-grey-400 material-icons"
+				<a class="active-nav mdl-navigation__link" href="../faq/"><i class="mdl-color-text--blue-grey-400 material-icons"
 														   role="presentation">help_outline</i><span>FAQ</span></a>
 			</nav>
 		</div>
