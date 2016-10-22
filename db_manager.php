@@ -55,7 +55,6 @@ function getUserData($username, $password)
 		return false;
 	}
 
-	$statement->store_result();
 	$result = $statement->get_result()->fetch_assoc();
 	$user_type = $result["user_type"];
 	$table_id = $result["table_id"];
