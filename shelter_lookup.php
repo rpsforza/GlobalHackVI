@@ -10,6 +10,35 @@ function getAllShelters()
 	return array_merge($cocs, $hosts);
 }
 
+function getCloseLocations($lat, $lon, $maxDist)
+{
+	$data = getAllShelters();
+	$locs = [];
+
+	foreach ($data as $loc) {
+		if (distance($lat, $lon, $loc["latitude"], $loc["longitude"]) < $maxDist) {
+			array_push($locs, $loc);
+		}
+	}
+
+	usort($locs, function ($loc1, $loc2) {
+		global $lat, $lon;
+		return distance($lat, $lon, $loc2["latitude"], $loc2["longitude"]) - distance($lat, $lon, $loc1["latitude"], $loc1["longitude"]);
+	});
+
+	return $locs;
+}
+
+function distance($lat1, $lon1, $lat2, $lon2)
+{
+	$theta = $lon1 - $lon2;
+	$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+	$dist = acos($dist);
+	$dist = rad2deg($dist);
+	$miles = $dist * 60 * 1.1515;
+	return $miles;
+}
+
 function getCompatibleShelters($client_id)
 {
 	$mysqli = getDB();
