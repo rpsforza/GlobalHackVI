@@ -3,11 +3,11 @@
 
 require '../db_manager.php';
 
-if (isset($_SESSION["user_id"])) {
+// if (isset($_SESSION["user_id"])) {
 
-} else {
-	header('Location: ../login');
-}
+// } else {
+// 	header('Location: ../login');
+// }
 
 ?>
 <html lang="en">
@@ -79,7 +79,7 @@ if (isset($_SESSION["user_id"])) {
 					<span><?php if (isset($_SESSION["user_id"])) {
 							$name = getUsersName($_SESSION["user_id"]);
 						} else {
-							$name = "<a href=\"../login/\">Login</a>";
+							$name = "<a style=\"align-items: center; color: rgba(255, 255, 255, 0.85); font-weight: 500;\" class=\"mdl-navigation__link\" href=\"../login/\">Login</a>";
 						}
 						echo $name; ?></span>
 					<div class="mdl-layout-spacer"></div>

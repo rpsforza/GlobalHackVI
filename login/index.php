@@ -43,24 +43,47 @@
 	?>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-		  integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.blue_grey-orange.min.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.min.js" type="text/javascript"></script>
+	<style>
+		.mdl-layout {
+			align-items: center;
+		  justify-content: center;
+		}
+		.mdl-layout__content {
+			padding: 14px;
+			flex: none;
+		}
 
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
-		  integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-			integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-			crossorigin="anonymous"></script>
+	</style>
 </head>
+
 <body>
-	<form method="post" action="./">
-		<input type="text" name="Username" value="" placeholder="Email">
-		<input type="password" name="Password" value="" placeholder="Password">
-		<input type="submit" name="commit" value="Login">
-	</form>
+	<div class="mdl-layout mdl-js-layout mdl-color--grey-100">
+		<main class="mdl-layout__content">
+			<div class="mdl-card mdl-shadow--6dp">
+				<div class="mdl-card__title mdl-color--blue-grey-900 mdl-color-text--white">
+					<img style="width: 100%;" id="logoname" src="../img/name2.png"/>
+				</div>
+		  	<div class="mdl-card__supporting-text">
+					<form method="post" action="./">
+						<div class="mdl-textfield mdl-js-textfield">
+							<input class="mdl-textfield__input" name="Username" value="" type="text" id="username" />
+							<label class="mdl-textfield__label" for="username">Username</label>
+						</div>
+						<div class="mdl-textfield mdl-js-textfield">
+							<input class="mdl-textfield__input" name="Password" value="" type="password" id="userpass" />
+							<label class="mdl-textfield__label" for="userpass">Password</label>
+						</div>
+						<div style="border:none; " class="mdl-card__actions mdl-card--border">
+							<button style="float:left;" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Sign Up</button>
+							<input type="submit" style="float:right;" value="Login" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"/>
+						</div>
+					</form>
+				</div>
+			</div>
+		</main>
+	</div>
 </body>
 </html>
