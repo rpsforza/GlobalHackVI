@@ -47,6 +47,16 @@ function clientMoveOut($client_id, $rehousing_or_permanent_housing, $new_address
 	$statement->bind_param("sisssi", $date, $client_id, $rehousing_or_permanent_housing, $new_address, $coc_or_host, $provider_id);
 	$statement->execute();
 
+	// increments the vacancies 
+	$mysqli->query("UPDATE `$coc_or_host` SET vacancy = vacancy + 1 WHERE id=$provider_id");
+	$vacancy = $mysqli->query("SELECT * FROM `$coc_or_host` WHERE id=$provider_id")->fetch_assoc()["vacancy"];
+
+	// creates a new vacancy record
+	$statement = $mysqli->prepare("INSERT INTO vacancy_records (date, vacancy, coc_or_host, provider_id) VALUES (?,?,?,?)");
+	$statement->bind_param("sisi", $date, $vacancy, $coc_or_host, $provider_id);
+	$statement->execute();
+
+	// sets client "moved_on" to true
 	$mysqli->query("UPDATE client SET moved_on=1 WHERE id=$client_id");
 }
 
@@ -59,5 +69,15 @@ function clientMoveIn($client_id, $coc_or_host, $provider_id) {
 	$statement->bind_param("sisi", $date, $client_id, $coc_or_host, $provider_id);
 	$statement->execute();
 
+	// decrements the vacancies 
+	$mysqli->query("UPDATE `$coc_or_host` SET vacancy = vacancy - 1 WHERE id=$provider_id");
+	$vacancy = $mysqli->query("SELECT * FROM `$coc_or_host` WHERE id=$provider_id")->fetch_assoc()["vacancy"];
+
+	// creates a new vacancy record
+	$statement = $mysqli->prepare("INSERT INTO vacancy_records (date, vacancy, coc_or_host, provider_id) VALUES (?,?,?,?)");
+	$statement->bind_param("sisi", $date, $vacancy, $coc_or_host, $provider_id);
+	$statement->execute();
+
+	// sets client "moved_on" to false
 	$mysqli->query("UPDATE client SET moved_on=0 WHERE id=$client_id");
 }
