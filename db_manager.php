@@ -34,7 +34,7 @@ function validateUser($username, $password)
 	if (!$result) {
 		return false;
 	} else {
-		return $result->fetch_assoc()["id"];
+		return $result->fetch_assoc();
 	}
 }
 

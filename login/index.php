@@ -23,9 +23,14 @@
 		<?php
 	} else {
 		if (isset($_POST["Username"]) && isset($_POST["Password"])) {
-			$user_id = validateUser($_POST["Username"], $_POST["Password"]);
-			if ($user_id) {
-				$_SESSION["user_id"] = $user_id;
+			$user_data = validateUser($_POST["Username"], $_POST["Password"]);
+			if ($user_data) {
+				// this id corresponds to the "login_accounts" table
+				$_SESSION["login_accounts_id"] = $user_data["id"];
+				// coc, client, or host
+				$_SESSION["user_type"] = $user_data["user_type"];
+				// this id corresponds to the table of the user type (coc, client, host)
+				$_SESSION["user_type_id"] = $user_data["table_id"];
 				header('Location: ../');
 			} else {
 				header('Location: ./?error=1');
