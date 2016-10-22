@@ -59,15 +59,15 @@ function getUserData($username, $password)
 	$user_type = $result["user_type"];
 	$table_id = $result["table_id"];
 
-	$user_row = $mysqli->query("SELECT * FROM $user_type WHERE login_accounts.id=$table_id")->fetch_assoc();
+	$user_row = $mysqli->query("SELECT * FROM `$user_type` WHERE login_accounts.id=$table_id")->fetch_assoc();
 	return $user_row;
 }
 
 function getUsersName($login_id)
 {
 	$mysqli = getDB();
-	$statement = $mysqli->prepare("SELECT * FROM login_accounts WHERE id=$login_id");
-	$statement->bind_param("ss", $username, $password);
+	$statement = $mysqli->prepare("SELECT * FROM login_accounts WHERE id=?");
+	$statement->bind_param("i", $login_id);
 	$statement->execute();
 
 	if (!$statement) {
@@ -78,6 +78,6 @@ function getUsersName($login_id)
 	$user_type = $result["user_type"];
 	$table_id = $result["table_id"];
 
-	$user_row = $mysqli->query("SELECT * FROM $user_type WHERE login_accounts.id=$table_id")->fetch_assoc();
+	$user_row = $mysqli->query("SELECT * FROM `$user_type` WHERE login_accounts.id=$table_id")->fetch_assoc();
 	return $user_type === "client" ? $user_row["First_Name"] . " " . $user_row["Last_Name"] : $user_row["name"];
 }
