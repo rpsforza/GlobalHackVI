@@ -28,10 +28,13 @@ function validateUser($username, $password)
 	$mysqli = getDB();
 	$statement = $mysqli->prepare("SELECT * FROM login_accounts WHERE username = ? AND password = ?");
 	$statement->bind_param("ss", $username, $password);
-	if (!$statement) {
+	$statement->execute();
+	$result = $statement->get_result();
+
+	if (!$result) {
 		return false;
 	} else {
-		return $statement->get_result()->fetch_assoc()["id"];
+		return $result->fetch_assoc()["id"];
 	}
 }
 
