@@ -20,21 +20,21 @@
 <body>
 	<canvas id="myChart" width="1000" height="600"></canvas>
 	<script>
-
 		$(document).ready(function() {
 			$.ajax({
 				url: "graph-helper.php",
 				success: function(result) {
-	    			// var ctx = document.getElementById("myChart");
-					// var scatterChart = new Chart(ctx, {
-					// 	type: 'line',
-					// 	data: result
-					// });
-					console.log("success happened");
-					console.log(result);
+	    			var ctx = document.getElementById("myChart");
+					var scatterChart = new Chart(ctx, {
+						type: 'line',
+						data: JSON.parse(result),
+						options: {
+							responsive: false
+						}
+					});
 	        	},
 	        	error: function(result) {
-	        		console.log("error happened");
+	        		console.log("ajax returned an error");
 	        	},
 	        	type: 'POST',
         		data: {
@@ -46,27 +46,24 @@
         			tables: ["intake"]
         		}
   			});
-		});
-		
-	</script>
 
-	<script>
-		$(function () {
-			var sliderRange = $("#slider-range");
-			var amt = $("#amount");
+  			$(function() {
+				var sliderRange = $("#slider-range");
+				var amt = $("#amount");
 
-			sliderRange.slider({
-				range: true,
-				min: 0,
-				max: 500,
-				values: [75, 300],
-				slide: function (event, ui) {
-					amt.val("$" + ui.values[0] + " - $" + ui.values[1]);
-				}
+				sliderRange.slider({
+					range: true,
+					min: 0,
+					max: 500,
+					values: [75, 300],
+					slide: function (event, ui) {
+						amt.val("$" + ui.values[0] + " - $" + ui.values[1]);
+					}
+				});
+
+				amt.val("$" + sliderRange.slider("values", 0) +
+					" - $" + sliderRange.slider("values", 1));
 			});
-
-			amt.val("$" + sliderRange.slider("values", 0) +
-				" - $" + sliderRange.slider("values", 1));
 		});
 	</script>
 
@@ -74,7 +71,7 @@
 		<label for="amount">Price range:</label>
 		<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
 	</p>
-
 	<div id="slider-range"></div>
+	
 </body>
 </html>
