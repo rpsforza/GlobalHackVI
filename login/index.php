@@ -23,8 +23,9 @@
 		<?php
 	} else {
 		if (isset($_POST["Username"]) && isset($_POST["Password"])) {
-			if (validateUser($_POST["Username"], $_POST["Password"])) {
-				// $_SESSION["user"] = getUser($_POST["Email"], 1)[0][0];
+			$user_id = validateUser($_POST["Username"], $_POST["Password"]);
+			if ($user_id) {
+				$_SESSION["user_id"] = $user_id;
 				header('Location: ../');
 			} else {
 				header('Location: ./?error=1');
