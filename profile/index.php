@@ -59,7 +59,7 @@ if (isset($_SESSION["user_id"])) {
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
 			<div class="mdl-layout__header-row">
-				<span class="mdl-layout-title">Statisfalse</span>
+				<span class="mdl-layout-title">Profile</span>
 				<div class="mdl-layout-spacer"></div>
 
 				<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
@@ -101,13 +101,13 @@ if (isset($_SESSION["user_id"])) {
 					$a = [["dash", "dashboard", false], ["map", "map", false], ["shelter", "hotel", false], ["housing", "home", false], ["services", "domain", false]];
 					break;
 				case "client":
-					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", false], ["housing", "home", false], ["services", "domain", false]];
+					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", true], ["shelter", "hotel", false], ["housing", "home", false], ["services", "domain", false]];
 					break;
 				case "coc":
-					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", false], ["housing", "home", false], ["services", "domain", false], ["availability", "people", false], ["statistics", "timeline", true]];
+					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", true], ["shelter", "hotel", false], ["housing", "home", false], ["services", "domain", false], ["availability", "people", false], ["statistics", "timeline", false]];
 					break;
 				case "host":
-					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", false], ["availability", "people", false]];
+					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", true], ["shelter", "hotel", false], ["availability", "people", false]];
 					break;
 				default:
 					$a = [["dash", "dashboard", false], ["map", "map", false], ["shelter", "hotel", false], ["housing", "home", false], ["services", "domain", false]];

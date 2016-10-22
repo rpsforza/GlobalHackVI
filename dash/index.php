@@ -76,20 +76,18 @@ if (isset($_SESSION["user_id"])) {
 			<header class="demo-drawer-header">
 				<img id="logoname" src="../img/name2.png"/>
 				<div class="demo-avatar-dropdown">
-					<span><?php if (isset($_SESSION["user"])) {
-							$name = getUsersName($_SESSION["user"]);
+					<span><?php if (isset($_SESSION["user_id"])) {
+							$name = getUsersName($_SESSION["user_id"]);
 						} else {
-							$name = "User";
+							$name = "<a href=\"../login/\">Login</a>";
 						}
 						echo $name; ?></span>
 					<div class="mdl-layout-spacer"></div>
-					<button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-						<i class="material-icons" role="presentation">arrow_drop_down</i>
-						<span class="visuallyhidden">Logout</span>
-					</button>
-					<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-						<li class="mdl-menu__item"><a id="logoutbuttonnav" href="../logout/">Logout</a></li>
-					</ul>
+					<?php if (isset($_SESSION["user_id"])) {
+						echo "<button id=\"accbtn\" class=\"mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon\"><i class=\"material-icons\" role=\"presentation\">arrow_drop_down</i><span class=\"visuallyhidden\">Logout</span></button><ul class=\"mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect\" for=\"accbtn\"><li class=\"mdl-menu__item\"><a id=\"logoutbuttonnav\" href=\"../logout/\">Logout</a></li></ul>";
+					}
+
+					?>
 				</div>
 			</header>
 			<?php

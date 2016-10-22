@@ -59,7 +59,7 @@ if (isset($_SESSION["user_id"])) {
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
 			<div class="mdl-layout__header-row">
-				<span class="mdl-layout-title">Statisfalse</span>
+				<span class="mdl-layout-title">Frequently Asked Quesitons</span>
 				<div class="mdl-layout-spacer"></div>
 
 				<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
@@ -104,7 +104,7 @@ if (isset($_SESSION["user_id"])) {
 					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", false], ["housing", "home", false], ["services", "domain", false]];
 					break;
 				case "coc":
-					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", false], ["housing", "home", false], ["services", "domain", false], ["availability", "people", false], ["statistics", "timeline", true]];
+					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", false], ["housing", "home", false], ["services", "domain", false], ["availability", "people", false], ["statistics", "timeline", false]];
 					break;
 				case "host":
 					$a = [["dash", "dashboard", false], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", false], ["availability", "people", false]];
@@ -124,7 +124,7 @@ if (isset($_SESSION["user_id"])) {
 			}
 			?>
 				<div class="mdl-layout-spacer"></div>
-				<a class="mdl-navigation__link" href="../faq/"><i class="mdl-color-text--blue-grey-400 material-icons"
+				<a class="mdl-navigation__link" href="../faq/"><i class="active-nav mdl-color-text--blue-grey-400 material-icons"
 														   role="presentation">help_outline</i><span>FAQ</span></a>
 			</nav>
 		</div>
