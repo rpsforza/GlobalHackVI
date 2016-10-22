@@ -20,37 +20,34 @@
 <body>
 	<canvas id="myChart" width="1000" height="600"></canvas>
 	<script>
-		var ctx = document.getElementById("myChart");
-		var scatterChart = new Chart(ctx, {
-			type: 'line',
-			data: {
-				labels: ["January", "February", "March", "April", "May", "June", "July"],
-   				datasets: [
-		        {
-		            label: "My First dataset",
-		            fill: false,
-		            lineTension: 0.1,
-		            backgroundColor: "rgba(75,192,192,0.4)",
-		            borderColor: "rgba(75,192,192,1)",
-		            borderCapStyle: 'butt',
-		            borderDash: [],
-		            borderDashOffset: 0.0,
-		            borderJoinStyle: 'miter',
-		            pointBorderColor: "rgba(75,192,192,1)",
-		            pointBackgroundColor: "#fff",
-		            pointBorderWidth: 1,
-		            pointHoverRadius: 5,
-		            pointHoverBackgroundColor: "rgba(75,192,192,1)",
-		            pointHoverBorderColor: "rgba(220,220,220,1)",
-		            pointHoverBorderWidth: 2,
-		            pointRadius: 1,
-		            pointHitRadius: 10,
-		            data: [65, 59, 80, 81, 56, 55, 40],
-		            spanGaps: false,
-		        }]	
-			}
-		});
 
+		$(document).ready(function() {
+			$.ajax({
+				url: "graph-helper.php",
+				success: function(result) {
+	    			// var ctx = document.getElementById("myChart");
+					// var scatterChart = new Chart(ctx, {
+					// 	type: 'line',
+					// 	data: result
+					// });
+					console.log("success happened");
+					console.log(result);
+	        	},
+	        	error: function(result) {
+	        		console.log("error happened");
+	        	},
+	        	type: 'POST',
+        		data: {
+        			coc_or_host: "coc",
+        			provider_id: "1",
+        			min_date: "8",
+        			max_date: "4",
+        			increments: "6",
+        			tables: ["intake"]
+        		}
+  			});
+		});
+		
 	</script>
 
 	<script>
