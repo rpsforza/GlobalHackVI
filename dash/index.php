@@ -3,7 +3,7 @@
 
 require '../db_manager.php';
 
-if (isset($_SESSION["user"])) {
+if (isset($_SESSION["user_id"])) {
 
 } else {
 	header('Location: ../login');
@@ -92,21 +92,53 @@ if (isset($_SESSION["user"])) {
 					</ul>
 				</div>
 			</header>
+			<?php 
+				$UserType = getType($_SESSION["user_id"]);
+				switch ($UserType) {
+					case "client":
+						$a = "manage";
+						$b = "b";
+						$c = "c";
+						$d = "d";
+						$e = "e";
+						break;
+					case "coc":
+						$a = "manage";
+						$b = "b";
+						$c = "c";
+						$d = "d";
+						$e = "e";
+						break;
+					case "host": 
+						$a = "manage";
+						$b = "b";
+						$c = "c";
+						$d = "d";
+						$e = "e";
+						break;
+					default:
+						$a = "manage";
+						$b = "b";
+						$c = "c";
+						$d = "d";
+						$e = "e";
+						break;
+				}
+
+			?> 
 			<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-				<a href="../dash/" class="active-nav mdl-navigation__link" href=""><i
-						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Dash</a>
-				<a href="../groups/" class="mdl-navigation__link" href=""><i
-						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Groups</a>
-				<a href="../news/" class="mdl-navigation__link" href=""><i
-						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">view_list</i>News</a>
-				<a href="../market/" class="mdl-navigation__link" href=""><i
-						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">store</i>Market</a>
-				<a href="../settings/" class="mdl-navigation__link" href=""><i
-						class="mdl-color-text--blue-grey-400 material-icons"
-						role="presentation">settings</i>Settings</a>
+				<a href=<?php echo "\"../".$a."/\""; ?> class="active-nav mdl-navigation__link" href=""><i
+						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i><?php echo ucwords($a); ?></a>
+				<a href=<?php echo "\"../".$b."/\""; ?> class="mdl-navigation__link" href=""><i
+						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i><?php echo ucwords($b); ?></a>
+				<a href=<?php echo "\"../".$c."/\""; ?> class="mdl-navigation__link" href=""><i
+						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">view_list</i><?php echo ucwords($c); ?></a>
+				<a href=<?php echo "\"../".$d."/\""; ?> class="mdl-navigation__link" href=""><i
+						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">store</i><?php echo ucwords($d); ?></a>
+				<a href=<?php echo "\"../".$e."/\""; ?> class="mdl-navigation__link" href=""><i
+						class="mdl-color-text--blue-grey-400 material-icons" role="presentation">settings</i><?php echo ucwords($e); ?></a>
 				<div class="mdl-layout-spacer"></div>
-				<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons"
-														   role="presentation">help_outline</i><span
+				<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons"role="presentation">help_outline</i><span
 						class="visuallyhidden">Help</span></a>
 			</nav>
 		</div>
