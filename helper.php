@@ -25,3 +25,4 @@ function getServicesProvided($client_id)
 
 	return $services_provided;
 }
+
