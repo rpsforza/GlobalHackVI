@@ -106,7 +106,7 @@ if (isset($_SESSION["user_id"])) {
 				case "coc":
 					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["map", "map", false], ["shelter", "hotel", true], ["services", "domain", false], ["housing", "home", false], ["availability", "people", false], ["statistics", "timeline", false]];
 					break;
-				case "host":["profile", "account_box", false], 
+				case "host":
 					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["map", "map", false], ["shelter", "hotel", true], ["availability", "people", false]];
 					break;
 				default:
