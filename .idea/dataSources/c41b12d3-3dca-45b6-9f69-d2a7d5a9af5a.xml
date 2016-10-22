@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - heroku_0e49192e673a1d3@us-cdbr-iron-east-04.cleardb.net">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+    <schema id="1" name="heroku_0e49192e673a1d3">
+      <visible>1</visible>
+    </schema>
+    <schema id="2" name="information_schema"/>
+    <table id="3" parent="1" name="client_data"/>
+    <column id="4" parent="3" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <index id="5" parent="3" name="id_UNIQUE">
+      <columns>id</columns>
+      <desc-columns></desc-columns>
+      <unique>1</unique>
+    </index>
+    <key id="6" parent="3" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <key id="7" parent="3" name="id_UNIQUE">
+      <columns>id</columns>
+      <underlying-index>id_UNIQUE</underlying-index>
+    </key>
+  </database-model>
+</dataSource>
