@@ -93,59 +93,41 @@ if (isset($_SESSION["user_id"])) {
 				</div>
 			</header>
 			<?php
-			$userType = getUserType($_SESSION["user_id"]);
+			if(isset($_SESSION["user_id"])) {
+				$userType = getUserType($_SESSION["user_id"]);
+			} else {
+				$userType = "clientNoAuth";
+			}
 			switch ($userType) { // [alt text, mdl font icon, current page]
+				case "clientNoAuth":
+					$a = [["dash", "dashboard", true], ["map", "map", false], ["shelter", "hotel", false], ["housing", "home", false], ["services", "domain", false]];
+					break;
 				case "client":
-					$a = ["dash", "home", true];
-					$b = ["manage", "home", false];
-					$c = ["map", "map", false];
-					$d = ["manage", "home", false];
-					$e = ["manage", "home", false];
+					$a = [["dash", "dashboard", true], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", false], ["housing", "home", false], ["services", "domain", false]];
 					break;
 				case "coc":
-					$a = ["dash", "home", true];
-					$b = ["manage", "home", false];
-					$c = ["map", "map", false];
-					$d = ["manage", "home", false];
-					$e = ["manage", "home", false];
+					$a = [["dash", "dashboard", true], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", false], ["housing", "home", false], ["services", "domain", false], ["availability", "people", false], ["statistics", "timeline", false]];
 					break;
 				case "host":
-					$a = ["dash", "home", true];
-					$b = ["manage", "home", false];
-					$c = ["map", "map", false];
-					$d = ["manage", "home", false];
-					$e = ["manage", "home", false];
+					$a = [["dash", "dashboard", true], ["map", "map", false], ["profile", "account_box", false], ["shelter", "hotel", false], ["availability", "people", false]];
 					break;
 				default:
-					$a = ["dash", "home", true];
-					$b = ["manage", "home", false];
-					$c = ["map", "map", false];
-					$d = ["manage", "home", false];
-					$e = ["manage", "home", false];
+					$a = [["dash", "dashboard", true], ["map", "map", false], ["shelter", "hotel", false], ["housing", "home", false], ["services", "domain", false]];
 					break;
 			}
 
 			?>
 			<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-				<a href="<?php echo "\"../" . $a[0] . "/\""; ?>" class="<?php if($a[2]) { echo "active-nav";} ?>mdl-navigation__link"><i
-						class="mdl-color-text--blue-grey-400 material-icons"
-						role="presentation"><?php echo $a[1]; ?></i><?php echo ucwords($a[0]); ?></a>
-				<a href="<?php echo "\"../" . $b[0] . "/\""; ?>" class="<?php if($a[2]) { echo "active-nav";} ?>mdl-navigation__link"><i
-						class="mdl-color-text--blue-grey-400 material-icons"
-						role="presentation"><?php echo $b[1]; ?></i><?php echo ucwords($b[0]); ?></a>
-				<a href="<?php echo "\"../" . $c[0] . "/\""; ?>" class="<?php if($a[2]) { echo "active-nav";} ?>mdl-navigation__link"><i
-						class="mdl-color-text--blue-grey-400 material-icons"
-						role="presentation"><?php echo $c[1]; ?></i><?php echo ucwords($c[0]); ?></a>
-				<a href="<?php echo "\"../" . $d[0] . "/\""; ?>" class="<?php if($a[2]) { echo "active-nav";} ?>mdl-navigation__link"><i
-						class="mdl-color-text--blue-grey-400 material-icons"
-						role="presentation"><?php echo $d[1]; ?></i><?php echo ucwords($d[0]); ?></a>
-				<a href="<?php echo "\"../" . $e[0] . "/\""; ?>" class="<?php if($a[2]) { echo "active-nav";} ?>mdl-navigation__link"><i
-						class="mdl-color-text--blue-grey-400 material-icons"
-						role="presentation"><?php echo $e[1]; ?></i><?php echo ucwords($e[0]); ?></a>
+			<?php
+			foreach ($a as $arr) {
+				$active="";
+				if ($arr[2]) $active="active-nav ";
+				echo "<a href=../".$arr[0]." class=\"".$active."mdl-navigation__link\"><i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">".$arr[1]."</i>".ucwords($arr[0])."</a>";
+			}
+			?>
 				<div class="mdl-layout-spacer"></div>
-				<a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons"
-														   role="presentation">help_outline</i><span
-						class="visuallyhidden">Help</span></a>
+				<a class="mdl-navigation__link" href="../faq/"><i class="mdl-color-text--blue-grey-400 material-icons"
+														   role="presentation">help_outline</i><span>FAQ</span></a>
 			</nav>
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">
