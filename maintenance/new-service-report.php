@@ -5,7 +5,6 @@ require("../db_manager.php");
 date("m/d/y");
 
 if (isset($_POST)) {
-	
 	// id of row in "clients" table
 	$client_id = $_POST["client_id"];
 	// stored in "services" table
@@ -26,14 +25,14 @@ if (isset($_POST)) {
 		$old_comments = $mysqli->query("SELECT * FROM provided_services WHERE client_id=$client_id AND service_id=$service_id")->fetch_assoc()["comments"];
 		$updated_comments = $comments . "\n\n" . $old_comments;
 
-		$statement = $mysqli->prepare("UPDATE provided_services SET percent_completed=?, comments=?");
+		$statement = $mysqli->prepare("UPDATE provided_services SET completed=?, comments=?");
 		$statement->bind_param("is", $percent_completed, $updated_comments);
 		$statement->execute();
 
-	// if not, make a new entry
+		// if not, make a new entry
 	} else {
 
-		$statement = $mysqli->prepare("INSERT INTO provided_services (client_id, service_id, percent_completed, comments) VALUES (?,?,?,?)");
+		$statement = $mysqli->prepare("INSERT INTO provided_services (client_id, service_id, completed, comments) VALUES (?,?,?,?)");
 		$statement->bind_param("iiis", $client_id, $service_id, $percent_completed, $comments);
 		$statement->execute();
 
@@ -42,5 +41,3 @@ if (isset($_POST)) {
 } else {
 	echo "POST data not set.";
 }
-
-?>
