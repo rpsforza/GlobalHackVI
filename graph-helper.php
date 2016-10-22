@@ -1,15 +1,27 @@
 <?php
 
-	// min_date / max_date define the date range
-	// they are expressed in terms of - days (so 40 means 40 days before today)
-	// so min date is actually larger than max date
+	if (isset($_POST)) {
 
-	// increments is the number of increments on the x-axis
+		require("db_manager.php");
+		$mysqli = getDB();
 
-	// $tables is an array containing the values "intake", "vacancy", and / or "output"
-	// it stores the options for which graph(s) you want to see - one, two, or all three?
+		/*** SET VALUES ***/
 
-	function getCapacityMetrics($coc_or_host, $provider_id, $min_date, $max_date, $increments, $tables) {
+		// identifiers
+		$coc_or_host = $_POST["coc_or_host"];
+		$provider_id = $_POST["provider_id"];
+		// min_date / max_date define the date range
+		// they are expressed in terms of - days (so 40 means 40 days before today)
+		// so min date is actually larger than max date
+		$min_date = $_POST["min_date"];
+		$max_date = $_POST["max_date"];
+		// number of increments on the x-axis
+		$increments = $_POST["increments"];
+		// $tables is an array containing the values "intake", "vacancy", and / or "output"
+		// it stores the options for which graph(s) you want to see - one, two, or all three?
+		$tables = $_POST["tables"];
+
+		/*** MAIN FUNCTION ***/
 
 		// calculates interval based on min date and max date
 		$interval = ceil(($min_date - $max_date) / $increments);
@@ -18,25 +30,30 @@
 		$converted_min_date = strtotime("-$min_date day");
 		$converted_max_date = strtotime("-$max_date day");
 
+		// the resulting object, according to chart.js specs (this is object "data" in the Chart object)
+		$result = array(
+			"labels" => [],
+			"datasets" => []
+		);
+
+		// SETS X-AXIS (LABEL)
+		for ($i = $min_date; $i >= $max_date; $i-=$interval) {
+			// sets the value for the x-axis tick
+			// so if i is 14 (as in 14 days before today) and today is 10/20/16, this should make result["labels"][] = 10/06/16
+			$time_stamp = strtotime("-$i day");
+			$date = date("m/d/y", $time_stamp);
+			$result["labels"][] = $date;
+		}
+
 		// iterates through the tables, applying the same procedure to table "vacancy" / "output" / "intake"
 		foreach ($tables as $table) {
 
-			// matches the chart.js specifications
-			// each label corresponds to an x-value, each data corresponds to a y-value
-			// so if label[2] = 3 and data[2] = 10/12/16, then 3 intakes happened on 10/12/16
-			$labels = [];
+			// the y-axis data corresponding to this table
 			$data = [];
 
 			// backwards because min_date > max_date it's weird I know
 			// every increment corresponds to another tick on the x-axis
-			for ($i = $min_date; $i >= $max_date; $i+=$interval) {
-
-				// sets the value for the x-axis tick
-				// so if i is 14 (as in 14 days before today) and today is 10/20/16, this should add labels[] = 10/06/16
-				$time_stamp = strtotime("-$i day");
-				$date = data("m/d/y", $time_stamp);
-				$labels[] = $date;
-
+			for ($i = $min_date; $i >= $max_date; $i-=$interval) {
 				// records that fit within this date span (between i and i + interval days)
 				$matching_records = 0;
 
@@ -48,27 +65,26 @@
 					// searches for matching records
 					$time_stamp = strtotime("-$j day");
 					$date = date('m/d/y', $time_stamp);
-					$intake_data = $mysqli->query("SELECT * FROM intakes WHERE date='$date'");
+					$table_query = $table . "_records";
+					$intake_data = $mysqli->query("SELECT * FROM $table_query WHERE date='$date'")->fetch_assoc();
 
 					// if records are found, it adds them to matching_records
-					if ($intake_data) $matching_records += count($intake_data);
+					if ($intake_data) {
+						$matching_records += count($intake_data);
+						echo (count($intake_data));
+					}
 				}
 
 				// matching_records now equals the total number of intakes that happened between i and i + interval
 				$data[] = $matching_records;
 			}
 
-			
+			$result["datasets"][] = (object) array(
+				"label" => $table,
+				"data" => $data
+			);
 		}
 
-		// returns an object according to chart.js specifications
-		$return_object = (object) array(
-			'labels' => $labels,
-			'datasets' => array(
-
-			)
-		);
-
+		echo json_encode((object) $result);
 	}
-
 ?>
