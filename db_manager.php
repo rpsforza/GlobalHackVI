@@ -59,6 +59,25 @@ function getUserData($username, $password)
 	$user_type = $result["user_type"];
 	$table_id = $result["table_id"];
 
-	$user_row = $mysqli->query("SELECT * FROM $user_type WHERE login_accounts.id=$table_id")->fetch_assoc();
+	$user_row = $mysqli->query("SELECT * FROM `$user_type` WHERE login_accounts.id=$table_id")->fetch_assoc();
+	return $user_row;
+}
+
+function getUserData($login_id)
+{
+	$mysqli = getDB();
+	$statement = $mysqli->prepare("SELECT * FROM login_accounts WHERE id=$login_id");
+	$statement->bind_param("ss", $username, $password);
+	$statement->execute();
+
+	if (!$statement) {
+		return false;
+	}
+
+	$result = $statement->get_result()->fetch_assoc();
+	$user_type = $result["user_type"];
+	$table_id = $result["table_id"];
+
+	$user_row = $mysqli->query("SELECT * FROM `$user_type` WHERE login_accounts.id=$table_id")->fetch_assoc();
 	return $user_row;
 }
