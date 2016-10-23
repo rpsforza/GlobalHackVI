@@ -3,16 +3,32 @@
 	<?php
 	require '../db_manager.php';
 
-	if (isset($_POST["Username"]) && isset($_POST["Password"]) && isset($_POST["FirstName"]) && isset($_POST["MiddleName"]) && isset($_POST["LastName"]) && isset($_POST["DateOfBirth"]) && isset($_POST["Gender"])  ) {
-			if (newClient($_POST["FirstName"], $_POST["MiddleName"], $_POST["LastName"], $_POST["DateOfBirth"], $_POST["Gender"])) {
-				header('Location: ../login/');
-			} else {
-				header('Location: ./?error=1');
-				exit();
-			}
-			exit();
-		}
+	if (isset($_POST["username"])) {
+		$username = $_POST["username"];
+		$password = $_POST["password"];
+		$first_name = $_POST["first_name"];
+		$middle_name = $_POST["middle_name"];
+		$last_name = $_POST["last_name"];
+		$dob = $_POST["dob"];
+		$gender = $_POST["gender"];
 
+		// $date_created = current date;
+
+		// TODO make UUID auto increment
+
+		$mysqli = getDB();
+
+		$statement = $mysqli->prepare("INSERT INTO client (First_Name, Middle_Name, Last_Name, DOB, Gender)
+										VALUES (?, ?, ?, ?, ?)");
+		$statement->bind_param("ssssi", $first_name, $middle_name, $last_name, $dob, $gender);
+		$statement->execute();
+
+		$usertype = "client";
+		$table_id = $mysqli->insert_id;
+		$statement = $mysqli->prepare("INSERT INTO login_accounts (username, password, user_type, table_id) VALUES (?,?,?,?)");
+		$statement->bind_param("sssi", $username, $password, $usertype, $table_id);
+		$statement->execute();
+	}
 	?>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -43,33 +59,33 @@
 					<img style="width: 100%;" id="logoname" src="../img/name2.png"/>
 				</div>
 		  	<div class="mdl-card__supporting-text">
-					<form method="post" action="./">
+					<form method="post">
 						<div class="mdl-textfield mdl-js-textfield">
-							<input class="mdl-textfield__input" name="Username" value="" type="text" id="username" />
+							<input class="mdl-textfield__input" name="username" value="" type="text" id="username" />
 							<label class="mdl-textfield__label" for="username">Username</label>
 						</div>
 						<div class="mdl-textfield mdl-js-textfield">
-							<input class="mdl-textfield__input" name="Password" value="" type="password" id="userpass" />
+							<input class="mdl-textfield__input" name="password" value="" type="password" id="userpass" />
 							<label class="mdl-textfield__label" for="userpass">Password</label>
 						</div>
 						<div class="mdl-textfield mdl-js-textfield">
-							<input class="mdl-textfield__input" name="FirstName" value="" type="text" id="FirstName" />
+							<input class="mdl-textfield__input" name="first_name" value="" type="text" id="FirstName" />
 							<label class="mdl-textfield__label" for="FirstName">First Name</label>
 						</div>
 						<div class="mdl-textfield mdl-js-textfield">
-							<input class="mdl-textfield__input" name="MiddleName" value="" type="text" id="MiddleName" />
+							<input class="mdl-textfield__input" name="middle_name" value="" type="text" id="MiddleName" />
 							<label class="mdl-textfield__label" for="MiddleName">Middle Name</label>
 						</div>
 						<div class="mdl-textfield mdl-js-textfield">
-							<input class="mdl-textfield__input" name="LastName" value="" type="text" id="LastName" />
+							<input class="mdl-textfield__input" name="last_name" value="" type="text" id="LastName" />
 							<label class="mdl-textfield__label" for="LastName">Last Name</label>
 						</div>
 						<div class="mdl-textfield mdl-js-textfield">
-							<input class="mdl-textfield__input" name="DateOfBirth" value="" type="text" id="DateOfBirth" />
+							<input class="mdl-textfield__input" name="dob" value="" type="text" id="DateOfBirth" />
 							<label class="mdl-textfield__label" for="DateOfBirth">Date of Birth</label>
 						</div>
 						<div class="mdl-textfield mdl-js-textfield">
-							<input class="mdl-textfield__input" name="DateOfBirth" value="" type="text" id="DateOfBirth" />
+							<input class="mdl-textfield__input" name="gender" value="" type="text" id="DateOfBirth" />
 							<label class="mdl-textfield__label" for="DateOfBirth">Gender</label>
 						</div>
 
