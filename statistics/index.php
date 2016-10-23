@@ -5,6 +5,19 @@ require '../db_manager.php';
 
 if (isset($_SESSION["user_id"])) {
 
+	if (isset($_GET["query"])) {
+
+		require("../search.php");
+		$search_results = search("coc", $_GET["query"]);
+
+	}
+	$coc_or_host = $_SESSION["user_type"];
+	$provider_id = $_SESSION["user_type_id"];
+	if (isset($_GET["coc_or_host"])) {
+		$coc_or_host = $_GET["coc_or_host"];
+		$provider_id = $_GET["provider_id"];
+	}
+
 } else {
 	header('Location: ../login');
 }
@@ -115,8 +128,8 @@ if (isset($_SESSION["user_id"])) {
 		        	},
 		        	type: 'POST',
 	        		data: {
-	        			coc_or_host: "coc",
-	        			provider_id: "1",
+	        			coc_or_host: <?php echo "'$coc_or_host'"; ?>,
+	        			provider_id: <?php echo $provider_id; ?>,
 	        			min_date: min_date,
 	        			borderColor: "rgba(75,192,192,1)",
 	        			max_date: max_date,
@@ -356,7 +369,23 @@ if (isset($_SESSION["user_id"])) {
 		</main>
 	</div>
 	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-
+<div id="tableWrap">
+					<table id="tabel" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+						<thead>
+						<tr>
+							<th class="mdl-data-table__cell--non-numeric">Name</th>
+							<th>Services</th>
+							<th>Vacancy</th>
+						</tr>
+						</thead>
+						<tbody id="table-body">
+							<tr>
+								<td> Test </td>
+								<td> Test </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 	
 </body>
 </html>
