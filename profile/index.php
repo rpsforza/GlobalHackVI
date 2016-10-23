@@ -107,7 +107,7 @@ if (isset($_SESSION["user_id"])) {
 					$a = [["dash", "dashboard", false], ["profile", "account_box", true], ["services", "domain", false], ["housing", "home", false], ["availability", "people", false], ["statistics", "timeline", false]];
 					break;
 				case "host":
-					$a = [["dash", "dashboard", false], ["profile", "account_box", true], ["services", "domain", false], ["availability", "people", false]];
+					$a = [["dash", "dashboard", false], ["profile", "account_box", true], ["services", "domain", false], ["availability", "people", false], ["statistics", "timeline", false]];
 					break;
 				default:
 					$a = [["dash", "dashboard", false], ["services", "domain", false], ["housing", "home", false]];

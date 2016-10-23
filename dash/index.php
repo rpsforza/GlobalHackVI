@@ -126,7 +126,7 @@ require '../search.php';
 					$a = [["dash", "dashboard", true], ["profile", "account_box", false], ["services", "domain", false], ["housing", "home", false], ["availability", "people", false], ["statistics", "timeline", false]];
 					break;
 				case "host":
-					$a = [["dash", "dashboard", true], ["profile", "account_box", false], ["services", "domain", false], ["availability", "people", false]];
+					$a = [["dash", "dashboard", true], ["profile", "account_box", false], ["services", "domain", false], ["availability", "people", false], ["statistics", "timeline", false]];
 					break;
 				default:
 					$a = [["dash", "dashboard", true], ["services", "domain", false], ["housing", "home", false]];

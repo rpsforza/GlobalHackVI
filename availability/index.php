@@ -119,7 +119,7 @@ if (isset($_GET["query"])) {
 					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["services", "domain", false], ["housing", "home", false], ["availability", "people", true], ["statistics", "timeline", false]];
 					break;
 				case "host":
-					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["services", "domain", false], ["availability", "people", true]];
+					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["services", "domain", false], ["availability", "people", true], ["statistics", "timeline", false]];
 					break;
 				default:
 					$a = [["dash", "dashboard", false], ["services", "domain", false], ["housing", "home", false]];
