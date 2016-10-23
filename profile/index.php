@@ -187,9 +187,9 @@ if (isset($_SESSION["user_id"])) {
 						"Name" => $client['First_Name'] . ' ' . $client['Middle_Name'] . ' ' . $client['Last_Name'],
 						"Age" => getAge($client['DOB']),
 						"Gender" => $client['Gender'] ? 'Female' : 'Male',
-						"Race" => 'Prefer not to answer',
+						"Race" => 'Prefer not to answer', // TODO: Implement
 						"Veteran" => ($client['VeteranStatus'] != 0) ? 'Yes' : 'No',
-						"Situation" => 'Prefer not to answer'
+						"Situation" => 'Waiting user input...' // TODO: Implement
 					];
 					echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
 					foreach ($v as $key => $value) {
