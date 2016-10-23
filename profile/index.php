@@ -193,7 +193,7 @@ if (isset($_SESSION["user_id"])) {
 					];
 					echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
 					foreach ($v as $key => $value) {
-						echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $key . "</td><td>" . $value . "</td></tr>";
+						echo "<tr><td class=\"mdl-data-table__cell--non-numeric\"><b>" . $key . "</b></td><td>" . $value . "</td></tr>";
 					}
 					echo "</tbody></table>";
 
@@ -210,7 +210,7 @@ if (isset($_SESSION["user_id"])) {
 					];
 					echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
 					foreach ($v as $key => $value) {
-						echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $key . "</td><td>" . $value . "</td></tr>";
+						echo "<tr><td class=\"mdl-data-table__cell--non-numeric\"><b>" . $key . "</b></td><td>" . $value . "</td></tr>";
 					}
 					echo "</tbody></table>";
 				} else {
