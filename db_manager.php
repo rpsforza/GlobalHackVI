@@ -111,3 +111,13 @@ function newClient($first_name, $middle_name, $last_name, $dob, $gender)
 	$statement->execute();
 	return true;
 }
+
+function getCurrentServices($client_id) {
+	$mysqli = getDB();
+	return $mysqli->query("SELECT * FROM provided_services WHERE client_id=$client_id AND completed=0")->fetch_assoc();
+}
+
+function getServiceHistory($client_id) {
+	$mysqli = getDB();
+	return $mysqli->query("SELECT * FROM provided_services WHERE client_id=$client_id AND completed=1")->fetch_assoc();
+}
