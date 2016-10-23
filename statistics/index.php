@@ -72,6 +72,9 @@ if (isset($_SESSION["user_id"])) {
 			options["completed"] = false;
 			options["initiated"] = false;
 
+			options["reservations"] = false;
+			options["missed_reservations"] = false;
+
 			var service_type = "all";
 
 			var sliderRange = $("#slider-range");
@@ -166,6 +169,16 @@ if (isset($_SESSION["user_id"])) {
 
 			$('#initiated').change(function() {
 			    options["initiated"] = this.checked;
+			    generateGraph();
+			});
+
+			$('#reservations').change(function() {
+			    options["reservations"] = this.checked;
+			    generateGraph();
+			});
+
+			$('#missed_reservations').change(function() {
+			    options["missed_reservations"] = this.checked;
 			    generateGraph();
 			});
 
