@@ -87,7 +87,7 @@
 						} else if ($option === "initiated") {
 							$clause = " AND completed=0";
 						}
-						$query = "SELECT * FROM provided_services WHERE date='$date'" . $clause . $service_clause;
+						$query = "SELECT * FROM provided_services WHERE date='$date' AND host_or_coc='$coc_or_host' AND provider_id=$provider_id" . $clause . $service_clause;
 
 						$count_data = $mysqli->query($query)->fetch_all();
 					}

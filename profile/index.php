@@ -98,7 +98,7 @@ if (isset($_SESSION["user_id"])) {
 			}
 			switch ($userType) { // [alt text, mdl font icon, current page]
 				case "clientNoAuth":
-					$a = [["dash", "dashboard", false], ["services", "domain", false], ["housing", "home", false]];
+					$a = [["services", "domain", false], ["housing", "home", false]];
 					break;
 				case "client":
 					$a = [["dash", "dashboard", false], ["profile", "account_box", true], ["services", "domain", false], ["housing", "home", false]];
@@ -107,7 +107,7 @@ if (isset($_SESSION["user_id"])) {
 					$a = [["dash", "dashboard", false], ["profile", "account_box", true], ["services", "domain", false], ["housing", "home", false], ["availability", "people", false], ["statistics", "timeline", false]];
 					break;
 				case "host":
-					$a = [["dash", "dashboard", false], ["profile", "account_box", true], ["services", "domain", false], ["availability", "people", false]];
+					$a = [["dash", "dashboard", false], ["profile", "account_box", true], ["services", "domain", false], ["availability", "people", false], ["statistics", "timeline", false]];
 					break;
 				default:
 					$a = [["dash", "dashboard", false], ["services", "domain", false], ["housing", "home", false]];

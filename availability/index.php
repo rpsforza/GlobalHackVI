@@ -86,8 +86,8 @@ if (isset($_GET["query"])) {
 			<header class="demo-drawer-header">
 				<img id="logoname" src="../img/name2.png"/>
 				<div class="demo-avatar-dropdown">
-					<span><?php if (isset($_SESSION["user"])) {
-							$name = getUsersName($_SESSION["user"]);
+					<span><?php if (isset($_SESSION["user_id"])) {
+							$name = getUsersName($_SESSION["user_id"]);
 						} else {
 							$name = "User";
 						}
@@ -110,7 +110,7 @@ if (isset($_GET["query"])) {
 			}
 			switch ($userType) { // [alt text, mdl font icon, current page]
 				case "clientNoAuth":
-					$a = [["dash", "dashboard", false], ["services", "domain", false], ["housing", "home", false]];
+					$a = [["services", "domain", false], ["housing", "home", false]];
 					break;
 				case "client":
 					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["services", "domain", false], ["housing", "home", false]];
@@ -119,7 +119,7 @@ if (isset($_GET["query"])) {
 					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["services", "domain", false], ["housing", "home", false], ["availability", "people", true], ["statistics", "timeline", false]];
 					break;
 				case "host":
-					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["services", "domain", false], ["availability", "people", true]];
+					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["services", "domain", false], ["availability", "people", true], ["statistics", "timeline", false]];
 					break;
 				default:
 					$a = [["dash", "dashboard", false], ["services", "domain", false], ["housing", "home", false]];
