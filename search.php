@@ -17,9 +17,9 @@
 
 			for ($i = 0; $i < count($search_terms); $i++) {
 				$term = $search_terms[$i];
-				$new_results = $mysqli->query("SELECT * FROM coc WHERE name='$term'")->fetch_all(MYSQLI_ASSOC);
+				$new_results = $mysqli->query("SELECT * FROM coc WHERE name LIKE '%$term%'")->fetch_all(MYSQLI_ASSOC);
 				$results = array_unique(array_merge($results, $new_results), SORT_REGULAR);
-				$new_results = $mysqli->query("SELECT * FROM host WHERE name='$term'")->fetch_all(MYSQLI_ASSOC);
+				$new_results = $mysqli->query("SELECT * FROM host WHERE name LIKE '%$term%'")->fetch_all(MYSQLI_ASSOC);
 				$results = array_unique(array_merge($results, $new_results), SORT_REGULAR);
 			}
 		}

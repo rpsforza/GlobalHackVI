@@ -75,11 +75,11 @@
 					$count_data = false;
 					if ($option === "intake" || $option === "output" || $option === "vacancy") {
 						$table = $option . "_records";
-						$count_data = $mysqli->query("SELECT * FROM $table WHERE date='$date'")->fetch_all();
+						$count_data = $mysqli->query("SELECT * FROM $table WHERE date='$date' AND coc_or_host='$coc_or_host' AND provider_id=$provider_id")->fetch_all();
 					} else if ($option === "reservations") {
-						$count_data = $mysqli->query("SELECT * FROM reservation_records WHERE date='$date' AND showed_up=1")->fetch_all();
+						$count_data = $mysqli->query("SELECT * FROM reservation_records WHERE date='$date' AND coc_or_host='$coc_or_host' AND provider_id=$provider_id AND showed_up=1")->fetch_all();
 					} else if ($option === "missed_reservations") {
-						$count_data = $mysqli->query("SELECT * FROM reservation_records WHERE date='$date' AND showed_up=0")->fetch_all();
+						$count_data = $mysqli->query("SELECT * FROM reservation_records WHERE date='$date' AND coc_or_host='$coc_or_host' AND provider_id=$provider_id AND showed_up=0")->fetch_all();
 					} else {
 						$clause = "";
 						if ($option === "completed") {

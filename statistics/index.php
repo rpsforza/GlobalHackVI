@@ -6,17 +6,21 @@ require '../db_manager.php';
 if (isset($_SESSION["user_id"])) {
 
 	if (isset($_GET["query"])) {
-
+   
 		require("../search.php");
-		$search_results = search("coc", $_GET["query"]);
+		$search_results = search("coc", urldecode($_GET["query"]));
 
 	}
+
+	$mysqli = getDB();
+
 	$coc_or_host = $_SESSION["user_type"];
 	$provider_id = $_SESSION["user_type_id"];
 	if (isset($_GET["coc_or_host"])) {
 		$coc_or_host = $_GET["coc_or_host"];
 		$provider_id = $_GET["provider_id"];
 	}
+	$name = $mysqli->query("SELECT * FROM $coc_or_host WHERE id=$provider_id")->fetch_assoc()["name"];
 
 } else {
 	header('Location: ../login');
@@ -293,6 +297,9 @@ if (isset($_SESSION["user_id"])) {
 			<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-size: 18pt; background-color: transparent; font-weight:bold;">
 		</p>
 		<div id="slider-range"></div>
+		<p style="font-size: 18pt; margin-top: 20px">
+			Seeing Data for <?php echo $name; ?>
+		</p>
 	</div>
 
 	<div style="margin: 50px; width: 100%; display: inherit;">
@@ -357,35 +364,40 @@ if (isset($_SESSION["user_id"])) {
 		</div>
 	</div>
 
-		
-
-		<div id="srk" class="mdh-expandable-search">
+	<div id="srk" style="width: 100%; margin-right: 50px; margin-left: 50px" class="mdh-expandable-search">
 		<i class="material-icons">search</i>
-		<form action="./" method="GET">
-			<input type="text" placeholder="search other providers" value="" name="query" size="1">
+		<form action="#tableWrap" method="GET">
+			<input type="text" placeholder="search other providers" name="query" size="1">
 		</form>
-	</div>
-			</div>
-		</main>
-	</div>
-	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-<div id="tableWrap">
-					<table id="tabel" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
-						<thead>
-						<tr>
-							<th class="mdl-data-table__cell--non-numeric">Name</th>
-							<th>Services</th>
-							<th>Vacancy</th>
-						</tr>
-						</thead>
-						<tbody id="table-body">
-							<tr>
-								<td> Test </td>
-								<td> Test </td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+	</div>	
+
+	<?php if (isset($search_results)) : ?>
+		<div style="width: 100%; margin: 50px" id="tableWrap">
+			<table id="tabel" style="width: 100%;"" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+				<thead>
+				<tr>
+					<th style="text-align: center">Name</th>
+				</tr>
+				</thead>
+				<tbody id="table-body">
+					<?php 
+						for ($i = 0; $i < count($search_results); $i++) {
+							$row = $search_results[$i];
+							$name = $row["name"];
+							$coc_or_host = $row["is_coc"] === 1 ? "coc" : "host";
+							$provider_id = $row["id"];
+							echo "<tr><td style='text-align: center'><a href='index.php?coc_or_host=$coc_or_host&provider_id=$provider_id'>$name</a></td></tr>";
+						}
+					?>
+				</tbody>
+			</table>
+		</div>
+	<?php endif; ?>
 	
+	</div>
+</main>
+</div>
+<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
 </body>
 </html>
