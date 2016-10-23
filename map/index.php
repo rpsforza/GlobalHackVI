@@ -329,6 +329,8 @@ if (isset($_SESSION["user_id"])) {
 		function addMarkersFromLocs() {
 			var shelterSymbol = pinSymbol("#F79622");
 
+			document.getElementById("table-body").innerHTML = "";
+
 			markers = locs.map(function (loc) {
 				addLocToTable(loc);
 
@@ -344,8 +346,6 @@ if (isset($_SESSION["user_id"])) {
 		}
 
 		function addLocToTable(loc) {
-			console.log(loc);
-
 			var tableBody = document.getElementById("table-body");
 
 			var row = document.createElement("tr");
@@ -356,7 +356,8 @@ if (isset($_SESSION["user_id"])) {
 			row.appendChild(name);
 
 			var services = document.createElement("td");
-			services.innerHTML = loc.services; // TODO: Format for user
+			var servArray = loc.services.split(";");
+			services.innerHTML = servArray; // TODO: Format for user
 			row.appendChild(services);
 
 			var vacancy = document.createElement("td");
