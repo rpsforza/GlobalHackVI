@@ -130,7 +130,16 @@ if (isset($_SESSION["user_id"])) {
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
-
+			<?php
+				if isset($_GET["coc"]) {
+					$v = ["Name", "Address", "City", "State", "Phone", "Services", "Capacity", "Current Occupancy", "Special Conditions"];
+					echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
+					for ($vi=0; $vi < ; $vi++) { 
+					 	echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$v[$vi]."</td><td>".VALUE."</td></tr>";
+					}
+					echo "</tbody></table>";
+				}
+			?>
 			</div>
 		</main>
 	</div>
