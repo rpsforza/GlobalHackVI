@@ -98,8 +98,23 @@
 				$data[] = $matching_records;
 			}
 
+			$rgb = 
+			switch ($option) {
+				case "intake": 
+			}
+
+			$rgb = "rgba(30, 30, 30, 0.4)";
+			if ($option === "intake" || $option === "output" || $option === "vacancy") {
+				$rgb = "rgba(150, 30, 30, 0.4";
+			} else if ($option === "all" || $option === "completed" || $option === "initiated") {
+				$rgb = "rgba(30, 150, 30, 0.4";
+			} else {
+				$rgb = "rgba(30, 30, 150, 0.4";
+			}
+
 			$result["datasets"][] = (object) array(
 				'label' => $option,
+				'backgroundColor' => $rgb,
 				'data' => $data
 			);
 		}
