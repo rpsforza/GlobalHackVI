@@ -4,10 +4,10 @@
 require '../coc-helper.php';
 
 if (isset($_SESSION["user_id"])) {
-	if(!isset($_GET)) {
+	if (!isset($_GET)) {
 		$type = getUserType($_SESSION["user_id"]);
 		$idd = $_SESSION["user_id"];
-		header("Location: ../profile/?".$type."=".$idd);
+		header("Location: ../profile/?" . $type . "=" . $idd);
 	}
 } else {
 	header('Location: ../login');
@@ -57,7 +57,7 @@ if (isset($_SESSION["user_id"])) {
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="../css/colors.css">
 	<link rel="stylesheet" href="../css/styles.css">
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 <body>
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -166,23 +166,26 @@ if (isset($_SESSION["user_id"])) {
 							"Special Conditions" => false // TODO: Implement using db data
 						];
 
-						echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
+						echo "<div></div><table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
 						foreach ($v as $col => $value) {
 							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\"><b>" . $col . "</b></td><td>" . $value . "</td></tr>";
 						}
-						echo "</tbody></table>";
+						echo "</tbody></table></div>";
 
-						// TODO: Reserve if you're an auth-ed client
+						echo '<div style="margin-left: 0.66%;">';
+						// Reserve if you're an auth-ed client
 						if (getUserType($_SESSION["user_id"]) == "client") {
 							$isReserved = in_array($_SESSION["user_id"], explode(';', $coc['active_clients']));
 
 							if (!$isReserved) {
 								// TODO: on click --> reserve
-								echo '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"> Reserve </button>';
+								echo '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" onclick="reserve(\'coc\')"> Reserve </button>';
 							} else {
 								// TODO: Option to un-reserve
+								echo '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" onclick="cancel_reservation(\'coc\')"> Cancel Reservation </button>';
 							}
 						}
+						echo '</div>';
 					}
 				} else if (isset($_GET["client"]) && (getUserType($_SESSION["user_id"]) == "coc" or getUserType($_SESSION["user_id"]) == "host")) {
 					$client = getClient(intval($_GET["client"]));
@@ -235,5 +238,45 @@ if (isset($_SESSION["user_id"])) {
 		</main>
 	</div>
 	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+	<script>
+		function reserve(type) {
+			var userID = "<?php echo $_SESSION['user_id']; ?>";
+			var cocID = "<?php echo $_GET["coc"]; ?>";
+
+			$.ajax({
+				type: "POST",
+				url: "../reserve.php",
+				data: {
+					userID: userID,
+					cocID: cocID,
+					type: type,
+					cancel: 'false'
+				},
+				success: function (result) {
+					console.log(result);
+				}
+			});
+		}
+
+		function cancel_reservation(type) {
+			var userID = "<?php echo $_SESSION['user_id']; ?>";
+			var cocID = "<?php echo $_GET["coc"]; ?>";
+
+			$.ajax({
+				type: "POST",
+				url: "../reserve.php",
+				data: {
+					userID: userID,
+					cocID: cocID,
+					type: type,
+					cancel: 'true'
+				},
+				success: function (result) {
+					console.log(JSON.parse(result));
+				}
+			});
+		}
+	</script>
 </body>
 </html>
