@@ -4,10 +4,18 @@
 require '../db_manager.php';
 
 if (isset($_SESSION["user_id"])) {
+	if (getUserType($_SESSION["user_id"]) == "coc" or getUserType($_SESSION["user_id"]) == "host") {
 
+	} else {
+		header('Location: ../login');
+	}
 } else {
 	header('Location: ../login');
 }
+
+if (isset($_GET["query"])) {
+		$x = search("client", $_GET["query"]);
+	}
 
 ?>
 <html lang="en">
@@ -53,7 +61,9 @@ if (isset($_SESSION["user_id"])) {
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="../css/colors.css">
 	<link rel="stylesheet" href="../css/styles.css">
-
+	<style type="text/css">
+		#srk {width: 90%;}
+	</style>
 </head>
 <body>
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -146,6 +156,26 @@ if (isset($_SESSION["user_id"])) {
 				}
 
 			?>
+				<div id="srk" class="mdh-expandable-search">
+			        <i class="material-icons">search</i>
+			        <form action="./" method="GET">
+			          <input type="text" placeholder="Search" value="" name="query" size="1">
+			        </form>
+			    </div>
+
+			      <?php 
+			      	if (isset($_GET) && isset($x)) {
+			      		if (sizeof($x) > 0) {
+			      			echo "<table id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th class=\"mdl-data-table__cell--non-numeric\">First Name</th><th>Middle Name</th><th>Last Name</th></tr></thead><tbody>";
+				      		for ($ix=0; $ix < sizeof($x); $ix++) { 
+					      		echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$x[$ix]["First_Name"]."</td><td>".$x[$ix]["Middle_Name"]."</td><td>".$x[$ix]["Last_Name"]."</td></tr>";
+				      		}
+				      		echo "</tbody></table>";
+			      		} else {
+			      			echo "<h5 style=\"width: 100%; text-align: center; color: red;\"> No Results Found </h5>";
+			      		}
+			      	}
+			      ?>
 
 			</div>
 		</main>
