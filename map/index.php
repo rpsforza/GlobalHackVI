@@ -183,10 +183,24 @@ if (isset($_SESSION["user_id"])) {
 				zoom: 8
 			});
 
+			var markMe = new google.maps.Marker({
+				position: new google.maps.LatLng(lat, lon),
+				map: map,
+				animation: google.maps.Animation.BOUNCE,
+				title: "Your Location"
+			});
+
+			markMe.addListener('click', function () {
+				markMe.setAnimation(null);
+			});
+
 			locs.forEach(function (loc) {
+				console.log(loc);
 				var marker = new google.maps.Marker({
-					position: new google.maps.LatLng(lat, lon),
-					map: map
+					position: new google.maps.LatLng(loc.latitude, loc.longitude),
+					map: map,
+					animation: google.maps.Animation.DROP,
+					title: loc.name
 				});
 			});
 		}
