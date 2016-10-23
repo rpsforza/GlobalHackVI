@@ -98,18 +98,17 @@
 				$data[] = $matching_records;
 			}
 
-			$rgb = 
+			$rgb = "";
 			switch ($option) {
-				case "intake": 
-			}
-
-			$rgb = "rgba(30, 30, 30, 0.4)";
-			if ($option === "intake" || $option === "output" || $option === "vacancy") {
-				$rgb = "rgba(150, 30, 30, 0.4";
-			} else if ($option === "all" || $option === "completed" || $option === "initiated") {
-				$rgb = "rgba(30, 150, 30, 0.4";
-			} else {
-				$rgb = "rgba(30, 30, 150, 0.4";
+				case "intake": $rgb = "rgba(100, 0, 0, 0.4)"; break;
+				case "output": $rgb = "rgba(175, 15, 15, 0.4)"; break;
+				case "vacancy": $rgb = "rgba(250, 30, 30, 0.4)"; break;
+				case "all": $rgb = "rgba(0, 100, 0, 0.4)"; break;
+				case "completed": $rgb = "rgba(15, 175, 15, 0.4)"; break;
+				case "initiated": $rgb = "rgba(30, 150, 30, 0.4)"; break;
+				case "reservation": $rgb = "rgba(0, 0, 50, 0.4)"; break;
+				case "missed_reservation": $rgb = "rgba(15, 15, 100, 0.4)"; break; 
+				default: $rgb = "rgba(30, 30, 150, .4";
 			}
 
 			$result["datasets"][] = (object) array(
