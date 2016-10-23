@@ -149,20 +149,17 @@ require '../search.php';
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
-			      <div id="srk" class="mdh-expandable-search">
-			        <i class="material-icons">search</i>
-			        <form action="./" method="GET">
-			          <input type="text" placeholder="Search" value="" name="query" size="1">
-			        </form>
-			      </div>
-
 			      <?php 
+			      if (getUserType($_SESSION["user_id"]) == "coc" or getUserType($_SESSION["user_id"]) == "host") {
+				      echo "<div id=\"srk\" class=\"mdh-expandable-search\"><i class=\"material-icons\">search</i><form action=\"./\" method=\"GET\"><input type=\"text\" placeholder=\"Search\" value=\"\" name=\"query\" size=\"1\"></form></div>";
+			      }
+
 			      	if (isset($_GET) && isset($x)) {
 			      		if (sizeof($x) > 0) {
 			      			echo "<table id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th class=\"mdl-data-table__cell--non-numeric\">First Name</th><th>Middle Name</th><th>Last Name</th></tr></thead><tbody>";
 				      		for ($ix=0; $ix < sizeof($x); $ix++) { 
 					      		echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$x[$ix]["First_Name"]."</td><td>".$x[$ix]["Middle_Name"]."</td><td>".$x[$ix]["Last_Name"]."</td></tr>";
-				      		}
+				      		}ss
 				      		echo "</tbody></table>";
 			      		} else {
 			      			echo "<h5 style=\"width: 100%; text-align: center; color: red;\"> No Results Found </h5>";
