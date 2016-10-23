@@ -2,7 +2,7 @@
 
 	if (isset($_POST)) {
 
-		require("db_manager.php");
+		require("../db_manager.php");
 		$mysqli = getDB();
 
 		/*** SET VALUES ***/
@@ -17,9 +17,15 @@
 		$max_date = $_POST["max_date"];
 		// number of increments on the x-axis
 		$increments = $_POST["increments"];
-		// $tables is an array containing the values "intake", "vacancy", and / or "output"
+		// $tables is an array containing the values "completed", "initiated", "all"
 		// it stores the options for which graph(s) you want to see - one, two, or all three?
-		$tables = $_POST["tables"];
+		$options = $_POST["options"];
+
+		$service_type = $_POST["service_type"];
+		$service_clause = "";
+		if ($service_type != "all") {
+			$service_clause = " AND service_id=$service_type";
+		}
 
 		/*** MAIN FUNCTION ***/
 
@@ -46,7 +52,7 @@
 		}
 
 		// iterates through the tables, applying the same procedure to table "vacancy" / "output" / "intake"
-		foreach ($tables as $table) {
+		foreach ($options as $option) {
 
 			// the y-axis data corresponding to this table
 			$data = [];
@@ -65,12 +71,26 @@
 					// searches for matching records
 					$time_stamp = strtotime("-$j day");
 					$date = date('m/d/y', $time_stamp);
-					$table_query = $table . "_records";
-					$intake_data = $mysqli->query("SELECT * FROM $table_query WHERE date='$date'")->fetch_all();
+
+					$count_data = false;
+					if ($option === "intake" || $option === "output" || $option === "vacancy") {
+						$table = $option . "_records";
+						$count_data = $mysqli->query("SELECT * FROM $table WHERE date='$date'")->fetch_all();
+					} else {
+						$clause = "";
+						if ($option === "completed") {
+							$clause = " AND completed=1";
+						} else if ($option === "initiated") {
+							$clause = " AND completed=0";
+						}
+						$query = "SELECT * FROM provided_services WHERE date='$date'" . $clause . $service_clause . ";";
+
+						$count_data = $mysqli->query($query)->fetch_all();
+					}
 
 					// if records are found, it adds them to matching_records
-					if ($intake_data) {
-						$matching_records += count($intake_data);
+					if ($count_data) {
+						$matching_records += count($count_data);
 					}
 				}
 
@@ -79,7 +99,7 @@
 			}
 
 			$result["datasets"][] = (object) array(
-				'label' => $table,
+				'label' => $option,
 				'data' => $data
 			);
 		}
