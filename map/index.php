@@ -159,13 +159,14 @@ if (isset($_SESSION["user_id"])) {
 		}
 
 		function onGeoSuccess(pos) {
-			lat = pos.coords.latitude;
-			lon = pos.coords.longitude;
+			var override = true;
+			lat = override ? 38.6227953 : pos.coords.latitude;
+			lon = override ? -90.2530406 : pos.coords.longitude;
 
 			$.ajax({
 				type: "POST",
 				url: "../shelter_lookup.php",
-				data: pos.coords,
+				data: override ? {latitude: lat, longitude: lon} : pos.coords,
 				success: function (result) {
 					locs = JSON.parse(result);
 
