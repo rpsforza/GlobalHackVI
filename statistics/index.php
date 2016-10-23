@@ -98,7 +98,7 @@ if (isset($_SESSION["user_id"])) {
 			var sliderRange = $("#slider-range");
 			var amt = $("#amount");
 
-			var min_date = 60;
+			var min_date = -60;
 			var max_date = 0;
 
 			getOptions = function() {
@@ -145,24 +145,24 @@ if (isset($_SESSION["user_id"])) {
 
 			sliderRange.slider({
 				range: true,
-				min: 0,
-				max: 60,
-				values: [0, 60],
+				min: -60,
+				max: 0,
+				values: [-50, 0],
 				slide: function (event, ui) {
-					var min = moment().subtract(ui.values[0], 'days').local().format("MM/DD/YYYY");
-					var max = moment().subtract(ui.values[1], 'days').local().format("MM/DD/YYYY");
-					amt.val(max + " - " + min);
+					var min = moment().add(ui.values[0], 'days').local().format("MM/DD/YYYY");
+					var max = moment().add(ui.values[1], 'days').local().format("MM/DD/YYYY");
+					amt.val(min + " - " + max);
 				},
 				stop: function(event, ui) {
-					min_date = ui.values[1];
-					max_date = ui.values[0];
+					min_date = -ui.values[0];
+					max_date = -ui.values[1];
 					generateGraph();
 				}
 			});
 
-			var min = moment().subtract(sliderRange.slider("values", 0), 'days').local().format("MM/DD/YYYY");
-			var max = moment().subtract(sliderRange.slider("values", 1), 'days').local().format("MM/DD/YYYY");
-			amt.val(max + " - " + min);
+			var min = moment().add(sliderRange.slider("values", 0), 'days').local().format("MM/DD/YYYY");
+			var max = moment().add(sliderRange.slider("values", 1), 'days').local().format("MM/DD/YYYY");
+			amt.val(min + " - " + max);
 
 			// FORM
 
