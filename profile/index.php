@@ -169,6 +169,16 @@ if (isset($_SESSION["user_id"])) {
 						echo "</tbody></table>";
 
 						// TODO: Reserve if you're an auth-ed client
+						if (getUserType($_SESSION["user_id"]) == "client") {
+							$isReserved = in_array($_SESSION["user_id"], explode(';', $coc['active_clients']));
+
+							if (!$isReserved) {
+								// TODO: on click --> reserve
+								echo '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"> Reserve </button>';
+							} else {
+								// TODO: Option to un-reserve
+							}
+						}
 					}
 				} else if (isset($_GET["client"]) && (getUserType($_SESSION["user_id"]) == "coc" or getUserType($_SESSION["user_id"]) == "host")) {
 					$client = getClient(intval($_GET["client"]));
