@@ -402,7 +402,10 @@ if (isset($_SESSION["user_id"])) {
 
 			var name = document.createElement("td");
 			name.className += "mdl-data-table__cell--non-numeric";
-			name.innerHTML = loc.name;
+			var link = document.createElement("a");
+			link.setAttribute(href, ("../profile/?coc=" + loc.id)
+			link.innerHTML = loc.name;
+			name.innerHTML = link;
 			row.appendChild(name);
 
 			var services = document.createElement("td");
