@@ -177,6 +177,17 @@ if (isset($_SESSION["user_id"])) {
 			});
 		}
 
+		function pinSymbol(color) {
+			return {
+				path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+				fillColor: color,
+				fillOpacity: 1,
+				strokeColor: '#000',
+				strokeWeight: 2,
+				scale: 1
+			};
+		}
+
 		function initMap() {
 			map = new google.maps.Map(document.getElementById('map'), {
 				center: {lat: lat, lng: lon},
@@ -187,20 +198,23 @@ if (isset($_SESSION["user_id"])) {
 				position: new google.maps.LatLng(lat, lon),
 				map: map,
 				animation: google.maps.Animation.BOUNCE,
-				title: "Your Location"
+				title: "Your Location",
+				icon: pinSymbol("#F79622")
 			});
 
 			markMe.addListener('click', function () {
 				markMe.setAnimation(null);
 			});
 
+			var shelterSymbol = pinSymbol("#39B54A");
+
 			locs.forEach(function (loc) {
 				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(loc.latitude, loc.longitude),
 					map: map,
-					// animation: google.maps.Animation.DROP,
+					// animation: google.maps.Animation.DR,
 					title: loc.name,
-					icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+					icon: shelterSymbol
 				});
 			});
 		}
