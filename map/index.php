@@ -61,10 +61,12 @@ if (isset($_SESSION["user_id"])) {
 			width: 100%;
 			margin-bottom: 5px;
 		}
+
 		#grid {
 			min-height: 10px;
 			min-width: 10px;
 		}
+
 		#tabel {
 			width: 100%;
 		}
@@ -147,37 +149,37 @@ if (isset($_SESSION["user_id"])) {
 			<div id="grid" class="mdl-grid">
 				<div id="map"></div>
 				<table id="tabel" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
-				  <thead>
-				    <tr>
-				      <th class="mdl-data-table__cell--non-numeric">Name</th>
-				      <th>Services</th>
-				      <th>Occupancy</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				    <tr>
-				      <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
-				      <td>25</td>
-				      <td>$2.90</td>
-				    </tr>
-				    <tr>
-				      <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
-				      <td>50</td>
-				      <td>$1.25</td>
-				    </tr>
-				    <tr>
-				      <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
-				      <td>10</td>
-				      <td>$2.35</td>
-				    </tr>
-				  </tbody>
+					<thead>
+					<tr>
+						<th class="mdl-data-table__cell--non-numeric">Name</th>
+						<th>Services</th>
+						<th>Occupancy</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
+						<td>25</td>
+						<td>$2.90</td>
+					</tr>
+					<tr>
+						<td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
+						<td>50</td>
+						<td>$1.25</td>
+					</tr>
+					<tr>
+						<td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
+						<td>10</td>
+						<td>$2.35</td>
+					</tr>
+					</tbody>
 				</table>
 			</div>
 		</main>
 	</div>
 	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 	<script>
-		var lat, lon, locs, map;
+		var lat, lon, locs, map, markers;
 
 		function getGeolocation() {
 			if (navigator.geolocation) {
@@ -305,19 +307,11 @@ if (isset($_SESSION["user_id"])) {
 				map: null,
 				animation: google.maps.Animation.DROP,
 				title: "Your Location",
+				draggable: true,
 				icon: pinSymbol("#39B54A")
 			});
 
-			var shelterSymbol = pinSymbol("#F79622");
-
-			locs.forEach(function (loc) {
-				var marker = new google.maps.Marker({
-					position: new google.maps.LatLng(loc.latitude, loc.longitude),
-					map: map,
-					title: loc.name,
-					icon: shelterSymbol
-				});
-			});
+			addMarkersFromLocs();
 
 			setTimeout(function () {
 				markMe.setMap(map);
@@ -327,8 +321,37 @@ if (isset($_SESSION["user_id"])) {
 					markMe.addListener('click', function () {
 						markMe.setAnimation(null);
 					});
+
+					markMe.addListener('dragend', function (event) {
+						$.ajax({
+							type: "POST",
+							url: "../shelter_lookup.php",
+							data: {latitude: event.latLng.lat(), longitude: event.latLng.lng()},
+							success: function (result) {
+								markers.forEach(function (marker) {
+									marker.setMap(null);
+								});
+								markers = [];
+								locs = JSON.parse(result);
+								addMarkersFromLocs();
+							}
+						});
+					});
 				}, 500);
 			}, 2750);
+		}
+
+		function addMarkersFromLocs() {
+			var shelterSymbol = pinSymbol("#F79622");
+
+			markers = locs.map(function (loc) {
+				return new google.maps.Marker({
+					position: new google.maps.LatLng(loc.latitude, loc.longitude),
+					map: map,
+					title: loc.name,
+					icon: shelterSymbol
+				});
+			});
 		}
 
 		getGeolocation();

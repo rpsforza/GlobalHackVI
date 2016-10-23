@@ -6,7 +6,7 @@ if (isset($_POST)) {
 	if (isset($_POST['latitude']) && isset($_POST['longitude'])) {
 		$lat = $_POST['latitude'];
 		$lon = $_POST['longitude'];
-		echo json_encode(getCloseLocations($lat, $lon, 250));
+		echo json_encode(getCloseLocations($lat, $lon, 150));
 	}
 	return;
 }
