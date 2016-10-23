@@ -32,7 +32,7 @@ function getCloseLocations($lat, $lon, $maxDist)
 
 	usort($locs, function ($loc1, $loc2) {
 		global $lat, $lon;
-		return distance($lat, $lon, $loc2["latitude"], $loc2["longitude"]) - distance($lat, $lon, $loc1["latitude"], $loc1["longitude"]);
+		return distance($lat, $lon, $loc1["latitude"], $loc1["longitude"]) - distance($lat, $lon, $loc2["latitude"], $loc2["longitude"]);
 	});
 
 	return $locs;

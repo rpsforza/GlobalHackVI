@@ -153,25 +153,10 @@ if (isset($_SESSION["user_id"])) {
 					<tr>
 						<th class="mdl-data-table__cell--non-numeric">Name</th>
 						<th>Services</th>
-						<th>Occupancy</th>
+						<th>Vacancy</th>
 					</tr>
 					</thead>
-					<tbody>
-					<tr>
-						<td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
-						<td>25</td>
-						<td>$2.90</td>
-					</tr>
-					<tr>
-						<td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
-						<td>50</td>
-						<td>$1.25</td>
-					</tr>
-					<tr>
-						<td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
-						<td>10</td>
-						<td>$2.35</td>
-					</tr>
+					<tbody id="table-body">
 					</tbody>
 				</table>
 			</div>
@@ -345,6 +330,8 @@ if (isset($_SESSION["user_id"])) {
 			var shelterSymbol = pinSymbol("#F79622");
 
 			markers = locs.map(function (loc) {
+				addLocToTable(loc);
+
 				return new google.maps.Marker({
 					position: new google.maps.LatLng(loc.latitude, loc.longitude),
 					map: map,
@@ -354,6 +341,29 @@ if (isset($_SESSION["user_id"])) {
 			});
 
 			document.getElementById("layout-title").innerHTML = "Map (" + markers.length + ")";
+		}
+
+		function addLocToTable(loc) {
+			console.log(loc);
+
+			var tableBody = document.getElementById("table-body");
+
+			var row = document.createElement("tr");
+
+			var name = document.createElement("td");
+			name.className += "mdl-data-table__cell--non-numeric";
+			name.innerHTML = loc.name;
+			row.appendChild(name);
+
+			var services = document.createElement("td");
+			services.innerHTML = loc.services; // TODO: Format for user
+			row.appendChild(services);
+
+			var vacancy = document.createElement("td");
+			vacancy.innerHTML = loc.vacancy;
+			row.appendChild(vacancy);
+
+			tableBody.appendChild(row);
 		}
 
 		getGeolocation();
