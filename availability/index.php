@@ -86,8 +86,8 @@ if (isset($_GET["query"])) {
 			<header class="demo-drawer-header">
 				<img id="logoname" src="../img/name2.png"/>
 				<div class="demo-avatar-dropdown">
-					<span><?php if (isset($_SESSION["user"])) {
-							$name = getUsersName($_SESSION["user"]);
+					<span><?php if (isset($_SESSION["user_id"])) {
+							$name = getUsersName($_SESSION["user_id"]);
 						} else {
 							$name = "User";
 						}
