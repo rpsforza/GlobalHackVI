@@ -133,7 +133,7 @@ if (isset($_SESSION["user_id"])) {
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
 			<?php
-				if(isset($_SESSION["user_id"]) {
+				if(isset($_SESSION["user_id"])) {
 					if (getUserType($_SESSION["user_id"]) == "coc" or getUserType($_SESSION["user_id"]) == "host") {
 						echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
 						// TODO Get All Users
