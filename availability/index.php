@@ -132,6 +132,20 @@ if (isset($_SESSION["user_id"])) {
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
+			<?php
+				if(isset($_SESSION["user_id"]) {
+					if (getUserType($_SESSION["user_id"]) == "coc" or getUserType($_SESSION["user_id"]) == "host") {
+						echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
+						// TODO Get All Users
+						$users = [];
+						foreach ($users as $person) {
+							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$person[NAME]."</td><td><a href=".("../profile/?client=".$person[ID])."> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=".("../remove/?client=".$person[ID])."> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td></tr>";
+						}
+						echo "</tbody></table>";
+					}
+				}
+
+			?>
 
 			</div>
 		</main>
