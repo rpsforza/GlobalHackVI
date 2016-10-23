@@ -70,6 +70,19 @@ if (isset($_SESSION["user_id"])) {
 		#tabel {
 			width: 100%;
 		}
+
+		#tableWrap {
+			width: 100%;
+			height: auto;
+			max-width: 100vw;
+			overflow: scroll;
+		}
+		th {
+			text-align: center !important;
+		}
+		.mdl-chip--contact {
+			display: -webkit-box;
+		}
 	</style>
 </head>
 <body>
@@ -148,17 +161,19 @@ if (isset($_SESSION["user_id"])) {
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div id="grid" class="mdl-grid">
 				<div id="map"></div>
-				<table id="tabel" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
-					<thead>
-					<tr>
-						<th class="mdl-data-table__cell--non-numeric">Name</th>
-						<th>Services</th>
-						<th>Vacancy</th>
-					</tr>
-					</thead>
-					<tbody id="table-body">
-					</tbody>
-				</table>
+				<div id="tableWrap">
+					<table id="tabel" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+						<thead>
+						<tr>
+							<th class="mdl-data-table__cell--non-numeric">Name</th>
+							<th>Services</th>
+							<th>Vacancy</th>
+						</tr>
+						</thead>
+						<tbody id="table-body">
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</main>
 	</div>
