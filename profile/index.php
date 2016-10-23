@@ -131,6 +131,24 @@ if (isset($_SESSION["user_id"])) {
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
 				<?php
+				function formatServices($servs)
+				{
+					global $servMap;
+					$result = "";
+
+					foreach ($servs as $servID) {
+						$serv = $servMap[strval($servID)];
+						$result .= formatService($serv[0], $serv[1]);
+					}
+
+					return $result;
+				}
+
+				function formatService($servName, $color)
+				{
+					return '<span class="mdl-chip mdl-chip--contact" style="display: -webkit-box;"><span class="mdl-chip__contact mdl-color--' . $color . ' mdl-color-text--white">' . substr($servName, 0, 1) . '</span><span class="mdl-chip__text">' . $servName . '</span></span>';
+				}
+
 				if (isset($_GET["coc"])) {
 					$coc = getCOC(intval($_GET["coc"]));
 					if ($coc) {
@@ -138,7 +156,7 @@ if (isset($_SESSION["user_id"])) {
 							"Name" => $coc['name'],
 							"Location" => $coc['address'] . ', ' . $coc['city'] . ', ' . $coc['state'] . ' ' . $coc['zipcode'],
 							"Phone" => $coc['phone'],
-							"Services" => $coc['services'], // TODO
+							"Services" => formatServices(explode(';', $coc['services'])), // TODO
 							"Vacancy" => $coc['vacancy'],
 							"Capacity" => $coc['capacity'],
 							"Special Conditions" => false // TODO
@@ -146,7 +164,7 @@ if (isset($_SESSION["user_id"])) {
 
 						echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
 						foreach ($v as $col => $value) {
-							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $col . "</td><td>" . $value . "</td></tr>";
+							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\"><b>" . $col . "</b></td><td>" . $value . "</td></tr>";
 						}
 						echo "</tbody></table>";
 					}

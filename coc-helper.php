@@ -2,6 +2,17 @@
 
 require("db_manager.php");
 
+$servMap = [
+	"-1" => ["Other", "purple-A700"],
+	"1" => ["Shelter", "indigo-A700"],
+	"2" => ["Health", "green"],
+	"3" => ["Legal", "lime-900"],
+	"4" => ["Job", "blue-grey-800"],
+	"5" => ["Food", "amber-900"],
+	"6" => ["Hygiene", "pink-A400"],
+	"7" => ["Transportation", "teal-A700"]
+];
+
 function getCOC($id)
 {
 	$mysqli = getDB();
