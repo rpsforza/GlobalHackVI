@@ -1,7 +1,7 @@
 <!doctype html>
 <?php
 
-require '../db_manager.php';
+require '../coc-helper.php';
 
 if (isset($_SESSION["user_id"])) {
 
@@ -132,12 +132,24 @@ if (isset($_SESSION["user_id"])) {
 			<div class="mdl-grid">
 				<?php
 				if (isset($_GET["coc"])) {
-					$v = ["Name", "Address", "City", "State", "Phone", "Services", "Capacity", "Current Occupancy", "Special Conditions"];
-					echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
-					for ($vi = 0; $vi < count($v); $vi++) {
-						echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $v[$vi] . "</td><td>" . VALUE . "</td></tr>";
+					$coc = getCOC(intval($_GET["coc"]));
+					if ($coc) {
+						$v = [
+							"Name" => $coc['name'],
+							"Location" => $coc['address'] . ', ' . $coc['city'] . ', ' . $coc['state'] . ' ' . $coc['zipcode'],
+							"Phone" => $coc['phone'],
+							"Services" => $coc['services'], // TODO
+							"Vacancy" => $coc['vacancy'],
+							"Capacity" => $coc['capacity'],
+							"Special Conditions" => false // TODO
+						];
+
+						echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
+						foreach ($v as $col => $value) {
+							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $col . "</td><td>" . $value . "</td></tr>";
+						}
+						echo "</tbody></table>";
 					}
-					echo "</tbody></table>";
 				} else if (isset($_GET["client"]) && (getUserType($_SESSION["user_id"]) == "coc" or getUserType($_SESSION["user_id"]) == "host")) {
 					$v = ["Name", "Address", "City", "State", "Phone", "Services", "Capacity", "Current Occupancy", "Special Conditions"];
 					echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";

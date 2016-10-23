@@ -2,6 +2,16 @@
 
 require("db_manager.php");
 
+function getCOC($id)
+{
+	$mysqli = getDB();
+	$statement = $mysqli->prepare("SELECT * FROM coc WHERE id=?");
+	$statement->bind_param('i', $id);
+	$statement->execute();
+	$result = $statement->get_result();
+	return $result ? $result->fetch_assoc() : false;
+}
+
 // $identifier is either "id" or "name"
 function getServicesListByIdentifier($identifier)
 {
@@ -26,7 +36,8 @@ function getServicesProvided($client_id)
 	return $services_provided;
 }
 
-function newServiceReport($client_id, $service_id, $host_or_coc, $provider_id, $completed, $comments) {
+function newServiceReport($client_id, $service_id, $host_or_coc, $provider_id, $completed, $comments)
+{
 	$mysqli = getDB();
 
 	$date = date("m/d/y");
@@ -38,7 +49,8 @@ function newServiceReport($client_id, $service_id, $host_or_coc, $provider_id, $
 
 // report a client moving out of temporary shelter and into their own housing / a permanent housing service
 // $rehousing_or_permanent_housing is either "rehousing" or "permanent_housing"
-function clientMoveOut($client_id, $rehousing_or_permanent_housing, $new_address, $coc_or_host, $provider_id) {
+function clientMoveOut($client_id, $rehousing_or_permanent_housing, $new_address, $coc_or_host, $provider_id)
+{
 	$mysqli = getDB();
 
 	$date = date("m/d/y");
@@ -60,7 +72,8 @@ function clientMoveOut($client_id, $rehousing_or_permanent_housing, $new_address
 	$mysqli->query("UPDATE client SET moved_on=1 WHERE id=$client_id");
 }
 
-function clientMoveIn($client_id, $coc_or_host, $provider_id) {
+function clientMoveIn($client_id, $coc_or_host, $provider_id)
+{
 	$mysqli = getDB();
 
 	$date = date("m/d/y");
@@ -82,7 +95,9 @@ function clientMoveIn($client_id, $coc_or_host, $provider_id) {
 	$mysqli->query("UPDATE client SET moved_on=0 WHERE id=$client_id");
 }
 
-function newReservation($client_id, $coc_or_host, $provider_id) {
+function newReservation($client_id, $coc_or_host, $provider_id)
+{
+	$mysqli = getDB();
 	$statement = $mysqli->prepare("SELECT * FROM reservation_records WHERE client_id=? AND coc_or_host=? AND provider_id=?");
 	$statement->bind_param("isi", $client_id, $coc_or_host, $provider_id);
 	$statement->execute();
@@ -96,7 +111,9 @@ function newReservation($client_id, $coc_or_host, $provider_id) {
 	}
 }
 
-function completeReservation($client_id, $coc_or_host, $provider_id) {
+function completeReservation($client_id, $coc_or_host, $provider_id)
+{
+	$mysqli = getDB();
 	$statement = $mysqli->prepare("UPDATE reservation_records SET showed_up=1 WHERE client_id=? AND coc_or_host=? AND provider_id=?");
 	$statement->bind_param("isi", $client_id, $coc_or_host, $provider_id);
 	$statement->execute();
