@@ -57,7 +57,15 @@ if (isset($_SESSION["user_id"])) {
 
 	<style>
 		#map {
-			height: 100%;
+			height: 66vh;
+			width: 100%;
+			margin-bottom: 5px;
+		}
+		#grid {
+			min-height: 10px;
+			min-width: 10px;
+		}
+		#tabel {
 			width: 100%;
 		}
 	</style>
@@ -135,8 +143,37 @@ if (isset($_SESSION["user_id"])) {
 																  role="presentation">help_outline</i><span>FAQ</span></a>
 			</nav>
 		</div>
-		<div id="map"></div>
-		<div id="table"></div>
+		<main class="mdl-layout__content mdl-color--grey-100">
+			<div id="grid" class="mdl-grid">
+				<div id="map"></div>
+				<table id="tabel" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+				  <thead>
+				    <tr>
+				      <th class="mdl-data-table__cell--non-numeric">Name</th>
+				      <th>Services</th>
+				      <th>Occupancy</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr>
+				      <td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
+				      <td>25</td>
+				      <td>$2.90</td>
+				    </tr>
+				    <tr>
+				      <td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
+				      <td>50</td>
+				      <td>$1.25</td>
+				    </tr>
+				    <tr>
+				      <td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
+				      <td>10</td>
+				      <td>$2.35</td>
+				    </tr>
+				  </tbody>
+				</table>
+			</div>
+		</main>
 	</div>
 	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 	<script>
