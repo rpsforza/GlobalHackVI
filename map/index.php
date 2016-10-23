@@ -58,6 +58,7 @@ if (isset($_SESSION["user_id"])) {
 	<style>
 		#map {
 			height: 100%;
+			width: 100%;
 		}
 	</style>
 </head>
@@ -134,12 +135,8 @@ if (isset($_SESSION["user_id"])) {
 																  role="presentation">help_outline</i><span>FAQ</span></a>
 			</nav>
 		</div>
-		<main class="mdl-layout__content mdl-color--grey-100">
-			<div class="mdl-grid">
-				<div id="map"></div>
-				<div id="table"></div>
-			</div>
-		</main>
+		<div id="map"></div>
+		<div id="table"></div>
 	</div>
 	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 	<script>
