@@ -113,10 +113,11 @@ require '../search.php';
 				$userType = getUserType($_SESSION["user_id"]);
 			} else {
 				$userType = "clientNoAuth";
+				header('Location: ../services/');
 			}
 			switch ($userType) { // [alt text, mdl font icon, current page]
 				case "clientNoAuth":
-					$a = [["dash", "dashboard", true], ["services", "domain", false], ["housing", "home", false]];
+					$a = [["services", "domain", false], ["housing", "home", false]];
 					break;
 				case "client":
 					$a = [["dash", "dashboard", true], ["profile", "account_box", false], ["services", "domain", false], ["housing", "home", false]];
