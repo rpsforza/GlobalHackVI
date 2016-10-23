@@ -54,6 +54,12 @@ if (isset($_SESSION["user_id"])) {
 	<link rel="stylesheet" href="../css/colors.css">
 	<link rel="stylesheet" href="../css/styles.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+	<style>
+		#map {
+			height: 100%;
+		}
+	</style>
 </head>
 <body>
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -130,47 +136,65 @@ if (isset($_SESSION["user_id"])) {
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
-				<script>
-					function getGeolocation() {
-						if (navigator.geolocation) {
-							navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoFail);
-						} else {
-							return onGeoFail();
-						}
-					}
-
-					function onGeoFail() {
-						// Resort to location by IP
-						$.getJSON('http://ipinfo.io', function (data) {
-							var pos = data.loc.split(',').map(Number);
-							onGeoSuccess({coords: {latitude: pos[0], longitude: pos[1]}});
-						});
-					}
-
-					function onGeoSuccess(pos) {
-						var lat = pos.coords.latitude;
-						var lon = pos.coords.longitude;
-
-						$.ajax({
-							type: "POST",
-							url: "../shelter_lookup.php",
-							data: pos.coords,
-							success: function (result) {
-								var locs = JSON.parse(result);
-								// TODO: Render Map
-							}
-						});
-					}
-
-					getGeolocation();
-				</script>
-
 				<div id="map"></div>
-
 				<div id="table"></div>
 			</div>
 		</main>
 	</div>
 	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+	<script>
+		var lat, lon, locs, map;
+
+		function getGeolocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoFail);
+			} else {
+				return onGeoFail();
+			}
+		}
+
+		function onGeoFail() {
+			// Resort to location by IP
+			$.getJSON('http://ipinfo.io', function (data) {
+				var pos = data.loc.split(',').map(Number);
+				onGeoSuccess({coords: {latitude: pos[0], longitude: pos[1]}});
+			});
+		}
+
+		function onGeoSuccess(pos) {
+			lat = pos.coords.latitude;
+			lon = pos.coords.longitude;
+
+			$.ajax({
+				type: "POST",
+				url: "../shelter_lookup.php",
+				data: pos.coords,
+				success: function (result) {
+					locs = JSON.parse(result);
+
+					// Start Google Maps
+					var mapScript = document.createElement("script");
+					mapScript.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAsloKYX3PEw3qk0tmp8B5SVAEuBqg38zQ&callback=initMap";
+					document.head.appendChild(mapScript);
+				}
+			});
+		}
+
+		function initMap() {
+			map = new google.maps.Map(document.getElementById('map'), {
+				center: {lat: lat, lng: lon},
+				zoom: 8
+			});
+
+			locs.forEach(function (loc) {
+				var marker = new google.maps.Marker({
+					position: new google.maps.LatLng(lat, lon),
+					map: map
+				});
+			});
+		}
+
+		getGeolocation();
+	</script>
 </body>
 </html>
