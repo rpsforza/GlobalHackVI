@@ -14,6 +14,7 @@ if (isset($_SESSION["user_id"])) {
 }
 
 if (isset($_GET["query"])) {
+		require("../search.php");
 		$x = search("client", $_GET["query"]);
 	}
 
@@ -145,11 +146,19 @@ if (isset($_GET["query"])) {
 			<?php
 				if(isset($_SESSION["user_id"])) {
 					if (getUserType($_SESSION["user_id"]) == "coc" or getUserType($_SESSION["user_id"]) == "host") {
-						echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
-						// TODO Get All Users
-						$users = [];
+						echo "<table style='width: 500px; margin-right: auto; margin-left: auto; margin-top: 30px; margin-bottom: 50px' class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
+						$mysqli = getDB();
+				      	$user_type = $_SESSION["user_type"];
+				      	$user_type_id = $_SESSION["user_type_id"];
+				      	$services = $mysqli->query("SELECT * FROM provided_services WHERE host_or_coc='$user_type' AND provider_id=$user_type_id")->fetch_all(MYSQLI_ASSOC);
+				      	$clients = [];
+				      	for ($i = 0; $i < count($services); $i++) {
+				      		$id = $services[$i]["client_id"];
+				      		$clients[] = $mysqli->query("SELECT * FROM client WHERE id=$id")->fetch_assoc();
+				      	}
+						$users = $clients;
 						foreach ($users as $person) {
-							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$person[NAME]."</td><td><a href=".("../profile/?client=".$person[ID])."> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=".("../remove/?client=".$person[ID])."> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td></tr>";
+							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$person["First_Name"] . " " . $person["Middle_Name"] . " " . $person["Last_Name"] . " " . "</td><td><a href=".("../profile/?client=".$person["id"])."> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=".("../remove/?client=".$person["id"])."> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td></tr>";
 						}
 						echo "</tbody></table>";
 					}
@@ -164,15 +173,12 @@ if (isset($_GET["query"])) {
 			    </div>
 
 			      <?php 
-			      	$mysqli = getDB();
-			      	$user_type = $_SESSION["user_type"];
-			      	$user_type_id = $_SESSION["user_type_id"];
-			      	$x = $mysqli->query("SELECT * FROM provided_services WHERE coc_or_host=$user_type AND provider_id=$user_type_id")->fetch_assoc();
+			      	
 			      	if (isset($_GET) && isset($x)) {
-			      		if (sizeof($x) > 0) {
-			      			echo "<table id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th class=\"mdl-data-table__cell--non-numeric\">First Name</th><th>Middle Name</th><th>Last Name</th><th>User Profile</th><th>Add User</th></tr></thead><tbody>";
-				      		for ($ix=0; $ix < sizeof($x); $ix++) { 
-					      		echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$x[$ix]["First_Name"]."</td><td>".$x[$ix]["Middle_Name"]."</td><td>".$x[$ix]["Last_Name"]."</td><td><a href=".("../profile/?client=".$x["id"])."> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=".("../remove/?client=".$x["id"])."> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">add</i></a></td></tr>";
+			      		if (count($x) > 0) {
+			      			echo "<table style='width: 500px; margin-right: auto; margin-left: auto; margin-top: 50px' id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th class=\"mdl-data-table__cell--non-numeric\">First Name</th><th>Middle Name</th><th>Last Name</th><th>User Profile</th><th>Add User</th></tr></thead><tbody>";
+				      		for ($ix=0; $ix < count($x); $ix++) { 
+					      		echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$x[$ix]["First_Name"]."</td><td>".$x[$ix]["Middle_Name"]."</td><td>".$x[$ix]["Last_Name"]."</td><td><a href=".("../profile/?client=".$x[$ix]["id"])."> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=".("../remove/?client=".$x[$ix]["id"])."> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">add</i></a></td></tr>";
 				      		}
 				      		echo "</tbody></table>";
 			      		} else {
