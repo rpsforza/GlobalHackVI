@@ -89,8 +89,9 @@ function newReservation($client_id, $coc_or_host, $provider_id) {
 	if ($statement->get_result()->num_rows > 0) {
 		return;
 	} else {
-		$statement = $mysqli->prepare("INSERT INTO reservation_records (client_id, coc_or_host, provider_id) VALUES (?,?,?)");
-		$statement->bind_param("isi", $client_id, $coc_or_host, $provider_id);
+		$date = date("m/d/y");
+		$statement = $mysqli->prepare("INSERT INTO reservation_records (client_id, coc_or_host, provider_id, date) VALUES (?,?,?,?)");
+		$statement->bind_param("isis", $client_id, $coc_or_host, $provider_id, $date);
 		$statement->execute();
 	}
 }
