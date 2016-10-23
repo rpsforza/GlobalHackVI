@@ -4,7 +4,11 @@
 require '../coc-helper.php';
 
 if (isset($_SESSION["user_id"])) {
-
+	if(!isset($_GET)) {
+		$type = getUserType($_SESSION["user_id"]);
+		$idd = $_SESSION["user_id"];
+		header("Location: ../profile/?".$type."=".$idd);
+	}
 } else {
 	header('Location: ../login');
 }
