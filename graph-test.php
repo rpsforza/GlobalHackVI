@@ -1,3 +1,16 @@
+<?php
+	
+	if (isset($_GET["query"])) {
+
+		require("search.php");
+		$query = urldecode($_GET["query"]);
+		$results = search("provider", $query);
+
+
+	}
+
+?>
+
 <html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -6,6 +19,9 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	
+	<!-- moment -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
 		  integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -60,7 +76,6 @@
 						var scatterChart = new Chart(ctx, {
 							type: 'line',
 							data: JSON.parse(result),
-							borderColor: "rgba(75,192,192,1)",
 							options: {
 								responsive: false
 							}
@@ -74,7 +89,6 @@
 	        			coc_or_host: "coc",
 	        			provider_id: "1",
 	        			min_date: min_date,
-	        			borderColor: "rgba(75,192,192,1)",
 	        			max_date: max_date,
 	        			increments: "10",
 	        			options: option_params,
@@ -98,7 +112,9 @@
 				}
 			});
 
-			amt.val("$" + sliderRange.slider("values", 0) + " - $" + sliderRange.slider("values", 1));
+			var min_date = moment().subtract(sliderRange.slider("values", 0), 'days');
+			var max_date = moment().subtract(sliderRange.slider("values", 1), 'days');
+			amt.val(min_date + " " + max_date);
 
 			// FORM
 
@@ -136,10 +152,6 @@
 				service_type = $("#services option:selected").val();
 			    generateGraph();
 			});
-
-			options["output"] = true;
-			generateGraph();
-			options["output"] = false;
 		});
 	</script>
 
@@ -153,44 +165,13 @@
 		<div id="slider-range"></div>
 	</div>
 
-	<!-- <input type="checkbox" id="intake"> <label>Homeless Taken In</label>
+	<input type="checkbox" id="intake"> <label>Homeless Taken In</label>
 	<input type="checkbox" id="vacancy"> <label>Vacancies</label>
 	<input type="checkbox" id="output"> <label>Homeless Moved Out</label>
 
 	<input type="checkbox" id="initiated"> <label>Services Initiated</label>
 	<input type="checkbox" id="completed"> <label>Services Completed</label>
-	<input type="checkbox" id="all"> <label>Services Completed or Initiated</label> -->
-
-
-	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="intake">
-	  <input type="checkbox" id="intake" class="mdl-checkbox__input" checked>
-	  <span class="mdl-checkbox__label">Homeless Taken In</span>
-	</label>
-
-	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="vacancy">
-	  <input type="checkbox" id="vacancy" class="mdl-checkbox__input" checked>
-	  <span class="mdl-checkbox__label">Vacancies</span>
-	</label>
-
-	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="output">
-	  <input type="checkbox" id="output" class="mdl-checkbox__input" checked>
-	  <span class="mdl-checkbox__label">Homeless Moved Out</span>
-	</label>
-
-	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="initiated">
-	  <input type="checkbox" id="initiated" class="mdl-checkbox__input" checked>
-	  <span class="mdl-checkbox__label">Services Started, Not Completed</span>
-	</label>
-
-	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="completed">
-	  <input type="checkbox" id="completed" class="mdl-checkbox__input" checked>
-	  <span class="mdl-checkbox__label">Services Completed</span>
-	</label>
-
-	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="all">
-	  <input type="checkbox" id="all" class="mdl-checkbox__input" checked>
-	  <span class="mdl-checkbox__label">All Services</span>
-	</label>
+	<input type="checkbox" id="all"> <label>Services Completed or Initiated</label>
 
 	<select id="services">
 		<option value="all">all services</option>

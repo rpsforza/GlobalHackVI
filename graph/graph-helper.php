@@ -105,10 +105,10 @@
 				case "vacancy": $rgb = "rgba(250, 30, 30, 0.4)"; break;
 				case "all": $rgb = "rgba(0, 100, 0, 0.4)"; break;
 				case "completed": $rgb = "rgba(15, 175, 15, 0.4)"; break;
-				case "initiated": $rgb = "rgba(30, 150, 30, 0.4)"; break;
-				case "reservation": $rgb = "rgba(0, 0, 50, 0.4)"; break;
-				case "missed_reservation": $rgb = "rgba(15, 15, 100, 0.4)"; break; 
-				default: $rgb = "rgba(30, 30, 150, .4";
+				case "initiated": $rgb = "rgba(30, 250, 30, 0.4)"; break;
+				case "reservation": $rgb = "rgba(0, 0, 100, 0.4)"; break;
+				case "missed_reservation": $rgb = "rgba(15, 15, 175, 0.4)"; break; 
+				default: $rgb = "rgba(30, 30, 250, .4";
 			}
 
 			$result["datasets"][] = (object) array(
