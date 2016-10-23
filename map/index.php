@@ -195,12 +195,12 @@ if (isset($_SESSION["user_id"])) {
 			});
 
 			locs.forEach(function (loc) {
-				console.log(loc);
 				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(loc.latitude, loc.longitude),
 					map: map,
-					animation: google.maps.Animation.DROP,
-					title: loc.name
+					// animation: google.maps.Animation.DROP,
+					title: loc.name,
+					icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
 				});
 			});
 		}
