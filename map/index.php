@@ -350,31 +350,31 @@ if (isset($_SESSION["user_id"])) {
 				name: "Other",
 				bg: "purple-A700"
 			},
-			"0": {
+			"1": {
 				name: "Shelter",
 				bg: "indigo-A700"
 			},
-			"1": {
+			"2": {
 				name: "Health",
 				bg: "green"
 			},
-			"2": {
+			"3": {
 				name: "Legal",
 				bg: "lime-900"
 			},
-			"3": {
+			"4": {
 				name: "Job",
 				bg: "blue-grey-800"
 			},
-			"4": {
+			"5": {
 				name: "Food",
 				bg: "amber-900"
 			},
-			"5": {
+			"6": {
 				name: "Hygiene",
 				bg: "pink-A400"
 			},
-			"6": {
+			"7": {
 				name: "Transportation",
 				bg: "teal-A700"
 			}
