@@ -345,6 +345,17 @@ if (isset($_SESSION["user_id"])) {
 			document.getElementById("layout-title").innerHTML = "Map (" + markers.length + ")";
 		}
 
+		var servMap = {
+			"-1": "Other",
+			"0": "Shelter",
+			"1": "Health",
+			"2": "Legal",
+			"3": "Job",
+			"4": "Food",
+			"5": "Hygiene",
+			"6": "Transportation"
+		};
+
 		function addLocToTable(loc) {
 			var tableBody = document.getElementById("table-body");
 
@@ -356,8 +367,27 @@ if (isset($_SESSION["user_id"])) {
 			row.appendChild(name);
 
 			var services = document.createElement("td");
-			var servArray = loc.services.split(";");
-			services.innerHTML = servArray; // TODO: Format for user
+			loc.services.split(";").forEach(function (servNum) {
+				var servName = servMap[servNum];
+
+				if (servName == null)
+					servName = "Other";
+
+				var badge = document.createElement("span");
+				badge.className += "mdl-chip mdl-chip--contact";
+
+				var icon = document.createElement("span");
+				icon.className += "mdl-chip__contact mdl-color--teal mdl-color-text--white";
+				icon.innerHTML = servName.charAt(0);
+				badge.appendChild(icon);
+
+				var text = document.createElement("span");
+				text.className += "mdl-chip__text";
+				text.innerHTML += servName;
+				badge.appendChild(text);
+
+				services.appendChild(badge);
+			});
 			row.appendChild(services);
 
 			var vacancy = document.createElement("td");
