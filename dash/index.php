@@ -2,12 +2,17 @@
 <?php
 
 require '../db_manager.php';
+require '../search.php';
 
 // if (isset($_SESSION["user_id"])) {
 
 // } else {
 // 	header('Location: ../login');
 // }
+
+	if (isset($_GET["query"])) {
+		$x = search("client", $_GET["query"]);
+	}
 
 ?>
 <html lang="en">
@@ -53,9 +58,22 @@ require '../db_manager.php';
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="../css/colors.css">
 	<link rel="stylesheet" href="../css/styles.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 </head>
 <body>
+<style> 
+
+#tabel {
+	width: 90%;
+    margin-left: 5%;
+    margin-top: 10px;
+}
+#srk {
+	width: 90%;
+}
+
+</style>
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
 			<div class="mdl-layout__header-row">
@@ -130,10 +148,57 @@ require '../db_manager.php';
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
+			      <div id="srk" class="mdh-expandable-search">
+			        <i class="material-icons">search</i>
+			        <form action="./" method="GET">
+			          <input type="text" placeholder="Search" value="" name="query" size="1">
+			        </form>
+			      </div>
 
+			      <?php 
+			      	if (isset($_GET) && isset($x)) {
+			      		if (sizeof($x) > 0) {
+			      			echo "<table id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th class=\"mdl-data-table__cell--non-numeric\">First Name</th><th>Middle Name</th><th>Last Name</th></tr></thead><tbody>";
+				      		for ($ix=0; $ix < sizeof($x); $ix++) { 
+					      		echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$x[$ix]["First_Name"]."</td><td>".$x[$ix]["Middle_Name"]."</td><td>".$x[$ix]["Last_Name"]."</td></tr>";
+				      		}
+				      		echo "</tbody></table>";
+			      		} else {
+			      			echo "<h5 style=\"width: 100%; text-align: center; color: red;\"> No Results Found </h5>";
+			      		}
+			      	}
+			      ?>
+		      </div>
 			</div>
 		</main>
 	</div>
 	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		  $('.mdh-toggle-search').click(function() {
+		    // No search bar is currently shown
+		    if ($(this).find('i').text() == 'search') {
+		      $(this).find('i').text('cancel');
+		      $(this).removeClass('mdl-cell--hide-tablet mdl-cell--hide-desktop'); // Ensures the close button doesn't disappear if the screen is resized.
+
+		      $('.mdl-layout__drawer-button, .mdl-layout-title, .mdl-badge, .mdl-layout-spacer').hide();
+		      $('.mdl-layout__header-row').css('padding-left', '16px'); // Remove margin that used to hold the menu button
+		      $('.mdh-expandable-search').removeClass('mdl-cell--hide-phone').css('margin', '0 16px 0 0');
+		      
+		    }
+		    // Search bar is currently showing
+		    else {
+		      $(this).find('i').text('search');
+		      $(this).addClass('mdl-cell--hide-tablet mdl-cell--hide-desktop');
+		      
+		      $('.mdl-layout__drawer-button, .mdl-layout-title, .mdl-badge, .mdl-layout-spacer').show();
+		      $('.mdl-layout__header-row').css('padding-left', '');
+		      $('.mdh-expandable-search').addClass('mdl-cell--hide-phone').css('margin', '0 50px');
+		    }
+		    
+		  });
+		});
+
+	</script>
 </body>
 </html>

@@ -253,7 +253,7 @@ if (isset($_SESSION["user_id"])) {
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
-				<canvas id="myChart" style="width:100%; height: auto;"></canvas>
+				<canvas id="myChart" width=1000 height=1000></canvas>
 
 	<div style="width: 40%; margin-top: 30px; margin-left: 30px">
 		<p>
