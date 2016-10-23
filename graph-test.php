@@ -60,6 +60,7 @@
 						var scatterChart = new Chart(ctx, {
 							type: 'line',
 							data: JSON.parse(result),
+							borderColor: "rgba(75,192,192,1)",
 							options: {
 								responsive: false
 							}
@@ -73,6 +74,7 @@
 	        			coc_or_host: "coc",
 	        			provider_id: "1",
 	        			min_date: min_date,
+	        			borderColor: "rgba(75,192,192,1)",
 	        			max_date: max_date,
 	        			increments: "10",
 	        			options: option_params,
@@ -134,6 +136,10 @@
 				service_type = $("#services option:selected").val();
 			    generateGraph();
 			});
+
+			options["output"] = true;
+			generateGraph();
+			options["output"] = false;
 		});
 	</script>
 
@@ -147,13 +153,44 @@
 		<div id="slider-range"></div>
 	</div>
 
-	<input type="checkbox" id="intake"> <label>Homeless Taken In</label>
+	<!-- <input type="checkbox" id="intake"> <label>Homeless Taken In</label>
 	<input type="checkbox" id="vacancy"> <label>Vacancies</label>
 	<input type="checkbox" id="output"> <label>Homeless Moved Out</label>
 
 	<input type="checkbox" id="initiated"> <label>Services Initiated</label>
 	<input type="checkbox" id="completed"> <label>Services Completed</label>
-	<input type="checkbox" id="all"> <label>Services Completed or Initiated</label>
+	<input type="checkbox" id="all"> <label>Services Completed or Initiated</label> -->
+
+
+	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="intake">
+	  <input type="checkbox" id="intake" class="mdl-checkbox__input" checked>
+	  <span class="mdl-checkbox__label">Homeless Taken In</span>
+	</label>
+
+	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="vacancy">
+	  <input type="checkbox" id="vacancy" class="mdl-checkbox__input" checked>
+	  <span class="mdl-checkbox__label">Vacancies</span>
+	</label>
+
+	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="output">
+	  <input type="checkbox" id="output" class="mdl-checkbox__input" checked>
+	  <span class="mdl-checkbox__label">Homeless Moved Out</span>
+	</label>
+
+	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="initiated">
+	  <input type="checkbox" id="initiated" class="mdl-checkbox__input" checked>
+	  <span class="mdl-checkbox__label">Services Started, Not Completed</span>
+	</label>
+
+	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="completed">
+	  <input type="checkbox" id="completed" class="mdl-checkbox__input" checked>
+	  <span class="mdl-checkbox__label">Services Completed</span>
+	</label>
+
+	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="all">
+	  <input type="checkbox" id="all" class="mdl-checkbox__input" checked>
+	  <span class="mdl-checkbox__label">All Services</span>
+	</label>
 
 	<select id="services">
 		<option value="all">all services</option>
