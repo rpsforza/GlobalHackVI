@@ -166,9 +166,9 @@ if (isset($_GET["query"])) {
 			      <?php 
 			      	if (isset($_GET) && isset($x)) {
 			      		if (sizeof($x) > 0) {
-			      			echo "<table id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th class=\"mdl-data-table__cell--non-numeric\">First Name</th><th>Middle Name</th><th>Last Name</th></tr></thead><tbody>";
+			      			echo "<table id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th class=\"mdl-data-table__cell--non-numeric\">First Name</th><th>Middle Name</th><th>Last Name</th><th>User Profile</th><th>Add User</th></tr></thead><tbody>";
 				      		for ($ix=0; $ix < sizeof($x); $ix++) { 
-					      		echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$x[$ix]["First_Name"]."</td><td>".$x[$ix]["Middle_Name"]."</td><td>".$x[$ix]["Last_Name"]."</td></tr>";
+					      		echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$x[$ix]["First_Name"]."</td><td>".$x[$ix]["Middle_Name"]."</td><td>".$x[$ix]["Last_Name"]."</td><td><a href=".("../profile/?client=".$x["id"])."> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=".("../remove/?client=".$x["id"])."> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">add</i></a></td></tr>";
 				      		}
 				      		echo "</tbody></table>";
 			      		} else {
