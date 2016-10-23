@@ -77,9 +77,9 @@
 						$table = $option . "_records";
 						$count_data = $mysqli->query("SELECT * FROM $table WHERE date='$date'")->fetch_all();
 					} else if ($option === "reservations") {
-						$count_data = $mysqli->query("SELECT * FROM reservation_records WHERE date='$date' AND showed_up=1");
+						$count_data = $mysqli->query("SELECT * FROM reservation_records WHERE date='$date' AND showed_up=1")->fetch_all();
 					} else if ($option === "missed_reservations") {
-						$count_data = $mysqli->query("SELECT * FROM reservation_records WHERE date='$date' AND showed_up=0");
+						$count_data = $mysqli->query("SELECT * FROM reservation_records WHERE date='$date' AND showed_up=0")->fetch_all();
 					} else {
 						$clause = "";
 						if ($option === "completed") {

@@ -58,13 +58,15 @@ if (isset($_SESSION["user_id"])) {
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
 </head>
 <body>
 <script>
 		$(document).ready(function() {
 
 			var options = [];
-			options["intake"] = false;
+			options["intake"] = true;
 			options["vacancy"] = false;
 			options["output"] = false;
 
@@ -80,7 +82,7 @@ if (isset($_SESSION["user_id"])) {
 			var sliderRange = $("#slider-range");
 			var amt = $("#amount");
 
-			var min_date = 10;
+			var min_date = 100;
 			var max_date = 0;
 
 			getOptions = function() {
@@ -102,7 +104,8 @@ if (isset($_SESSION["user_id"])) {
 							data: JSON.parse(result),
 							borderColor: "rgba(75,192,192,1)",
 							options: {
-								responsive: false
+								responsive: true,
+								maintainAspectRatio: true
 							}
 						});
 		        	},
@@ -126,10 +129,12 @@ if (isset($_SESSION["user_id"])) {
 			sliderRange.slider({
 				range: true,
 				min: 0,
-				max: 10,
-				values: [0, 10],
+				max: 100,
+				values: [0, 100],
 				slide: function (event, ui) {
-					amt.val("$" + ui.values[0] + " - $" + ui.values[1]);
+					var min = moment().subtract(ui.values[0], 'days').local().format("MM/DD/YYYY");
+					var max = moment().subtract(ui.values[1], 'days').local().format("MM/DD/YYYY");
+					amt.val(max + " - " + min);
 				},
 				stop: function(event, ui) {
 					min_date = ui.values[1];
@@ -138,7 +143,9 @@ if (isset($_SESSION["user_id"])) {
 				}
 			});
 
-			amt.val("$" + sliderRange.slider("values", 0) + " - $" + sliderRange.slider("values", 1));
+			var min = moment().subtract(sliderRange.slider("values", 0), 'days').local().format("MM/DD/YYYY");
+			var max = moment().subtract(sliderRange.slider("values", 1), 'days').local().format("MM/DD/YYYY");
+			amt.val(max + " - " + min);
 
 			// FORM
 
@@ -187,9 +194,7 @@ if (isset($_SESSION["user_id"])) {
 			    generateGraph();
 			});
 
-			options["output"] = true;
 			generateGraph();
-			options["output"] = false;
 		});
 	</script>
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
@@ -266,15 +271,15 @@ if (isset($_SESSION["user_id"])) {
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
-				<canvas id="myChart" width=1000 height=1000></canvas>
+				<canvas id="myChart" style="width:100px; height: 100px;"></canvas>
 
-	<div style="width: 40%; margin-top: 30px; margin-left: 30px">
+	<div style="width: 40%; margin-top: 30px; margin-left: 30px; margin-bottom: 50px">
 		<p>
-			<label for="amount">Day range:</label>
-			<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+			<label style="font-size: 18pt" for="amount">Day range:</label>
+			<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-size: 18pt; background-color: transparent; font-weight:bold;">
 		</p>
 		<div id="slider-range"></div>
-		</div>
+	</div>
 
 		<!-- <input type="checkbox" id="intake"> <label>Homeless Taken In</label>
 		<input type="checkbox" id="vacancy"> <label>Vacancies</label>
@@ -291,27 +296,37 @@ if (isset($_SESSION["user_id"])) {
 		</label>
 
 		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="vacancy">
-		  <input type="checkbox" id="vacancy" class="mdl-checkbox__input" checked>
+		  <input type="checkbox" id="vacancy" class="mdl-checkbox__input">
 		  <span class="mdl-checkbox__label">Vacancies</span>
 		</label>
 
 		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="output">
-		  <input type="checkbox" id="output" class="mdl-checkbox__input" checked>
+		  <input type="checkbox" id="output" class="mdl-checkbox__input">
 		  <span class="mdl-checkbox__label">Homeless Moved Out</span>
 		</label>
 
 		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="initiated">
-		  <input type="checkbox" id="initiated" class="mdl-checkbox__input" checked>
+		  <input type="checkbox" id="initiated" class="mdl-checkbox__input">
 		  <span class="mdl-checkbox__label">Services Started, Not Completed</span>
 		</label>
 
 		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="completed">
-		  <input type="checkbox" id="completed" class="mdl-checkbox__input" checked>
+		  <input type="checkbox" id="completed" class="mdl-checkbox__input">
 		  <span class="mdl-checkbox__label">Services Completed</span>
 		</label>
 
+		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="reservations">
+		  <input type="checkbox" id="reservations" class="mdl-checkbox__input">
+		  <span class="mdl-checkbox__label">Reservations (Showed Up)</span>
+		</label>
+
+		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="missed_reservations">
+		  <input type="checkbox" id="missed_reservations" class="mdl-checkbox__input">
+		  <span class="mdl-checkbox__label">Reservations (Missed)</span>
+		</label>
+
 		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="all">
-		  <input type="checkbox" id="all" class="mdl-checkbox__input" checked>
+		  <input type="checkbox" id="all" class="mdl-checkbox__input">
 		  <span class="mdl-checkbox__label">All Services</span>
 		</label>
 
