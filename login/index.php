@@ -77,10 +77,10 @@
 							<label class="mdl-textfield__label" for="userpass">Password</label>
 						</div>
 						<div style="border:none; " class="mdl-card__actions mdl-card--border">
-							<button style="float:left;" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Sign Up</button>
 							<input type="submit" style="float:right;" value="Login" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"/>
 						</div>
 					</form>
+							<button onClick="location.href='../signup/'" style="float:left; margin-top:-20px;" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Sign Up</button>
 				</div>
 			</div>
 		</main>

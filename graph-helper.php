@@ -32,8 +32,8 @@
 
 		// the resulting object, according to chart.js specs (this is object "data" in the Chart object)
 		$result = array(
-			"labels" => [],
-			"datasets" => []
+			'labels' => [],
+			'datasets' => []
 		);
 
 		// SETS X-AXIS (LABEL)
@@ -66,12 +66,11 @@
 					$time_stamp = strtotime("-$j day");
 					$date = date('m/d/y', $time_stamp);
 					$table_query = $table . "_records";
-					$intake_data = $mysqli->query("SELECT * FROM $table_query WHERE date='$date'")->fetch_assoc();
+					$intake_data = $mysqli->query("SELECT * FROM $table_query WHERE date='$date'")->fetch_all();
 
 					// if records are found, it adds them to matching_records
 					if ($intake_data) {
 						$matching_records += count($intake_data);
-						echo (count($intake_data));
 					}
 				}
 
@@ -80,11 +79,11 @@
 			}
 
 			$result["datasets"][] = (object) array(
-				"label" => $table,
-				"data" => $data
+				'label' => $table,
+				'data' => $data
 			);
 		}
 
-		echo json_encode((object) $result);
+		echo json_encode($result);
 	}
 ?>
