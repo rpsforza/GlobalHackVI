@@ -82,7 +82,7 @@ if (isset($_SESSION["user_id"])) {
 			var sliderRange = $("#slider-range");
 			var amt = $("#amount");
 
-			var min_date = 100;
+			var min_date = 60;
 			var max_date = 0;
 
 			getOptions = function() {
@@ -98,6 +98,7 @@ if (isset($_SESSION["user_id"])) {
 				$.ajax({
 					url: "../graph/graph-helper.php",
 					success: function(result) {
+						console.log(result);
 		    			var ctx = document.getElementById("myChart");
 						var scatterChart = new Chart(ctx, {
 							type: 'line',
@@ -129,8 +130,8 @@ if (isset($_SESSION["user_id"])) {
 			sliderRange.slider({
 				range: true,
 				min: 0,
-				max: 100,
-				values: [0, 100],
+				max: 60,
+				values: [0, 60],
 				slide: function (event, ui) {
 					var min = moment().subtract(ui.values[0], 'days').local().format("MM/DD/YYYY");
 					var max = moment().subtract(ui.values[1], 'days').local().format("MM/DD/YYYY");
