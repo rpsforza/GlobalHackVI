@@ -164,6 +164,10 @@ if (isset($_GET["query"])) {
 			    </div>
 
 			      <?php 
+			      	$mysqli = getDB();
+			      	$user_type = $_SESSION["user_type"];
+			      	$user_type_id = $_SESSION["user_type_id"];
+			      	$x = $mysqli->query("SELECT * FROM provided_services WHERE coc_or_host=$user_type AND provider_id=$user_type_id")->fetch_assoc();
 			      	if (isset($_GET) && isset($x)) {
 			      		if (sizeof($x) > 0) {
 			      			echo "<table id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th class=\"mdl-data-table__cell--non-numeric\">First Name</th><th>Middle Name</th><th>Last Name</th><th>User Profile</th><th>Add User</th></tr></thead><tbody>";
@@ -176,6 +180,8 @@ if (isset($_GET["query"])) {
 			      		}
 			      	}
 			      ?>
+
+
 
 			</div>
 		</main>
