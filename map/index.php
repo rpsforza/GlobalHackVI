@@ -270,10 +270,6 @@ if (isset($_SESSION["user_id"])) {
 				icon: pinSymbol("#39B54A")
 			});
 
-			markMe.addListener('click', function () {
-				markMe.setAnimation(null);
-			});
-
 			var shelterSymbol = pinSymbol("#F79622");
 
 			locs.forEach(function (loc) {
@@ -290,6 +286,9 @@ if (isset($_SESSION["user_id"])) {
 
 				setTimeout(function () {
 					markMe.setAnimation(google.maps.Animation.BOUNCE);
+					markMe.addListener('click', function () {
+						markMe.setAnimation(null);
+					});
 				}, 500);
 			}, 2750);
 		}
