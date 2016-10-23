@@ -346,14 +346,38 @@ if (isset($_SESSION["user_id"])) {
 		}
 
 		var servMap = {
-			"-1": "Other",
-			"0": "Shelter",
-			"1": "Health",
-			"2": "Legal",
-			"3": "Job",
-			"4": "Food",
-			"5": "Hygiene",
-			"6": "Transportation"
+			"-1": {
+				name: "Other",
+				bg: "purple-A700"
+			},
+			"0": {
+				name: "Shelter",
+				bg: "indigo-A700"
+			},
+			"1": {
+				name: "Health",
+				bg: "green"
+			},
+			"2": {
+				name: "Legal",
+				bg: "lime-900"
+			},
+			"3": {
+				name: "Job",
+				bg: "blue-grey-800"
+			},
+			"4": {
+				name: "Food",
+				bg: "amber-900"
+			},
+			"5": {
+				name: "Hygiene",
+				bg: "pink-A400"
+			},
+			"6": {
+				name: "Transportation",
+				bg: "teal-A700"
+			}
 		};
 
 		function addLocToTable(loc) {
@@ -368,16 +392,24 @@ if (isset($_SESSION["user_id"])) {
 
 			var services = document.createElement("td");
 			loc.services.split(";").forEach(function (servNum) {
-				var servName = servMap[servNum];
+				var service = servMap[servNum];
 
-				if (servName == null)
-					servName = "Other";
+				if (service == null) {
+					service = {
+						name: "Other",
+						bg: "purple-A700"
+					};
+				}
+
+				var servName = service.name;
 
 				var badge = document.createElement("span");
 				badge.className += "mdl-chip mdl-chip--contact";
 
 				var icon = document.createElement("span");
-				icon.className += "mdl-chip__contact mdl-color--teal mdl-color-text--white";
+				icon.classList.add("mdl-chip__contact");
+				icon.classList.add("mdl-color--" + service.bg);
+				icon.classList.add("mdl-color-text--white");
 				icon.innerHTML = servName.charAt(0);
 				badge.appendChild(icon);
 
