@@ -256,19 +256,19 @@ if (isset($_SESSION["user_id"])) {
 			}
 			switch ($userType) { // [alt text, mdl font icon, current page]
 				case "clientNoAuth":
-					$a = [["dash", "dashboard", false], ["map", "map", false], ["shelter", "hotel", false], ["services", "domain", false], ["housing", "home", false]];
+					$a = [["dash", "dashboard", false], ["services", "domain", false], ["housing", "home", false]];
 					break;
 				case "client":
-					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["map", "map", false], ["shelter", "hotel", false], ["services", "domain", false], ["housing", "home", false]];
+					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["services", "domain", false], ["housing", "home", false]];
 					break;
 				case "coc":
-					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["map", "map", false], ["shelter", "hotel", false], ["services", "domain", false], ["housing", "home", false], ["availability", "people", false], ["statistics", "timeline", true]];
+					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["services", "domain", false], ["housing", "home", false], ["availability", "people", false], ["statistics", "timeline", true]];
 					break;
 				case "host":
-					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["map", "map", false], ["shelter", "hotel", false], ["availability", "people", false]];
+					$a = [["dash", "dashboard", false], ["profile", "account_box", false], ["services", "domain", false], ["availability", "people", false]];
 					break;
 				default:
-					$a = [["dash", "dashboard", false], ["map", "map", false], ["shelter", "hotel", false], ["services", "domain", false], ["housing", "home", false]];
+					$a = [["dash", "dashboard", false], ["services", "domain", false], ["housing", "home", false]];
 					break;
 			}
 
