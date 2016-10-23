@@ -1,15 +1,10 @@
 	<?php
 
 	require("db_manager.php");
-	$mysqli = getDB();
 
-	if (isset($_POST["type"])) {
-
-		// searching for client or service?
-		$type = $_POST["type"];
-		$search_query = $_POST["search_query"];
-		$search_terms = explode(" ", $search_query);
-
+	function search($type, $query) {
+		$mysqli = getDB();
+		$search_terms = explode(" ", $query);
 		$results = [];
 
 		if ($type === "client") {
@@ -30,10 +25,20 @@
 				$results = array_unique(array_merge($results, $new_results), SORT_REGULAR);
 			}
 		}
+		return $results;
+	}
+
+	if (isset($_POST["type"])) {
+
+		// searching for client or service?
+		$type = $_POST["type"];
+		$search_query = $_POST["search_query"];
+		
+		$results = search($type, $search_query);
+
 		echo "<pre>";
 		var_dump($results);
 		echo "</pre>";
-		echo "HI";
 	}
 ?>
 
@@ -44,7 +49,7 @@
 <body>
 <form method="post">
 	<input name="search_query" />
-	<input type="hidden" name="type" value="coc" />
+	<input type="hidden" name="type" value="client" />
 	<input type="submit" />
 </form>
 </body>

@@ -81,3 +81,22 @@ function clientMoveIn($client_id, $coc_or_host, $provider_id) {
 	// sets client "moved_on" to false
 	$mysqli->query("UPDATE client SET moved_on=0 WHERE id=$client_id");
 }
+
+function newReservation($client_id, $coc_or_host, $provider_id) {
+	$statement = $mysqli->prepare("SELECT * FROM reservation_records WHERE client_id=? AND coc_or_host=? AND provider_id=?");
+	$statement->bind_param("isi", $client_id, $coc_or_host, $provider_id);
+	$statement->execute();
+	if ($statement->get_result()->num_rows > 0) {
+		return;
+	} else {
+		$statement = $mysqli->prepare("INSERT INTO reservation_records (client_id, coc_or_host, provider_id) VALUES (?,?,?)");
+		$statement->bind_param("isi", $client_id, $coc_or_host, $provider_id);
+		$statement->execute();
+	}
+}
+
+function completeReservation($client_id, $coc_or_host, $provider_id) {
+	$statement = $mysqli->prepare("UPDATE reservation_records SET showed_up=1 WHERE client_id=? AND coc_or_host=? AND provider_id=?");
+	$statement->bind_param("isi", $client_id, $coc_or_host, $provider_id);
+	$statement->execute();
+}
