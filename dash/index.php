@@ -177,7 +177,6 @@ if (isset($_GET["query"])) {
 					}
 				}
 				?>
->>>>>>> origin/master
 			</div>
 	</div>
 	</main>
