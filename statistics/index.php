@@ -54,8 +54,131 @@ if (isset($_SESSION["user_id"])) {
 	<link rel="stylesheet" href="../css/colors.css">
 	<link rel="stylesheet" href="../css/styles.css">
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
+<script>
+		$(document).ready(function() {
+
+			var options = [];
+			options["intake"] = false;
+			options["vacancy"] = false;
+			options["output"] = false;
+
+			options["all"] = false;
+			options["completed"] = false;
+			options["initiated"] = false;
+
+			var service_type = "all";
+
+			var sliderRange = $("#slider-range");
+			var amt = $("#amount");
+
+			var min_date = 10;
+			var max_date = 0;
+
+			getOptions = function() {
+				var result = [];
+				for (var key in options) {
+    				if (options[key]) result.push(key);
+				}
+				return result;
+			}
+
+			generateGraph = function() {
+				var option_params = getOptions();
+				$.ajax({
+					url: "../graph/graph-helper.php",
+					success: function(result) {
+		    			var ctx = document.getElementById("myChart");
+						var scatterChart = new Chart(ctx, {
+							type: 'line',
+							data: JSON.parse(result),
+							borderColor: "rgba(75,192,192,1)",
+							options: {
+								responsive: false
+							}
+						});
+		        	},
+		        	error: function(result) {
+		        		console.log("ajax returned an error");
+		        	},
+		        	type: 'POST',
+	        		data: {
+	        			coc_or_host: "coc",
+	        			provider_id: "1",
+	        			min_date: min_date,
+	        			borderColor: "rgba(75,192,192,1)",
+	        			max_date: max_date,
+	        			increments: "10",
+	        			options: option_params,
+	        			service_type: service_type
+	        		}
+				});
+			}
+
+			sliderRange.slider({
+				range: true,
+				min: 0,
+				max: 10,
+				values: [0, 10],
+				slide: function (event, ui) {
+					amt.val("$" + ui.values[0] + " - $" + ui.values[1]);
+				},
+				stop: function(event, ui) {
+					min_date = ui.values[1];
+					max_date = ui.values[0];
+					generateGraph();
+				}
+			});
+
+			amt.val("$" + sliderRange.slider("values", 0) + " - $" + sliderRange.slider("values", 1));
+
+			// FORM
+
+			$('#intake').change(function() {
+			    options["intake"] = this.checked;
+			    generateGraph();
+			});
+
+			$('#vacancy').change(function() {
+			    options["vacancy"] = this.checked;
+			    generateGraph();
+			});
+
+			$('#output').change(function() {
+			    options["output"] = this.checked;
+			    generateGraph();
+			});
+
+			$('#all').change(function() {
+			    options["all"] = this.checked;
+			    generateGraph();
+			});
+
+			$('#completed').change(function() {
+			    options["completed"] = this.checked;
+			    generateGraph();
+			});
+
+			$('#initiated').change(function() {
+			    options["initiated"] = this.checked;
+			    generateGraph();
+			});
+
+			$("#services").change(function () {
+				service_type = $("#services option:selected").val();
+			    generateGraph();
+			});
+
+			options["output"] = true;
+			generateGraph();
+			options["output"] = false;
+		});
+	</script>
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
 			<div class="mdl-layout__header-row">
@@ -130,7 +253,68 @@ if (isset($_SESSION["user_id"])) {
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
+				<canvas id="myChart" style="width:100%; height: auto;"></canvas>
 
+	<div style="width: 40%; margin-top: 30px; margin-left: 30px">
+		<p>
+			<label for="amount">Day range:</label>
+			<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+		</p>
+		<div id="slider-range"></div>
+		</div>
+
+		<!-- <input type="checkbox" id="intake"> <label>Homeless Taken In</label>
+		<input type="checkbox" id="vacancy"> <label>Vacancies</label>
+		<input type="checkbox" id="output"> <label>Homeless Moved Out</label>
+
+		<input type="checkbox" id="initiated"> <label>Services Initiated</label>
+		<input type="checkbox" id="completed"> <label>Services Completed</label>
+		<input type="checkbox" id="all"> <label>Services Completed or Initiated</label> -->
+
+
+		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="intake">
+		  <input type="checkbox" id="intake" class="mdl-checkbox__input" checked>
+		  <span class="mdl-checkbox__label">Homeless Taken In</span>
+		</label>
+
+		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="vacancy">
+		  <input type="checkbox" id="vacancy" class="mdl-checkbox__input" checked>
+		  <span class="mdl-checkbox__label">Vacancies</span>
+		</label>
+
+		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="output">
+		  <input type="checkbox" id="output" class="mdl-checkbox__input" checked>
+		  <span class="mdl-checkbox__label">Homeless Moved Out</span>
+		</label>
+
+		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="initiated">
+		  <input type="checkbox" id="initiated" class="mdl-checkbox__input" checked>
+		  <span class="mdl-checkbox__label">Services Started, Not Completed</span>
+		</label>
+
+		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="completed">
+		  <input type="checkbox" id="completed" class="mdl-checkbox__input" checked>
+		  <span class="mdl-checkbox__label">Services Completed</span>
+		</label>
+
+		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="all">
+		  <input type="checkbox" id="all" class="mdl-checkbox__input" checked>
+		  <span class="mdl-checkbox__label">All Services</span>
+		</label>
+
+		<select id="services">
+			<option value="all">all services</option>
+			<?php
+				$mysqli = getDB();
+
+				$services = $mysqli->query("SELECT * FROM services")->fetch_all(MYSQLI_ASSOC);
+				for ($i = 0; $i < count($services); $i++) {
+					$service = $services[$i]["name"];
+					$id = $services[$i]["id"];
+					echo "<option value='$id'>$service</option>";
+				}
+			?>
+		</select>
 			</div>
 		</main>
 	</div>
