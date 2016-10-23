@@ -10,9 +10,10 @@ require '../search.php';
 // 	header('Location: ../login');
 // }
 
-	if (isset($_GET["query"])) {
-		$x = search("client", $_GET["query"]);
-	}
+$x;
+if (isset($_GET["query"])) {
+	$x = search("client", $_GET["query"]);
+}
 
 ?>
 <html lang="en">
@@ -62,18 +63,19 @@ require '../search.php';
 
 </head>
 <body>
-<style> 
+	<style>
 
-#tabel {
-	width: 90%;
-    margin-left: 5%;
-    margin-top: 10px;
-}
-#srk {
-	width: 90%;
-}
+		#tabel {
+			width: 90%;
+			margin-left: 5%;
+			margin-top: 10px;
+		}
 
-</style>
+		#srk {
+			width: 90%;
+		}
+
+	</style>
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
 			<div class="mdl-layout__header-row">
@@ -109,7 +111,7 @@ require '../search.php';
 				</div>
 			</header>
 			<?php
-			if(isset($_SESSION["user_id"])) {
+			if (isset($_SESSION["user_id"])) {
 				$userType = getUserType($_SESSION["user_id"]);
 			} else {
 				$userType = "clientNoAuth";
@@ -135,52 +137,53 @@ require '../search.php';
 
 			?>
 			<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-			<?php
-			foreach ($a as $arr) {
-				$active="";
-				if ($arr[2]) $active="active-nav ";
-				echo "<a href=../".$arr[0]." class=\"".$active."mdl-navigation__link\"><i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">".$arr[1]."</i>".ucwords($arr[0])."</a>";
-			}
-			?>
+				<?php
+				foreach ($a as $arr) {
+					$active = "";
+					if ($arr[2]) $active = "active-nav ";
+					echo "<a href=../" . $arr[0] . " class=\"" . $active . "mdl-navigation__link\"><i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">" . $arr[1] . "</i>" . ucwords($arr[0]) . "</a>";
+				}
+				?>
 				<div class="mdl-layout-spacer"></div>
 				<a class="mdl-navigation__link" href="../faq/"><i class="mdl-color-text--blue-grey-400 material-icons"
-														   role="presentation">help_outline</i><span>FAQ</span></a>
+																  role="presentation">help_outline</i><span>FAQ</span></a>
 			</nav>
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
-			      <div id="srk" class="mdh-expandable-search">
-			        <i class="material-icons">search</i>
-			        <form action="./" method="GET">
-			          <input type="text" placeholder="Search" value="" name="query" size="1">
-			        </form>
-			      </div>
+				<div id="srk" class="mdh-expandable-search">
+					<i class="material-icons">search</i>
+					<form action="./" method="GET">
+						<input type="text" placeholder="Search" value="" name="query" size="1">
+					</form>
+				</div>
 
-			      <?php 
-			      	if (isset($_GET) && isset($x)) {
-			      		if (sizeof($x) > 0) {
-			      			echo "<table id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th class=\"mdl-data-table__cell--non-numeric\">First Name</th><th>Middle Name</th><th>Last Name</th></tr></thead><tbody>";
-				      		for ($ix=0; $ix < sizeof($x); $ix++) { 
-					      		echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$x[$ix]["First_Name"]."</td><td>".$x[$ix]["Middle_Name"]."</td><td>".$x[$ix]["Last_Name"]."</td></tr>";
-				      		}
-				      		echo "</tbody></table>";
-			      		} else {
-			      			echo "<h5 style=\"width: 100%; text-align: center; color: red;\"> No Results Found </h5>";
-			      		}
-			      	}
-			      	if (isset($_SESSION)) {
-			      		if (getUserType($_SESSION["user_id"]) == "host" or getUserType($_SESSION["user_id"]) == "coc") {
-			      			echo "<table id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th>Reservation Requests</th></tr><tr><th class=\"mdl-data-table__cell--non-numeric\">Name</th><th>Visit Profile</th><th>Accept</th><th>Deny</th></tr></thead><tbody>";
-				      		for ($ix=0; $ix < sizeof($x); $ix++) { 
-					      		echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$x[$ix]["First_Name"]." ".$x[$ix]["Last_Name"]."</td><td><a href=".("../profile/?client=".$x[$ix]["id"])."> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=".("../remove/?client=".$x[$ix]["id"])."> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td><td><a href=".("../add/?client=".$x[$ix]["id"])."> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">check_circle</i></a></td></tr>";
-				      		}
-				      		echo "</tbody></table>";
-			      		}
-			      	}
-			      ?>
-		      </div>
+				<?php
+				global $x;
+				if (isset($_GET) && isset($x)) {
+					if (sizeof($x) > 0) {
+						echo "<table id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th class=\"mdl-data-table__cell--non-numeric\">First Name</th><th>Middle Name</th><th>Last Name</th></tr></thead><tbody>";
+						for ($ix = 0; $ix < sizeof($x); $ix++) {
+							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $x[$ix]["First_Name"] . "</td><td>" . $x[$ix]["Middle_Name"] . "</td><td>" . $x[$ix]["Last_Name"] . "</td></tr>";
+						}
+						echo "</tbody></table>";
+					} else {
+						echo "<h5 style=\"width: 100%; text-align: center; color: red;\"> No Results Found </h5>";
+					}
+				}
+				if (isset($_SESSION)) {
+					if (getUserType($_SESSION["user_id"]) == "host" or getUserType($_SESSION["user_id"]) == "coc") {
+						echo "<table id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th>Reservation Requests</th></tr><tr><th class=\"mdl-data-table__cell--non-numeric\">Name</th><th>Visit Profile</th><th>Accept</th><th>Deny</th></tr></thead><tbody>";
+						for ($ix = 0; $ix < sizeof($x); $ix++) {
+							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $x[$ix]["First_Name"] . " " . $x[$ix]["Last_Name"] . "</td><td><a href=" . ("../profile/?client=" . $x[$ix]["id"]) . "> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=" . ("../remove/?client=" . $x[$ix]["id"]) . "> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td><td><a href=" . ("../add/?client=" . $x[$ix]["id"]) . "> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">check_circle</i></a></td></tr>";
+						}
+						echo "</tbody></table>";
+					}
+				}
+				?>
 			</div>
-		</main>
+	</div>
+	</main>
 	</div>
 	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 </body>

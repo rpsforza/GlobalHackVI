@@ -189,9 +189,7 @@ if (isset($_SESSION["user_id"])) {
 						"Gender" => $client['Gender'] ? 'Female' : 'Male',
 						"Race" => 'Prefer not to answer',
 						"Veteran" => ($client['VeteranStatus'] != 0) ? 'Yes' : 'No',
-						"Situation" => 'Prefer not to answer',
-						"Current Services" => json_encode([]),
-						"History" => json_encode([])
+						"Situation" => 'Prefer not to answer'
 					];
 					echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
 					foreach ($v as $key => $value) {
