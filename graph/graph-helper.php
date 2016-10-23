@@ -76,6 +76,10 @@
 					if ($option === "intake" || $option === "output" || $option === "vacancy") {
 						$table = $option . "_records";
 						$count_data = $mysqli->query("SELECT * FROM $table WHERE date='$date'")->fetch_all();
+					} else if ($option === "reservations") {
+						$count_data = $mysqli->query("SELECT * FROM reservation_records WHERE date='$date' AND showed_up=1");
+					} else if ($option === "missed_reservations") {
+						$count_data = $mysqli->query("SELECT * FROM reservation_records WHERE date='$date' AND showed_up=0");
 					} else {
 						$clause = "";
 						if ($option === "completed") {
@@ -106,8 +110,8 @@
 				case "all": $rgb = "rgba(0, 100, 0, 0.4)"; break;
 				case "completed": $rgb = "rgba(15, 175, 15, 0.4)"; break;
 				case "initiated": $rgb = "rgba(30, 250, 30, 0.4)"; break;
-				case "reservation": $rgb = "rgba(0, 0, 100, 0.4)"; break;
-				case "missed_reservation": $rgb = "rgba(15, 15, 175, 0.4)"; break; 
+				case "reservations": $rgb = "rgba(0, 0, 100, 0.4)"; break;
+				case "missed_reservations": $rgb = "rgba(15, 15, 175, 0.4)"; break; 
 				default: $rgb = "rgba(30, 30, 250, .4";
 			}
 
