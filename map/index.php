@@ -166,7 +166,7 @@ if (isset($_SESSION["user_id"])) {
 			$.ajax({
 				type: "POST",
 				url: "../shelter_lookup.php",
-				data: override ? {latitude: lat, longitude: lon} : pos.coords,
+				data: {latitude: lat, longitude: lon},
 				success: function (result) {
 					locs = JSON.parse(result);
 
