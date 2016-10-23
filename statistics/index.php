@@ -20,7 +20,6 @@ if (isset($_SESSION["user_id"])) {
 		$coc_or_host = $_GET["coc_or_host"];
 		$provider_id = $_GET["provider_id"];
 	}
-	$name = $mysqli->query("SELECT * FROM $coc_or_host WHERE id=$provider_id")->fetch_assoc()["name"];
 
 } else {
 	header('Location: ../login');
@@ -298,7 +297,10 @@ if (isset($_SESSION["user_id"])) {
 		</p>
 		<div id="slider-range"></div>
 		<p style="font-size: 18pt; margin-top: 20px">
-			Seeing Data for <?php echo $name; ?>
+			Seeing Data for <?php 
+				$name = $mysqli->query("SELECT * FROM $coc_or_host WHERE id=$provider_id")->fetch_assoc()["name"];
+				echo $name;
+			?>
 		</p>
 	</div>
 
@@ -384,7 +386,7 @@ if (isset($_SESSION["user_id"])) {
 						for ($i = 0; $i < count($search_results); $i++) {
 							$row = $search_results[$i];
 							$name = $row["name"];
-							$coc_or_host = $row["is_coc"] === 1 ? "coc" : "host";
+							$coc_or_host = $row["is_coc"] == 1 ? "coc" : "host";
 							$provider_id = $row["id"];
 							echo "<tr><td style='text-align: center'><a href='index.php?coc_or_host=$coc_or_host&provider_id=$provider_id'>$name</a></td></tr>";
 						}
