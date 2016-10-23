@@ -112,12 +112,24 @@ function newClient($first_name, $middle_name, $last_name, $dob, $gender)
 	return true;
 }
 
-function getCurrentServices($client_id) {
+function getCurrentServices($client_id)
+{
 	$mysqli = getDB();
 	return $mysqli->query("SELECT * FROM provided_services WHERE client_id=$client_id AND completed=0")->fetch_assoc();
 }
 
-function getServiceHistory($client_id) {
+function getServiceHistory($client_id)
+{
 	$mysqli = getDB();
 	return $mysqli->query("SELECT * FROM provided_services WHERE client_id=$client_id AND completed=1")->fetch_assoc();
+}
+
+function getHost($id)
+{
+	$mysqli = getDB();
+	$statement = $mysqli->prepare("SELECT * FROM host WHERE id=?");
+	$statement->bind_param('i', $id);
+	$statement->execute();
+	$result = $statement->get_result();
+	return $result ? $result->fetch_assoc() : false;
 }

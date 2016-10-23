@@ -199,10 +199,18 @@ if (isset($_SESSION["user_id"])) {
 
 					// TODO: Refer if you are a host/coc
 				} else if (isset($_GET["host"])) {
-					$v = ["Name", "Address", "City", "State", "Phone", "Services", "Capacity", "Current Occupancy", "Special Conditions"];
+					$host = getHost(intval($_GET["host"]));
+					$v = [
+						"Name" => $host['name'],
+						"Phone" => $host['phone'],
+						"Latitude" => $host['latitude'],
+						"Longitude" => $host['longitude'],
+						"Vacancy" => $host['vacancy'],
+						"Capacity" => $host['capacity']
+					];
 					echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
-					for ($vi = 0; $vi < count($v); $vi++) {
-						echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $v[$vi] . "</td><td>" . VALUE . "</td></tr>";
+					foreach ($v as $key => $value) {
+						echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $key . "</td><td>" . $value . "</td></tr>";
 					}
 					echo "</tbody></table>";
 				} else {
