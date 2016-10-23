@@ -76,7 +76,7 @@ if (isset($_SESSION["user_id"])) {
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
 			<div class="mdl-layout__header-row">
-				<span class="mdl-layout-title">Map</span>
+				<span class="mdl-layout-title" id="layout-title">Map</span>
 				<div class="mdl-layout-spacer"></div>
 
 				<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
@@ -153,25 +153,10 @@ if (isset($_SESSION["user_id"])) {
 					<tr>
 						<th class="mdl-data-table__cell--non-numeric">Name</th>
 						<th>Services</th>
-						<th>Occupancy</th>
+						<th>Vacancy</th>
 					</tr>
 					</thead>
-					<tbody>
-					<tr>
-						<td class="mdl-data-table__cell--non-numeric">Acrylic (Transparent)</td>
-						<td>25</td>
-						<td>$2.90</td>
-					</tr>
-					<tr>
-						<td class="mdl-data-table__cell--non-numeric">Plywood (Birch)</td>
-						<td>50</td>
-						<td>$1.25</td>
-					</tr>
-					<tr>
-						<td class="mdl-data-table__cell--non-numeric">Laminate (Gold on Blue)</td>
-						<td>10</td>
-						<td>$2.35</td>
-					</tr>
+					<tbody id="table-body">
 					</tbody>
 				</table>
 			</div>
@@ -344,7 +329,11 @@ if (isset($_SESSION["user_id"])) {
 		function addMarkersFromLocs() {
 			var shelterSymbol = pinSymbol("#F79622");
 
+			document.getElementById("table-body").innerHTML = "";
+
 			markers = locs.map(function (loc) {
+				addLocToTable(loc);
+
 				return new google.maps.Marker({
 					position: new google.maps.LatLng(loc.latitude, loc.longitude),
 					map: map,
@@ -352,6 +341,60 @@ if (isset($_SESSION["user_id"])) {
 					icon: shelterSymbol
 				});
 			});
+
+			document.getElementById("layout-title").innerHTML = "Map (" + markers.length + ")";
+		}
+
+		var servMap = {
+			"-1": "Other",
+			"0": "Shelter",
+			"1": "Health",
+			"2": "Legal",
+			"3": "Job",
+			"4": "Food",
+			"5": "Hygiene",
+			"6": "Transportation"
+		};
+
+		function addLocToTable(loc) {
+			var tableBody = document.getElementById("table-body");
+
+			var row = document.createElement("tr");
+
+			var name = document.createElement("td");
+			name.className += "mdl-data-table__cell--non-numeric";
+			name.innerHTML = loc.name;
+			row.appendChild(name);
+
+			var services = document.createElement("td");
+			loc.services.split(";").forEach(function (servNum) {
+				var servName = servMap[servNum];
+
+				if (servName == null)
+					servName = "Other";
+
+				var badge = document.createElement("span");
+				badge.className += "mdl-chip mdl-chip--contact";
+
+				var icon = document.createElement("span");
+				icon.className += "mdl-chip__contact mdl-color--teal mdl-color-text--white";
+				icon.innerHTML = servName.charAt(0);
+				badge.appendChild(icon);
+
+				var text = document.createElement("span");
+				text.className += "mdl-chip__text";
+				text.innerHTML += servName;
+				badge.appendChild(text);
+
+				services.appendChild(badge);
+			});
+			row.appendChild(services);
+
+			var vacancy = document.createElement("td");
+			vacancy.innerHTML = loc.vacancy;
+			row.appendChild(vacancy);
+
+			tableBody.appendChild(row);
 		}
 
 		getGeolocation();
