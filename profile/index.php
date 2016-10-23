@@ -91,7 +91,7 @@ if (isset($_SESSION["user_id"])) {
 				</div>
 			</header>
 			<?php
-			if(isset($_SESSION["user_id"])) {
+			if (isset($_SESSION["user_id"])) {
 				$userType = getUserType($_SESSION["user_id"]);
 			} else {
 				$userType = "clientNoAuth";
@@ -116,46 +116,46 @@ if (isset($_SESSION["user_id"])) {
 
 			?>
 			<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-			<?php
-			foreach ($a as $arr) {
-				$active="";
-				if ($arr[2]) $active="active-nav ";
-				echo "<a href=../".$arr[0]." class=\"".$active."mdl-navigation__link\"><i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">".$arr[1]."</i>".ucwords($arr[0])."</a>";
-			}
-			?>
+				<?php
+				foreach ($a as $arr) {
+					$active = "";
+					if ($arr[2]) $active = "active-nav ";
+					echo "<a href=../" . $arr[0] . " class=\"" . $active . "mdl-navigation__link\"><i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">" . $arr[1] . "</i>" . ucwords($arr[0]) . "</a>";
+				}
+				?>
 				<div class="mdl-layout-spacer"></div>
 				<a class="mdl-navigation__link" href="../faq/"><i class="mdl-color-text--blue-grey-400 material-icons"
-														   role="presentation">help_outline</i><span>FAQ</span></a>
+																  role="presentation">help_outline</i><span>FAQ</span></a>
 			</nav>
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
-			<?php
-				if (isset($_GET["coc"]) {
+				<?php
+				if (isset($_GET["coc"])) {
 					$v = ["Name", "Address", "City", "State", "Phone", "Services", "Capacity", "Current Occupancy", "Special Conditions"];
 					echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
-					for ($vi=0; $vi < ; $vi++) { 
-					 	echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$v[$vi]."</td><td>".VALUE."</td></tr>";
+					for ($vi = 0; $vi < count($v); $vi++) {
+						echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $v[$vi] . "</td><td>" . VALUE . "</td></tr>";
 					}
 					echo "</tbody></table>";
 				} else if (isset($_GET["client"]) && (getUserType($_SESSION["user_id"]) == "coc" or getUserType($_SESSION["user_id"]) == "host")) {
 					$v = ["Name", "Address", "City", "State", "Phone", "Services", "Capacity", "Current Occupancy", "Special Conditions"];
 					echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
-					for ($vi=0; $vi < ; $vi++) { 
-					 	echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$v[$vi]."</td><td>".VALUE."</td></tr>";
+					for ($vi = 0; $vi < count($v); $vi++) {
+						echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $v[$vi] . "</td><td>" . VALUE . "</td></tr>";
 					}
 					echo "</tbody></table>";
-				} else if (isset($_GET["host"]) {
+				} else if (isset($_GET["host"])) {
 					$v = ["Name", "Address", "City", "State", "Phone", "Services", "Capacity", "Current Occupancy", "Special Conditions"];
 					echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
-					for ($vi=0; $vi < ; $vi++) { 
-					 	echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$v[$vi]."</td><td>".VALUE."</td></tr>";
+					for ($vi = 0; $vi < count($v); $vi++) {
+						echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $v[$vi] . "</td><td>" . VALUE . "</td></tr>";
 					}
 					echo "</tbody></table>";
 				} else {
-					
+
 				}
-			?>
+				?>
 			</div>
 		</main>
 	</div>
