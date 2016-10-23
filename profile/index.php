@@ -254,7 +254,7 @@ if (isset($_SESSION["user_id"])) {
 					cancel: 'false'
 				},
 				success: function (result) {
-					console.log(result);
+					window.alert('Reserved!');
 				}
 			});
 		}
@@ -273,7 +273,7 @@ if (isset($_SESSION["user_id"])) {
 					cancel: 'true'
 				},
 				success: function (result) {
-					console.log(JSON.parse(result));
+					window.alert('Canceled!');
 				}
 			});
 		}
