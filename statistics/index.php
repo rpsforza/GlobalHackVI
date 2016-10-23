@@ -5,6 +5,21 @@ require '../db_manager.php';
 
 if (isset($_SESSION["user_id"])) {
 
+	if (isset($_GET["search_query"])) {
+		require("../search.php");
+		$results = search("coc", urldecode($_GET["search_query"]));
+	}
+
+	if (isset($_GET["coc_or_host"])) {
+		$coc_or_host = $_GET["coc_or_host"];
+		$provider_id = $_GET["provider_id"];
+
+	// if no GET string, just use the signed in user's data
+	} else {
+		$coc_or_host = $_SESSION["user_type"];
+		$provider_id = $_SESSION["user_type_id"];
+	}
+
 } else {
 	header('Location: ../login');
 }
@@ -112,8 +127,8 @@ if (isset($_SESSION["user_id"])) {
 		        	},
 		        	type: 'POST',
 	        		data: {
-	        			coc_or_host: "coc",
-	        			provider_id: "1",
+	        			coc_or_host: <?php echo "'$coc_or_host'"; ?>,
+	        			provider_id: <?php echo $provider_id; ?>,
 	        			min_date: min_date,
 	        			borderColor: "rgba(75,192,192,1)",
 	        			max_date: max_date,
@@ -127,7 +142,7 @@ if (isset($_SESSION["user_id"])) {
 			sliderRange.slider({
 				range: true,
 				min: 0,
-				max: 10,
+				max: 100,
 				values: [0, 10],
 				slide: function (event, ui) {
 					var min = moment().subtract(ui.values[0], 'days').local().format("MM/DD/YYYY");
