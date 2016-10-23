@@ -168,6 +168,15 @@ require '../search.php';
 			      			echo "<h5 style=\"width: 100%; text-align: center; color: red;\"> No Results Found </h5>";
 			      		}
 			      	}
+			      	if (isset($_SESSION)) {
+			      		if (getUserType($_SESSION["user_id"]) == "host" or getUserType($_SESSION["user_id"]) == "coc") {
+			      			echo "<table id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th>Reservation Requests</th></tr><tr><th class=\"mdl-data-table__cell--non-numeric\">Name</th><th>Visit Profile</th><th>Accept</th><th>Deny</th></tr></thead><tbody>";
+				      		for ($ix=0; $ix < sizeof($x); $ix++) { 
+					      		echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$x[$ix]["First_Name"]." ".$x[$ix]["Last_Name"]."</td><td><a href=".("../profile/?client=".$x[$ix]["id"])."> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=".("../remove/?client=".$x[$ix]["id"])."> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td><td><a href=".("../add/?client=".$x[$ix]["id"])."> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">check_circle</i></a></td></tr>";
+				      		}
+				      		echo "</tbody></table>";
+			      		}
+			      	}
 			      ?>
 		      </div>
 			</div>
