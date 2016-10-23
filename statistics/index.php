@@ -274,7 +274,7 @@ if (isset($_SESSION["user_id"])) {
 			<div class="mdl-grid">
 				<canvas id="myChart" style="width:100px; height: 100px;"></canvas>
 
-	<div style="width: 40%; margin-top: 30px; margin-left: 30px; margin-bottom: 50px">
+	<div style="width: 40%; margin-top: 30px; margin-left: 30px; margin-bottom: 50px; padding-right: 50%">
 		<p>
 			<label style="font-size: 18pt" for="amount">Day range:</label>
 			<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-size: 18pt; background-color: transparent; font-weight:bold;">
@@ -282,71 +282,81 @@ if (isset($_SESSION["user_id"])) {
 		<div id="slider-range"></div>
 	</div>
 
-		<!-- <input type="checkbox" id="intake"> <label>Homeless Taken In</label>
-		<input type="checkbox" id="vacancy"> <label>Vacancies</label>
-		<input type="checkbox" id="output"> <label>Homeless Moved Out</label>
+	<div style="margin: 50px; width: 100%; display: inherit;">
+		<div style="width: 33%">
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="intake">
+			  <input type="checkbox" id="intake" class="mdl-checkbox__input" checked>
+			  <span class="mdl-checkbox__label">Homeless Taken In</span>
+			</label>
 
-		<input type="checkbox" id="initiated"> <label>Services Initiated</label>
-		<input type="checkbox" id="completed"> <label>Services Completed</label>
-		<input type="checkbox" id="all"> <label>Services Completed or Initiated</label> -->
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="vacancy">
+			  <input type="checkbox" id="vacancy" class="mdl-checkbox__input">
+			  <span class="mdl-checkbox__label">Vacancies</span>
+			</label>
 
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="output">
+			  <input type="checkbox" id="output" class="mdl-checkbox__input">
+			  <span class="mdl-checkbox__label">Homeless Moved Out</span>
+			</label>
+		</div>
 
-		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="intake">
-		  <input type="checkbox" id="intake" class="mdl-checkbox__input" checked>
-		  <span class="mdl-checkbox__label">Homeless Taken In</span>
-		</label>
+		<div style="width: 33%; margin-right: auto; margin-left: auto">
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="initiated">
+			  <input type="checkbox" id="initiated" class="mdl-checkbox__input">
+			  <span class="mdl-checkbox__label">Services Started, Not Completed</span>
+			</label>
 
-		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="vacancy">
-		  <input type="checkbox" id="vacancy" class="mdl-checkbox__input">
-		  <span class="mdl-checkbox__label">Vacancies</span>
-		</label>
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="completed">
+			  <input type="checkbox" id="completed" class="mdl-checkbox__input">
+			  <span class="mdl-checkbox__label">Services Completed</span>
+			</label>
 
-		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="output">
-		  <input type="checkbox" id="output" class="mdl-checkbox__input">
-		  <span class="mdl-checkbox__label">Homeless Moved Out</span>
-		</label>
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="all">
+			  <input type="checkbox" id="all" class="mdl-checkbox__input">
+			  <span class="mdl-checkbox__label">All Services</span>
+			</label>
 
-		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="initiated">
-		  <input type="checkbox" id="initiated" class="mdl-checkbox__input">
-		  <span class="mdl-checkbox__label">Services Started, Not Completed</span>
-		</label>
+			<select style="height: 35px; margin-top: 10px" id="services">
+				<option value="all">all services</option>
+				<?php
+					$mysqli = getDB();
 
-		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="completed">
-		  <input type="checkbox" id="completed" class="mdl-checkbox__input">
-		  <span class="mdl-checkbox__label">Services Completed</span>
-		</label>
+					$services = $mysqli->query("SELECT * FROM services")->fetch_all(MYSQLI_ASSOC);
+					for ($i = 0; $i < count($services); $i++) {
+						$service = $services[$i]["name"];
+						$id = $services[$i]["id"];
+						echo "<option value='$id'>$service</option>";
+					}
+				?>
+			</select>
+		</div>
 
-		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="reservations">
-		  <input type="checkbox" id="reservations" class="mdl-checkbox__input">
-		  <span class="mdl-checkbox__label">Reservations (Showed Up)</span>
-		</label>
+		<div style="width: 33%; float: right;">
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="reservations">
+			  <input type="checkbox" id="reservations" class="mdl-checkbox__input">
+			  <span class="mdl-checkbox__label">Reservations (Showed Up)</span>
+			</label>
 
-		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="missed_reservations">
-		  <input type="checkbox" id="missed_reservations" class="mdl-checkbox__input">
-		  <span class="mdl-checkbox__label">Reservations (Missed)</span>
-		</label>
+			<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="missed_reservations">
+			  <input type="checkbox" id="missed_reservations" class="mdl-checkbox__input">
+			  <span class="mdl-checkbox__label">Reservations (Missed)</span>
+			</label>
+		</div>
+	</div>
 
-		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="all">
-		  <input type="checkbox" id="all" class="mdl-checkbox__input">
-		  <span class="mdl-checkbox__label">All Services</span>
-		</label>
+		
 
-		<select id="services">
-			<option value="all">all services</option>
-			<?php
-				$mysqli = getDB();
-
-				$services = $mysqli->query("SELECT * FROM services")->fetch_all(MYSQLI_ASSOC);
-				for ($i = 0; $i < count($services); $i++) {
-					$service = $services[$i]["name"];
-					$id = $services[$i]["id"];
-					echo "<option value='$id'>$service</option>";
-				}
-			?>
-		</select>
+		<div id="srk" class="mdh-expandable-search">
+		<i class="material-icons">search</i>
+		<form action="./" method="GET">
+			<input type="text" placeholder="search other providers" value="" name="query" size="1">
+		</form>
+	</div>
 			</div>
 		</main>
 	</div>
 	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+	
 </body>
 </html>
