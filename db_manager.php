@@ -4,10 +4,12 @@ header("Access-Control-Allow-Origin: *");
 
 session_start();
 
-$db_server = "us-cdbr-iron-east-04.cleardb.net";
-$db_username = "b50c03721510b5";
-$db_password = "15258fda";
-$db_name = "heroku_0e49192e673a1d3";
+$creds = json_decode(file_get_contents($_SERVER["DOCUMENT_ROOT"] . '/sql-auth.json'), true);
+
+$db_server = $creds["server"];
+$db_username = $creds["user"];
+$db_password = $creds["pass"];
+$db_name = $creds["name"];
 
 $mysqli = new mysqli($db_server, $db_username, $db_password, $db_name);
 
