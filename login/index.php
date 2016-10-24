@@ -43,14 +43,16 @@
 	?>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.blue_grey-orange.min.css">
+	<link rel="stylesheet" type="text/css"
+		  href="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.blue_grey-orange.min.css">
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
 	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.min.js" type="text/javascript"></script>
 	<style>
 		.mdl-layout {
 			align-items: center;
-		  justify-content: center;
+			justify-content: center;
 		}
+
 		.mdl-layout__content {
 			padding: 14px;
 			flex: none;
@@ -66,21 +68,24 @@
 				<div class="mdl-card__title mdl-color--blue-grey-900 mdl-color-text--white">
 					<img style="width: 100%;" id="logoname" src="../img/name2.png"/>
 				</div>
-		  	<div class="mdl-card__supporting-text">
+				<div class="mdl-card__supporting-text">
 					<form method="post" action="./">
 						<div class="mdl-textfield mdl-js-textfield">
-							<input class="mdl-textfield__input" name="Username" value="" type="text" id="username" />
+							<input class="mdl-textfield__input" name="Username" value="" type="text" id="username"/>
 							<label class="mdl-textfield__label" for="username">Username</label>
 						</div>
 						<div class="mdl-textfield mdl-js-textfield">
-							<input class="mdl-textfield__input" name="Password" value="" type="password" id="userpass" />
+							<input class="mdl-textfield__input" name="Password" value="" type="password" id="userpass"/>
 							<label class="mdl-textfield__label" for="userpass">Password</label>
 						</div>
 						<div style="border:none; " class="mdl-card__actions mdl-card--border">
-							<input type="submit" style="float:right;" value="Login" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"/>
+							<input type="submit" style="float:right;" value="Login"
+								   class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"/>
 						</div>
 					</form>
-							<button onClick="location.href='../signup/'" style="float:left; margin-top:-20px;" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Sign Up</button>
+					<button onClick="location.href='../signup/'" style="float:left; margin-top:-20px;"
+							class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Sign Up
+					</button>
 				</div>
 			</div>
 		</main>

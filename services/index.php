@@ -5,8 +5,6 @@ require '../db_manager.php';
 
 if (isset($_SESSION["user_id"])) {
 
-} else {
-	header('Location: ../login');
 }
 
 ?>
@@ -77,9 +75,11 @@ if (isset($_SESSION["user_id"])) {
 			max-width: 100vw;
 			overflow: scroll;
 		}
+
 		th {
 			text-align: center !important;
 		}
+
 		.mdl-chip--contact {
 			display: -webkit-box;
 		}
@@ -109,7 +109,7 @@ if (isset($_SESSION["user_id"])) {
 					<span><?php if (isset($_SESSION["user_id"])) {
 							$name = getUsersName($_SESSION["user_id"]);
 						} else {
-							$name = "<a href=\"../login/\">Login</a>";
+							$name = "<a style=\"align-items: center; color: rgba(255, 255, 255, 0.85); font-weight: 500;\" class=\"mdl-navigation__link\" href=\"../login/\">Login</a>";
 						}
 						echo $name; ?></span>
 					<div class="mdl-layout-spacer"></div>
@@ -197,7 +197,7 @@ if (isset($_SESSION["user_id"])) {
 		}
 
 		function onGeoSuccess(pos) {
-			var override = true;
+			var override = false;
 			lat = override ? 38.6227953 : pos.coords.latitude;
 			lon = override ? -90.2530406 : pos.coords.longitude;
 

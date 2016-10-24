@@ -1,13 +1,13 @@
 <?php
-	
-	if (isset($_GET["query"])) {
 
-		require("search.php");
-		$query = urldecode($_GET["query"]);
-		$results = search("provider", $query);
+if (isset($_GET["query"])) {
+
+	require("search.php");
+	$query = urldecode($_GET["query"]);
+	$results = search("provider", $query);
 
 
-	}
+}
 
 ?>
 
@@ -18,7 +18,7 @@
 	<!-- slider -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	
+
 	<!-- moment -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
 
@@ -40,7 +40,7 @@
 </head>
 <body>
 	<script>
-		$(document).ready(function() {
+		$(document).ready(function () {
 
 			var options = [];
 			options["intake"] = false;
@@ -59,20 +59,20 @@
 			var min_date = 10;
 			var max_date = 0;
 
-			getOptions = function() {
+			getOptions = function () {
 				var result = [];
 				for (var key in options) {
-    				if (options[key]) result.push(key);
+					if (options[key]) result.push(key);
 				}
 				return result;
 			}
 
-			generateGraph = function() {
+			generateGraph = function () {
 				var option_params = getOptions();
 				$.ajax({
 					url: "graph/graph-helper.php",
-					success: function(result) {
-		    			var ctx = document.getElementById("myChart");
+					success: function (result) {
+						var ctx = document.getElementById("myChart");
 						var scatterChart = new Chart(ctx, {
 							type: 'line',
 							data: JSON.parse(result),
@@ -80,20 +80,20 @@
 								responsive: false
 							}
 						});
-		        	},
-		        	error: function(result) {
-		        		console.log("ajax returned an error");
-		        	},
-		        	type: 'POST',
-	        		data: {
-	        			coc_or_host: "coc",
-	        			provider_id: "1",
-	        			min_date: min_date,
-	        			max_date: max_date,
-	        			increments: "10",
-	        			options: option_params,
-	        			service_type: service_type
-	        		}
+					},
+					error: function (result) {
+						console.log("ajax returned an error");
+					},
+					type: 'POST',
+					data: {
+						coc_or_host: "coc",
+						provider_id: "1",
+						min_date: min_date,
+						max_date: max_date,
+						increments: "10",
+						options: option_params,
+						service_type: service_type
+					}
 				});
 			}
 
@@ -105,7 +105,7 @@
 				slide: function (event, ui) {
 					amt.val("$" + ui.values[0] + " - $" + ui.values[1]);
 				},
-				stop: function(event, ui) {
+				stop: function (event, ui) {
 					min_date = ui.values[1];
 					max_date = ui.values[0];
 					generateGraph();
@@ -118,39 +118,39 @@
 
 			// FORM
 
-			$('#intake').change(function() {
-			    options["intake"] = this.checked;
-			    generateGraph();
+			$('#intake').change(function () {
+				options["intake"] = this.checked;
+				generateGraph();
 			});
 
-			$('#vacancy').change(function() {
-			    options["vacancy"] = this.checked;
-			    generateGraph();
+			$('#vacancy').change(function () {
+				options["vacancy"] = this.checked;
+				generateGraph();
 			});
 
-			$('#output').change(function() {
-			    options["output"] = this.checked;
-			    generateGraph();
+			$('#output').change(function () {
+				options["output"] = this.checked;
+				generateGraph();
 			});
 
-			$('#all').change(function() {
-			    options["all"] = this.checked;
-			    generateGraph();
+			$('#all').change(function () {
+				options["all"] = this.checked;
+				generateGraph();
 			});
 
-			$('#completed').change(function() {
-			    options["completed"] = this.checked;
-			    generateGraph();
+			$('#completed').change(function () {
+				options["completed"] = this.checked;
+				generateGraph();
 			});
 
-			$('#initiated').change(function() {
-			    options["initiated"] = this.checked;
-			    generateGraph();
+			$('#initiated').change(function () {
+				options["initiated"] = this.checked;
+				generateGraph();
 			});
 
 			$("#services").change(function () {
 				service_type = $("#services option:selected").val();
-			    generateGraph();
+				generateGraph();
 			});
 		});
 	</script>
@@ -176,15 +176,15 @@
 	<select id="services">
 		<option value="all">all services</option>
 		<?php
-			require("db_manager.php");
-			$mysqli = getDB();
+		require("db_manager.php");
+		$mysqli = getDB();
 
-			$services = $mysqli->query("SELECT * FROM services")->fetch_all(MYSQLI_ASSOC);
-			for ($i = 0; $i < count($services); $i++) {
-				$service = $services[$i]["name"];
-				$id = $services[$i]["id"];
-				echo "<option value='$id'>$service</option>";
-			}
+		$services = $mysqli->query("SELECT * FROM services")->fetch_all(MYSQLI_ASSOC);
+		for ($i = 0; $i < count($services); $i++) {
+			$service = $services[$i]["name"];
+			$id = $services[$i]["id"];
+			echo "<option value='$id'>$service</option>";
+		}
 		?>
 	</select>
 </body>

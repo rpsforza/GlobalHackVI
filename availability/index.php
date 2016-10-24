@@ -14,9 +14,9 @@ if (isset($_SESSION["user_id"])) {
 }
 
 if (isset($_GET["query"])) {
-		require("../search.php");
-		$x = search("client", $_GET["query"]);
-	}
+	require("../search.php");
+	$x = search("client", $_GET["query"]);
+}
 
 ?>
 <html lang="en">
@@ -63,7 +63,9 @@ if (isset($_GET["query"])) {
 	<link rel="stylesheet" href="../css/colors.css">
 	<link rel="stylesheet" href="../css/styles.css">
 	<style type="text/css">
-		#srk {width: 90%;}
+		#srk {
+			width: 90%;
+		}
 	</style>
 </head>
 <body>
@@ -143,56 +145,55 @@ if (isset($_GET["query"])) {
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
-			<?php
-				if(isset($_SESSION["user_id"])) {
+				<?php
+				if (isset($_SESSION["user_id"])) {
 					if (getUserType($_SESSION["user_id"]) == "coc" or getUserType($_SESSION["user_id"]) == "host") {
 						echo "<table style='width: 500px; margin-right: auto; margin-left: auto; margin-top: 30px; margin-bottom: 50px' class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
 						$mysqli = getDB();
-				      	$user_type = $_SESSION["user_type"];
-				      	$user_type_id = $_SESSION["user_type_id"];
-				      	$services = $mysqli->query("SELECT * FROM provided_services WHERE host_or_coc='$user_type' AND provider_id=$user_type_id")->fetch_all(MYSQLI_ASSOC);
-				      	$clients = [];
-				      	for ($i = 0; $i < sizeof($services); $i++) {
-				      		$id = $services[$i]["client_id"];
-				      		$clients[] = $mysqli->query("SELECT * FROM client WHERE id=$id")->fetch_assoc();
-				      	}
+						$user_type = $_SESSION["user_type"];
+						$user_type_id = $_SESSION["user_type_id"];
+						$services = $mysqli->query("SELECT * FROM provided_services WHERE host_or_coc='$user_type' AND provider_id=$user_type_id")->fetch_all(MYSQLI_ASSOC);
+						$clients = [];
+						for ($i = 0; $i < sizeof($services); $i++) {
+							$id = $services[$i]["client_id"];
+							$clients[] = $mysqli->query("SELECT * FROM client WHERE id=$id")->fetch_assoc();
+						}
 						$users = $clients;
 						foreach ($users as $person) {
-							$name = $person["First_Name"]." ".$person["Last_Name"];
-							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">".$name."</td><td><a href=".("../profile/?client=".$person["id"])."> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=".("remove.php?client=".$person["id"])."> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td></tr>";
+							$name = $person["First_Name"] . " " . $person["Last_Name"];
+							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $name . "</td><td><a href=" . ("../profile/?client=" . $person["id"]) . "> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=" . ("remove.php?client=" . $person["id"]) . "> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td></tr>";
 						}
 						echo "</tbody></table>";
 					}
 				}
 
-			?>
+				?>
 				<div id="srk" class="mdh-expandable-search">
-			        <i class="material-icons">search</i>
-			        <form action="./" method="GET">
-			          <input type="text" placeholder="Search" value="" name="query" size="1">
-			        </form>
-			    </div>
+					<i class="material-icons">search</i>
+					<form action="./" method="GET">
+						<input type="text" placeholder="Search" value="" name="query" size="1">
+					</form>
+				</div>
 
-			      <?php 
-			      	
-			      	if (isset($_GET) && isset($x)) {
-			      		if (count($x) > 0) {
-			      			echo "<table style='width: 500px; margin-right: auto; margin-left: auto; margin-top: 50px' id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th class=\"mdl-data-table__cell--non-numeric\">First Name</th><th>Middle Name</th><th>Last Name</th><th>User Profile</th><th>Add User</th></tr></thead><tbody>";
-				      		for ($ix=0; $ix < count($x); $ix++) { 
+				<?php
 
-				      			$id = $x[$ix]["id"];
-				      			$taken = "";
-				      			if ($mysqli->query("SELECT * FROM provided_services WHERE client_id=$id")->fetch_assoc()) $taken = "style='color: rgb(255, 0, 0)'";
+				if (isset($_GET) && isset($x)) {
+					if (count($x) > 0) {
+						echo "<table style='width: 500px; margin-right: auto; margin-left: auto; margin-top: 50px' id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th class=\"mdl-data-table__cell--non-numeric\">First Name</th><th>Middle Name</th><th>Last Name</th><th>User Profile</th><th>Add User</th></tr></thead><tbody>";
+						for ($ix = 0; $ix < count($x); $ix++) {
 
-					      		echo "<tr $taken><td class=\"mdl-data-table__cell--non-numeric\">".$x[$ix]["First_Name"]."</td><td>".$x[$ix]["Middle_Name"]."</td><td>".$x[$ix]["Last_Name"]."</td><td><a href=".("../profile/?client=".$x[$ix]["id"])."> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=".("add.php?client=".$x[$ix]["id"])."> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">add</i></a></td></tr>";
-				      		}
-				      		echo "</tbody></table>";
-			      		} else {
-			      			echo "<h5 style=\"width: 100%; text-align: center; color: red;\"> No Results Found </h5>";
-			      		}
-			      	}
-			      ?>
+							$id = $x[$ix]["id"];
+							$taken = "";
+							if ($mysqli->query("SELECT * FROM provided_services WHERE client_id=$id")->fetch_assoc()) $taken = "style='color: rgb(255, 0, 0)'";
 
+							echo "<tr $taken><td class=\"mdl-data-table__cell--non-numeric\">" . $x[$ix]["First_Name"] . "</td><td>" . $x[$ix]["Middle_Name"] . "</td><td>" . $x[$ix]["Last_Name"] . "</td><td><a href=" . ("../profile/?client=" . $x[$ix]["id"]) . "> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=" . ("add.php?client=" . $x[$ix]["id"]) . "> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">add</i></a></td></tr>";
+						}
+						echo "</tbody></table>";
+					} else {
+						echo "<h5 style=\"width: 100%; text-align: center; color: red;\"> No Results Found </h5>";
+					}
+				}
+				?>
 
 
 			</div>

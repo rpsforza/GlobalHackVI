@@ -4,15 +4,17 @@
 require '../db_manager.php';
 require '../search.php';
 
-// if (isset($_SESSION["user_id"])) {
-
-// } else {
-// 	header('Location: ../login');
-// }
-
 $x;
 if (isset($_GET["query"])) {
 	$x = search("client", $_GET["query"]);
+}
+
+$userType;
+if (isset($_SESSION["user_id"])) {
+	$userType = getUserType($_SESSION["user_id"]);
+} else {
+	$userType = "clientNoAuth";
+	header('Location: ../services/');
 }
 
 ?>
@@ -64,7 +66,6 @@ if (isset($_GET["query"])) {
 </head>
 <body>
 	<style>
-
 		#tabel {
 			width: 90%;
 			margin-left: 5%;
@@ -96,27 +97,26 @@ if (isset($_GET["query"])) {
 			<header class="demo-drawer-header">
 				<img id="logoname" src="../img/name2.png"/>
 				<div class="demo-avatar-dropdown">
-					<span><?php if (isset($_SESSION["user_id"])) {
+					<span>
+						<?php
+						if (isset($_SESSION["user_id"])) {
 							$name = getUsersName($_SESSION["user_id"]);
 						} else {
 							$name = "<a style=\"align-items: center; color: rgba(255, 255, 255, 0.85); font-weight: 500;\" class=\"mdl-navigation__link\" href=\"../login/\">Login</a>";
 						}
-						echo $name; ?></span>
+						echo $name;
+						?>
+					</span>
 					<div class="mdl-layout-spacer"></div>
-					<?php if (isset($_SESSION["user_id"])) {
+					<?php
+					if (isset($_SESSION["user_id"])) {
 						echo "<button id=\"accbtn\" class=\"mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon\"><i class=\"material-icons\" role=\"presentation\">arrow_drop_down</i><span class=\"visuallyhidden\">Logout</span></button><ul class=\"mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect\" for=\"accbtn\"><li class=\"mdl-menu__item\"><a id=\"logoutbuttonnav\" href=\"../logout/\">Logout</a></li></ul>";
 					}
-
 					?>
 				</div>
 			</header>
 			<?php
-			if (isset($_SESSION["user_id"])) {
-				$userType = getUserType($_SESSION["user_id"]);
-			} else {
-				$userType = "clientNoAuth";
-				header('Location: ../services/');
-			}
+			global $userType, $a;
 			switch ($userType) { // [alt text, mdl font icon, current page]
 				case "clientNoAuth":
 					$a = [["services", "domain", false], ["housing", "home", false]];
@@ -152,9 +152,9 @@ if (isset($_GET["query"])) {
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
 				<?php
-				if (getUserType($_SESSION["user_id"]) == "coc" or getUserType($_SESSION["user_id"]) == "host") {
-				      echo "<div id=\"srk\" class=\"mdh-expandable-search\"><i class=\"material-icons\">search</i><form action=\"./\" method=\"GET\"><input type=\"text\" placeholder=\"Search\" value=\"\" name=\"query\" size=\"1\"></form></div>";
-			      }
+				if ((isset($_SESSION["user_id"])) && (getUserType($_SESSION["user_id"]) == "coc" or getUserType($_SESSION["user_id"]) == "host")) {
+					echo "<div id=\"srk\" class=\"mdh-expandable-search\"><i class=\"material-icons\">search</i><form action=\"./\" method=\"GET\"><input type=\"text\" placeholder=\"Search\" value=\"\" name=\"query\" size=\"1\"></form></div>";
+				}
 				global $x;
 				if (isset($_GET) && isset($x)) {
 					if (sizeof($x) > 0) {
@@ -167,7 +167,7 @@ if (isset($_GET["query"])) {
 						echo "<h5 style=\"width: 100%; text-align: center; color: red;\"> No Results Found </h5>";
 					}
 				}
-				if (isset($_SESSION)) {
+				if (isset($_SESSION["user_id"])) {
 					if (getUserType($_SESSION["user_id"]) == "host" or getUserType($_SESSION["user_id"]) == "coc") {
 						echo "<table id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th>Reservation Requests</th></tr><tr><th class=\"mdl-data-table__cell--non-numeric\">Name</th><th>Visit Profile</th><th>Accept</th><th>Deny</th></tr></thead><tbody>";
 						for ($ix = 0; $ix < sizeof($x); $ix++) {
