@@ -4,12 +4,25 @@ header("Access-Control-Allow-Origin: *");
 
 session_start();
 
-$creds = json_decode(file_get_contents($_SERVER["DOCUMENT_ROOT"] . '/sql-auth.json'), true);
+$db_server;
+$db_username;
+$db_password;
+$db_name;
 
-$db_server = $creds["server"];
-$db_username = $creds["user"];
-$db_password = $creds["pass"];
-$db_name = $creds["name"];
+if (getenv("db_server")) {
+	$db_server = getenv("db_server");
+	$db_username = getenv("db_user");
+	$db_password = getenv("db_pass");
+	$db_name = getenv("db_name");
+} else if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/sql-auth.json')) {
+	$credFile = file_get_contents($_SERVER["DOCUMENT_ROOT"] . '/sql-auth.json');
+	$creds = json_decode($credFile, true);
+
+	$db_server = $creds["server"];
+	$db_username = $creds["user"];
+	$db_password = $creds["pass"];
+	$db_name = $creds["name"];
+}
 
 $mysqli = new mysqli($db_server, $db_username, $db_password, $db_name);
 
