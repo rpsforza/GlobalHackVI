@@ -73,7 +73,6 @@ if (isset($_SESSION["user_id"])) {
 		#srk {
 			width: 90%;
 		}
-
 	</style>
 </head>
 <body>
