@@ -8,20 +8,20 @@ if (isset($_POST)) {
 	/*** SET VALUES ***/
 
 	// identifiers
-	$coc_or_host = $_POST["coc_or_host"];
-	$provider_id = $_POST["provider_id"];
+	$coc_or_host = $mysqli->escape_string($_POST["coc_or_host"]);
+	$provider_id = $mysqli->escape_string($_POST["provider_id"]);
 	// min_date / max_date define the date range
 	// they are expressed in terms of - days (so 40 means 40 days before today)
 	// so min date is actually larger than max date
-	$min_date = $_POST["min_date"];
-	$max_date = $_POST["max_date"];
+	$min_date = $mysqli->escape_string($_POST["min_date"]);
+	$max_date = $mysqli->escape_string($_POST["max_date"]);
 	// number of increments on the x-axis
-	$increments = $_POST["increments"];
+	$increments = $mysqli->escape_string($_POST["increments"]);
 	// $tables is an array containing the values "completed", "initiated", "all"
 	// it stores the options for which graph(s) you want to see - one, two, or all three?
 	$options = $_POST["options"];
 
-	$service_type = $_POST["service_type"];
+	$service_type = $mysqli->escape_string($_POST["service_type"]);
 	$service_clause = "";
 	if ($service_type != "all") {
 		$service_clause = " AND service_id=$service_type";
@@ -129,7 +129,7 @@ if (isset($_POST)) {
 				$rgb = "rgba(15, 15, 175, 0.4)";
 				break;
 			default:
-				$rgb = "rgba(30, 30, 250, .4";
+				$rgb = "rgba(30, 30, 250, .4)";
 		}
 
 		$result["datasets"][] = (object)array(
@@ -141,4 +141,3 @@ if (isset($_POST)) {
 
 	echo json_encode($result);
 }
-?>

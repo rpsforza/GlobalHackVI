@@ -65,7 +65,7 @@ if (isset($_GET["query"])) {
 					if (options[key]) result.push(key);
 				}
 				return result;
-			}
+			};
 
 			generateGraph = function () {
 				var option_params = getOptions();
@@ -95,7 +95,7 @@ if (isset($_GET["query"])) {
 						service_type: service_type
 					}
 				});
-			}
+			};
 
 			sliderRange.slider({
 				range: true,

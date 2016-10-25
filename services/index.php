@@ -356,7 +356,7 @@ if (isset($_SESSION["user_id"])) {
 				});
 			});
 
-			document.getElementById("layout-title").innerHTML = "Map (" + markers.length + ")";
+			document.getElementById("layout-title").innerHTML = "Services (" + markers.length + ")";
 		}
 
 		var servMap = {

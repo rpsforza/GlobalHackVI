@@ -107,14 +107,14 @@ if (isset($_SESSION["user_id"])) {
 					if (options[key]) result.push(key);
 				}
 				return result;
-			}
+			};
 
 			generateGraph = function () {
 				var option_params = getOptions();
 				$.ajax({
 					url: "../graph/graph-helper.php",
 					success: function (result) {
-						console.log(result);
+						// console.log(result);
 						var ctx = document.getElementById("myChart");
 						var scatterChart = new Chart(ctx, {
 							type: 'line',
@@ -127,7 +127,7 @@ if (isset($_SESSION["user_id"])) {
 						});
 					},
 					error: function (result) {
-						console.log("ajax returned an error");
+						// console.log("ajax returned an error");
 					},
 					type: 'POST',
 					data: {
@@ -298,10 +298,13 @@ if (isset($_SESSION["user_id"])) {
 					</p>
 					<div id="slider-range"></div>
 					<p style="font-size: 18pt; margin-top: 20px">
-						Seeing Data for <?php
-						$name = $mysqli->query("SELECT * FROM $coc_or_host WHERE id=$provider_id")->fetch_assoc()["name"];
-						echo $name;
-						?>
+						Viewing Data for
+						<i>
+							<?php
+							$name = $mysqli->query("SELECT * FROM $coc_or_host WHERE id=$provider_id")->fetch_assoc()["name"];
+							echo $name;
+							?>
+						</i>
 					</p>
 				</div>
 
