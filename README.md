@@ -2,7 +2,7 @@
 *A Sweet Solution to a Sour Problem*
 
 ## Background
-Clementine was created over the course of [GlobalHack VI](https://globalhack.org/globalhack-vi/), a million-dollar weekend hackathon in St. Louis, in which this project won Second Place within the Youth Division (Team #14).
+Clementine was created over the course of [GlobalHack VI](https://globalhack.org/globalhack-vi/), a million-dollar weekend hackathon in St. Louis, in which this project won [Second Place within the Youth Division (Team #14)](https://devpost.com/software/globalhack6).
 
 ### Mission
 Develop civic technology directed towards addressing homelessness
@@ -25,7 +25,7 @@ Develop civic technology directed towards addressing homelessness
 4. Related parties can aid in early prevention by notifying CoCs with information on people who are at risk of becoming homeless
     + For example, utility and mortgage providers can notify CoCs on Clementine if a client is unable to pay on time and then activate supportive mechanisms for prevention
 
-### Technologies Utilized
+### Built With
 * PHP
 * MySQL
 * HTML / CSS / JavaScript
