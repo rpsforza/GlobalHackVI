@@ -13,6 +13,7 @@ Develop civic technology directed towards addressing homelessness
     + Homeless clients have a profile that outlines their essential information
         + CoCs are able to see a client's history and leave comments for other CoCs, thus ameliorating communication and data-sharing
     + Unauthenticated clients can still view nearby services but do not have as much of a tailored experience (e.g. they may see incompatible shelters with their unique situation)
+    + Provide an automated numbers for clients without access to the website to call or text to access the same information (todo)
 
 2. CoC (Continuum of Care) providers use Clementine as a revamped HMIS (Homeless Management Information System) in which they can better cater to the homeless population, manage their resources more effectively, and easily communicate with other service providers
     + CoCs have a better reservation system that updates vacancy statistics in real-time
@@ -22,7 +23,7 @@ Develop civic technology directed towards addressing homelessness
 3. People can volunteer as hosts, participating in an Airbnb-esque program in which they lease unused property for temporarily housing the homeless in exchange for tax deductions
 
 4. Related parties can aid in early prevention by notifying CoCs with information on people who are at risk of becoming homeless
-    + For example, utility and mortgage providers can notify CoCs on Clementine if a client is unable to pay on time and then active supportive mechanisms
+    + For example, utility and mortgage providers can notify CoCs on Clementine if a client is unable to pay on time and then activate supportive mechanisms for prevention
 
 ### Technologies Utilized
 * PHP
