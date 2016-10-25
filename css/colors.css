@@ -3247,12 +3247,9 @@ input.mdl-button[type="submit"] {
 }
 
 .mdl-card__media {
-    background-color: rgb(24, 255, 255);
-    background-repeat: repeat;
-    background-position: 50% 50%;
     background-size: cover;
     background-origin: padding-box;
-    background-attachment: scroll;
+    background: rgb(24, 255, 255) repeat scroll 50% 50%;
     box-sizing: border-box
 }
 
@@ -4564,7 +4561,7 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__ripple-container .mdl-ripple,
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 0%;
+    width: 0;
     transition: width .2s cubic-bezier(.4, 0, .2, 1)
 }
 
@@ -4626,8 +4623,8 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__ripple-container .mdl-ripple,
 
 @-webkit-keyframes indeterminate1 {
     0% {
-        left: 0%;
-        width: 0%
+        left: 0;
+        width: 0
     }
     50% {
         left: 25%;
@@ -4635,14 +4632,14 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__ripple-container .mdl-ripple,
     }
     75% {
         left: 100%;
-        width: 0%
+        width: 0
     }
 }
 
 @keyframes indeterminate1 {
     0% {
-        left: 0%;
-        width: 0%
+        left: 0;
+        width: 0
     }
     50% {
         left: 25%;
@@ -5620,8 +5617,7 @@ _:-ms-input-placeholder,
     height: 12px;
     box-sizing: border-box;
     border-radius: 50%;
-    background-image: none;
-    background: rgb(103, 58, 183);
+    background: rgb(103, 58, 183) none;
     border: none
 }
 
@@ -5634,15 +5630,13 @@ _:-ms-input-placeholder,
 }
 
 .mdl-slider.is-upgraded:active::-webkit-slider-thumb {
-    background-image: none;
-    background: rgb(103, 58, 183);
+    background: rgb(103, 58, 183) none;
     -webkit-transform: scale(1.5);
     transform: scale(1.5)
 }
 
 .mdl-slider.is-upgraded:active::-moz-range-thumb {
-    background-image: none;
-    background: rgb(103, 58, 183);
+    background: rgb(103, 58, 183) none;
     transform: scale(1.5)
 }
 

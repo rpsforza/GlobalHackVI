@@ -63,8 +63,6 @@ if (isset($_SESSION["user_id"])) {
 	<link rel="stylesheet" href="../css/styles.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
-</head>
-<body>
 	<style>
 		#tabel {
 			width: 90%;
@@ -77,6 +75,8 @@ if (isset($_SESSION["user_id"])) {
 		}
 
 	</style>
+</head>
+<body>
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
 			<div class="mdl-layout__header-row">
@@ -171,7 +171,7 @@ if (isset($_SESSION["user_id"])) {
 					if (getUserType($_SESSION["user_id"]) == "host" or getUserType($_SESSION["user_id"]) == "coc") {
 						echo "<table id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th>Reservation Requests</th></tr><tr><th class=\"mdl-data-table__cell--non-numeric\">Name</th><th>Visit Profile</th><th>Accept</th><th>Deny</th></tr></thead><tbody>";
 						for ($ix = 0; $ix < sizeof($x); $ix++) {
-							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $x[$ix]["First_Name"] . " " . $x[$ix]["Last_Name"] . "</td><td><a href=" . ("../profile/?client=" . $x[$ix]["id"]) . "> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=" . ("../remove/?client=" . $x[$ix]["id"]) . "> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td><td><a href=" . ("../add/?client=" . $x[$ix]["id"]) . "> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">check_circle</i></a></td></tr>";
+							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $x[$ix]["First_Name"] . " " . $x[$ix]["Last_Name"] . "</td><td><a href=" . ("../profile/?client=" . $x[$ix]["id"]) . "> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=" . ("../availability/add.php?client=" . $x[$ix]["id"]) . "> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">check_circle</i></a></td><td><a href=" . ("../availability/remove.php?client=" . $x[$ix]["id"]) . "> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td></tr>";
 						}
 						echo "</tbody></table>";
 					}

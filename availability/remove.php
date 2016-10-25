@@ -34,5 +34,4 @@ if (isset($_GET["client"])) {
 
 }
 
-header("Location: index.php");
-?>
+header("Location: ./");

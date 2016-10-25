@@ -184,6 +184,7 @@ if (isset($_GET["query"])) {
 
 							$id = $x[$ix]["id"];
 							$taken = "";
+							$mysqli = getDB();
 							if ($mysqli->query("SELECT * FROM provided_services WHERE client_id=$id")->fetch_assoc()) $taken = "style='color: rgb(255, 0, 0)'";
 
 							echo "<tr $taken><td class=\"mdl-data-table__cell--non-numeric\">" . $x[$ix]["First_Name"] . "</td><td>" . $x[$ix]["Middle_Name"] . "</td><td>" . $x[$ix]["Last_Name"] . "</td><td><a href=" . ("../profile/?client=" . $x[$ix]["id"]) . "> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=" . ("add.php?client=" . $x[$ix]["id"]) . "> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">add</i></a></td></tr>";

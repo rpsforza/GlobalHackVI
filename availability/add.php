@@ -33,5 +33,4 @@ if (isset($_GET["client"])) {
 	$mysqli->query("UPDATE client SET moved_on=0 WHERE id=$client_id");
 }
 
-header("Location: index.php");
-?>
+header("Location: ./");

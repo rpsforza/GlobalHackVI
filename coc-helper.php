@@ -53,7 +53,7 @@ function newServiceReport($client_id, $service_id, $host_or_coc, $provider_id, $
 
 	$date = date("m/d/y");
 
-	$statement = $mysqli->prepare("INSERT INTO provided_services (client_id, service_id, host_or_coc, provider_id, completed, comments, date) VALUES (?,?,?,?,?,?)");
+	$statement = $mysqli->prepare("INSERT INTO provided_services (client_id, service_id, host_or_coc, provider_id, completed, comments, date) VALUES (?,?,?,?,?,?,?)");
 	$statement->bind_param("iisiiss", $client_id, $service_id, $host_or_coc, $provider_id, $completed, $comments, $date);
 	$statement->execute();
 }
