@@ -106,20 +106,43 @@ function clientMoveIn($client_id, $coc_or_host, $provider_id)
 	$mysqli->query("UPDATE client SET moved_on=0 WHERE id=$client_id");
 }
 
-function newReservation($client_id, $coc_or_host, $provider_id)
+function isReserved($client_id, $coc_or_host, $provider_id)
 {
+	if (is_string($coc_or_host))
+		$coc_or_host = ($coc_or_host === 'coc' ? 0 : 1);
+
 	$mysqli = getDB();
 	$statement = $mysqli->prepare("SELECT * FROM reservation_records WHERE client_id=? AND coc_or_host=? AND provider_id=?");
-	$statement->bind_param("isi", $client_id, $coc_or_host, $provider_id);
-	$statement->execute();
-	if ($statement->get_result()->num_rows > 0) {
-		return;
-	} else {
+	$statement->bind_param("iii", $client_id, $coc_or_host, $provider_id);
+	return $statement->execute() && $statement->get_result()->num_rows > 0;
+}
+
+function newReservation($client_id, $coc_or_host, $provider_id)
+{
+	if (is_string($coc_or_host))
+		$coc_or_host = ($coc_or_host === 'coc' ? 0 : 1);
+
+	$mysqli = getDB();
+
+	if (!isReserved($client_id, $coc_or_host, $provider_id)) {
 		$date = date("m/d/y");
 		$statement = $mysqli->prepare("INSERT INTO reservation_records (client_id, coc_or_host, provider_id, date) VALUES (?,?,?,?)");
-		$statement->bind_param("isis", $client_id, $coc_or_host, $provider_id, $date);
-		$statement->execute();
+		$statement->bind_param("iiis", $client_id, $coc_or_host, $provider_id, $date);
+		return $statement->execute();
 	}
+
+	return false;
+}
+
+function cancelReservation($client_id, $coc_or_host, $provider_id)
+{
+	if (is_string($coc_or_host))
+		$coc_or_host = ($coc_or_host === 'coc' ? 0 : 1);
+
+	$mysqli = getDB();
+	$statement = $mysqli->prepare("DELETE FROM reservation_records WHERE client_id=? AND coc_or_host=? AND provider_id=? AND showed_up = 0 ORDER BY STR_TO_DATE(date, '%m/%d/%Y') DESC LIMIT 1");
+	$statement->bind_param("iii", $client_id, $coc_or_host, $provider_id);
+	return $statement->execute();
 }
 
 function completeReservation($client_id, $coc_or_host, $provider_id)

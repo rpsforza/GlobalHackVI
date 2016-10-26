@@ -173,15 +173,12 @@ if (isset($_SESSION["user_id"])) {
 						echo '<div style="margin-left: 0.66%;">';
 						// Reserve if you're an auth-ed client
 						if (getUserType($_SESSION["user_id"]) == "client") {
-							$isReserved = in_array($_SESSION["user_id"], explode(';', $coc['active_clients']));
+							$isReserved = isReserved($_SESSION["user_id"], 0, $_GET["coc"]);
 
-							if (!$isReserved) {
-								// TODO: on click --> reserve
-								echo '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" onclick="reserve(\'coc\')"> Reserve </button>';
-							} else {
-								// TODO: Option to un-reserve
-								echo '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" onclick="cancel_reservation(\'coc\')"> Cancel Reservation </button>';
-							}
+							echo '<button id="reserve-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" onclick="reserve(\'coc\')"> Reserve </button>';
+							echo '<button id="unreserve-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" onclick="cancel_reservation(\'coc\')"> Cancel Reservation </button>';
+
+							echo '<script>$(' . ($isReserved ? "\"#reserve-button\"" : "\"#unreserve-button\"") . ').hide();</script>';
 						}
 						echo '</div>';
 					}
@@ -255,11 +252,14 @@ if (isset($_SESSION["user_id"])) {
 					userID: userID,
 					cocID: cocID,
 					type: type,
-					cancel: 'false'
+					cancel: false
 				},
 				success: function (result) {
 					var snackbarContainer = document.querySelector('#snackbar');
 					snackbarContainer.MaterialSnackbar.showSnackbar({message: 'Reserved!'});
+
+					$("#reserve-button").hide();
+					$("#unreserve-button").show();
 				}
 			});
 		}
@@ -275,11 +275,14 @@ if (isset($_SESSION["user_id"])) {
 					userID: userID,
 					cocID: cocID,
 					type: type,
-					cancel: 'true'
+					cancel: true
 				},
 				success: function (result) {
 					var snackbarContainer = document.querySelector('#snackbar');
 					snackbarContainer.MaterialSnackbar.showSnackbar({message: 'Canceled Reservation.'});
+
+					$("#reserve-button").show();
+					$("#unreserve-button").hide();
 				}
 			});
 		}

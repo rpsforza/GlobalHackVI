@@ -5,15 +5,15 @@ require 'coc-helper.php';
 if (isset($_POST)) {
 	if (isset($_POST['userID']) && isset($_POST['cocID']) && isset($_POST['type']) && isset($_POST['cancel'])) {
 		$cancel = json_decode($_POST['cancel']);
+
 		if ($cancel) {
-			return;
+			echo cancelReservation(intval($_POST['userID']), $_POST['type'], intval($_POST['cocID']));
 		} else {
-			newReservation($_POST['userID'], $_POST['type'], $_POST['cocID']);
-			echo 'true';
-			return;
+			echo newReservation(intval($_POST['userID']), $_POST['type'], intval($_POST['cocID']));
 		}
+
+		return;
 	}
 
-	echo 'false';
-	return;
+	echo 'failed';
 }
