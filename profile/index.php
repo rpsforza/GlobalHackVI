@@ -258,8 +258,9 @@ if (isset($_SESSION["user_id"])) {
 					var snackbarContainer = document.querySelector('#snackbar');
 					snackbarContainer.MaterialSnackbar.showSnackbar({message: 'Reserved!'});
 
-					$("#reserve-button").hide();
-					$("#unreserve-button").show();
+					$("#reserve-button").hide("fast", function () {
+						$("#unreserve-button").show("fast");
+					});
 				}
 			});
 		}
@@ -281,8 +282,9 @@ if (isset($_SESSION["user_id"])) {
 					var snackbarContainer = document.querySelector('#snackbar');
 					snackbarContainer.MaterialSnackbar.showSnackbar({message: 'Canceled Reservation.'});
 
-					$("#reserve-button").show();
-					$("#unreserve-button").hide();
+					$("#unreserve-button").hide("fast", function () {
+						$("#reserve-button").show("fast");
+					});
 				}
 			});
 		}
