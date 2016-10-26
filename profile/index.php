@@ -232,6 +232,12 @@ if (isset($_SESSION["user_id"])) {
 
 				}
 				?>
+
+				<div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
+					<div class="mdl-snackbar__text"></div>
+					<button class="mdl-snackbar__action" type="button"></button>
+				</div>
+
 			</div>
 		</main>
 	</div>
@@ -252,7 +258,8 @@ if (isset($_SESSION["user_id"])) {
 					cancel: 'false'
 				},
 				success: function (result) {
-					window.alert('Reserved!');
+					var snackbarContainer = document.querySelector('#snackbar');
+					snackbarContainer.MaterialSnackbar.showSnackbar({message: 'Reserved!'});
 				}
 			});
 		}
@@ -271,7 +278,8 @@ if (isset($_SESSION["user_id"])) {
 					cancel: 'true'
 				},
 				success: function (result) {
-					window.alert('Canceled!');
+					var snackbarContainer = document.querySelector('#snackbar');
+					snackbarContainer.MaterialSnackbar.showSnackbar({message: 'Canceled Reservation.'});
 				}
 			});
 		}
