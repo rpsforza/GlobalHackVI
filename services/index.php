@@ -178,7 +178,7 @@ if (isset($_SESSION["user_id"])) {
 	</div>
 	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 	<script>
-		var lat, lon, locs, map, markers;
+		var lat, lon, locs, map, markers, info;
 
 		function geolocate(highAccuracy) {
 			highAccuracy = (typeof highAccuracy === 'boolean') && (highAccuracy);
@@ -312,6 +312,12 @@ if (isset($_SESSION["user_id"])) {
 				streetViewControl: false
 			});
 
+			info = new google.maps.InfoWindow();
+
+			google.maps.event.addListener(map, 'click', function () {
+				info.close();
+			});
+
 			var markMe = new google.maps.Marker({
 				position: new google.maps.LatLng(lat, lon),
 				map: null,
@@ -329,6 +335,8 @@ if (isset($_SESSION["user_id"])) {
 				setTimeout(function () {
 					markMe.setAnimation(google.maps.Animation.BOUNCE);
 					markMe.addListener('click', function () {
+						info.setContent("Your location");
+						info.open(map, markMe);
 						markMe.setAnimation(null);
 					});
 
@@ -359,12 +367,19 @@ if (isset($_SESSION["user_id"])) {
 			markers = locs.map(function (loc) {
 				addLocToTable(loc);
 
-				return new google.maps.Marker({
+				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(loc.latitude, loc.longitude),
 					map: map,
 					title: loc.name,
 					icon: shelterSymbol
 				});
+
+				marker.addListener('click', function () {
+					info.setContent('<a href=' + "../profile/?coc=" + loc.id + '>' + loc.name + '</a>');
+					info.open(map, marker);
+				});
+
+				return marker;
 			});
 
 			document.getElementById("layout-title").innerHTML = "Services (" + markers.length + ")";
