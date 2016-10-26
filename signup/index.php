@@ -11,12 +11,11 @@ if (isset($_POST["username"])) {
 	$last_name = $mysqli->escape_string($_POST["last_name"]);
 	$dob = $mysqli->escape_string($_POST["dob"]);
 	$gender = $_POST["gender"];
-
-	// TODO: make UUID auto increment
+	$userID = intval($mysqli->query("SELECT MAX(UserID) FROM client")->fetch_assoc()["MAX(UserID)"]) + 1;
 
 	if (!userExists($username)) {
-		$statement = $mysqli->prepare("INSERT INTO client (First_Name, Middle_Name, Last_Name, DOB, Gender, Date_Created, DateUpdated) VALUES (?, ?, ?, ?, ?, ?, ?)");
-		$statement->bind_param("ssssiss", $first_name, $middle_name, $last_name, $dob, $gender, gmdate('Y-m-d h:i:s \G\M\T'), gmdate('Y-m-d h:i:s \G\M\T'));
+		$statement = $mysqli->prepare("INSERT INTO client (UserID, First_Name, Middle_Name, Last_Name, DOB, Gender, Date_Created, DateUpdated) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		$statement->bind_param("issssiss", $userID, $first_name, $middle_name, $last_name, $dob, $gender, gmdate('Y-m-d h:i:s \G\M\T'), gmdate('Y-m-d h:i:s \G\M\T'));
 		$a = $statement->execute();
 
 		$usertype = "client";
