@@ -180,11 +180,23 @@ if (isset($_SESSION["user_id"])) {
 	<script>
 		var lat, lon, locs, map, markers;
 
-		function getGeolocation() {
+		function geolocate(highAccuracy) {
+			highAccuracy = (typeof highAccuracy === 'boolean') && (highAccuracy);
+
 			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoFail);
+				navigator.geolocation.getCurrentPosition(
+					onGeoSuccess,
+					highAccuracy
+						? geolocate
+						: onGeoFail,
+					{
+						enableHighAccuracy: highAccuracy,
+						maximumAge: 600000,
+						timeout: 10000
+					}
+				);
 			} else {
-				return onGeoFail();
+				onGeoFail();
 			}
 		}
 
@@ -197,9 +209,8 @@ if (isset($_SESSION["user_id"])) {
 		}
 
 		function onGeoSuccess(pos) {
-			var override = false;
-			lat = override ? 38.6227953 : pos.coords.latitude;
-			lon = override ? -90.2530406 : pos.coords.longitude;
+			lat = pos.coords.latitude;
+			lon = pos.coords.longitude;
 
 			$.ajax({
 				type: "POST",
@@ -446,7 +457,7 @@ if (isset($_SESSION["user_id"])) {
 			tableBody.appendChild(row);
 		}
 
-		getGeolocation();
+		geolocate(true);
 	</script>
 </body>
 </html>
