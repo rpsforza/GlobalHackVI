@@ -9,5 +9,6 @@
     <orderEntry type="library" name="jquery-ui" level="application" />
     <orderEntry type="library" name="Chart.bundle" level="application" />
     <orderEntry type="library" name="moment" level="application" />
+    <orderEntry type="library" name="moment-with-locales" level="application" />
   </component>
 </module>

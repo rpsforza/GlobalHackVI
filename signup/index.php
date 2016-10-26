@@ -1,36 +1,38 @@
-<html>
-<head>
-	<?php
-	require '../db_manager.php';
+<?php
+require '../db_manager.php';
 
-	if (isset($_POST["username"])) {
-		$username = $_POST["username"];
-		$password = $_POST["password"];
-		$first_name = $_POST["first_name"];
-		$middle_name = $_POST["middle_name"];
-		$last_name = $_POST["last_name"];
-		$dob = $_POST["dob"];
-		$gender = $_POST["gender"];
+$mysqli = getDB();
 
-		// $date_created = current date;
+if (isset($_POST["username"])) {
+	$username = $mysqli->escape_string($_POST["username"]);
+	$password = $mysqli->escape_string($_POST["password"]);
+	$first_name = $mysqli->escape_string($_POST["first_name"]);
+	$middle_name = $mysqli->escape_string($_POST["middle_name"]);
+	$last_name = $mysqli->escape_string($_POST["last_name"]);
+	$dob = $mysqli->escape_string($_POST["dob"]);
+	$gender = $_POST["gender"];
 
-		// TODO make UUID auto increment
+	// TODO: make UUID auto increment
 
-		$mysqli = getDB();
-
-		$statement = $mysqli->prepare("INSERT INTO client (First_Name, Middle_Name, Last_Name, DOB, Gender)
-										VALUES (?, ?, ?, ?, ?)");
-		$statement->bind_param("ssssi", $first_name, $middle_name, $last_name, $dob, $gender);
-		$statement->execute();
+	if (!userExists($username)) {
+		$statement = $mysqli->prepare("INSERT INTO client (First_Name, Middle_Name, Last_Name, DOB, Gender, Date_Created, DateUpdated) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		$statement->bind_param("ssssiss", $first_name, $middle_name, $last_name, $dob, $gender, gmdate('Y-m-d h:i:s \G\M\T'), gmdate('Y-m-d h:i:s \G\M\T'));
+		$a = $statement->execute();
 
 		$usertype = "client";
 		$table_id = $mysqli->insert_id;
 		$statement = $mysqli->prepare("INSERT INTO login_accounts (username, password, user_type, table_id) VALUES (?,?,?,?)");
 		$statement->bind_param("sssi", $username, $password, $usertype, $table_id);
-		$statement->execute();
-	}
-	?>
+		$b = $statement->execute();
 
+		if ($a && $b)
+			header('Location: ../');
+	}
+}
+?>
+
+<html>
+<head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css"
 		  href="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.blue_grey-orange.min.css">

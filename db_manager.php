@@ -38,6 +38,19 @@ function getDB()
 	return ($mysqli = new mysqli($db_server, $db_username, $db_password, $db_name));
 }
 
+function userExists($username)
+{
+	$mysqli = getDB();
+	$statement = $mysqli->prepare("SELECT * FROM login_accounts WHERE username = ?");
+	$statement->bind_param("s", $username);
+	$statement->execute();
+	$result = $statement->get_result();
+	if ($result) {
+		return $result->num_rows > 0;
+	}
+	return false;
+}
+
 function validateUser($username, $password)
 {
 	$mysqli = getDB();
