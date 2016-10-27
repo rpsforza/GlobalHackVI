@@ -255,8 +255,8 @@ if (isset($_SESSION["user_id"])) {
 
 	<script>
 		function reserve(type) {
-			var userID = "<?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '-1'; ?>";
-			var cocID = "<?php echo isset($_GET["coc"]) ? $_GET["coc"] : ''; ?>";
+			var userID = <? echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '-1'; ?>;
+			var cocID = <? echo isset($_GET["coc"]) ? $_GET["coc"] : '-1'; ?>;
 
 			$.ajax({
 				type: "POST",
@@ -279,8 +279,8 @@ if (isset($_SESSION["user_id"])) {
 		}
 
 		function cancel_reservation(type) {
-			var userID = "<?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : ''; ?>";
-			var cocID = "<?php echo isset($_GET["coc"]) ? $_GET["coc"] : ''; ?>";
+			var userID = <? echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '-1'; ?>;
+			var cocID = <? echo isset($_GET["coc"]) ? $_GET["coc"] : '-1'; ?>;
 
 			$.ajax({
 				type: "POST",
