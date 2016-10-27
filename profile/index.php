@@ -14,7 +14,7 @@ if (isset($_SESSION["user_id"])) {
 	} else if (isset($_GET["client"])) {
 		$me = ($_SESSION["user_id"] == $_GET["client"]);
 	}
-} else {
+} else if (!isset($_GET["coc"])) {
 	header('Location: ../login');
 }
 
@@ -85,9 +85,22 @@ if (isset($_SESSION["user_id"])) {
 			<header class="demo-drawer-header">
 				<img id="logoname" src="../img/name2.png"/>
 				<div class="demo-avatar-dropdown">
-					<span><?php echo getUsersName($_SESSION["user_id"]); ?></span>
+					<span>
+						<?php
+						if (isset($_SESSION["user_id"])) {
+							$name = getUsersName($_SESSION["user_id"]);
+						} else {
+							$name = "<a style=\"align-items: center; color: rgba(255, 255, 255, 0.85); font-weight: 500;\" class=\"mdl-navigation__link\" href=\"../login/\">Login</a>";
+						}
+						echo $name;
+						?>
+					</span>
 					<div class="mdl-layout-spacer"></div>
-					<?php echo "<button id=\"accbtn\" class=\"mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon\"><i class=\"material-icons\" role=\"presentation\">arrow_drop_down</i><span class=\"visuallyhidden\">Logout</span></button><ul class=\"mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect\" for=\"accbtn\"><li class=\"mdl-menu__item\"><a id=\"logoutbuttonnav\" href=\"../logout/\">Logout</a></li></ul>"; ?>
+					<?php
+					if (isset($_SESSION["user_id"])) {
+						echo "<button id=\"accbtn\" class=\"mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon\"><i class=\"material-icons\" role=\"presentation\">arrow_drop_down</i><span class=\"visuallyhidden\">Logout</span></button><ul class=\"mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect\" for=\"accbtn\"><li class=\"mdl-menu__item\"><a id=\"logoutbuttonnav\" href=\"../logout/\">Logout</a></li></ul>";
+					}
+					?>
 				</div>
 			</header>
 			<?php
@@ -172,7 +185,7 @@ if (isset($_SESSION["user_id"])) {
 
 						echo '<div style="margin-left: 0.66%;">';
 						// Reserve if you're an auth-ed client
-						if (getUserType($_SESSION["user_id"]) == "client") {
+						if (isset($_SESSION["user_id"]) and getUserType($_SESSION["user_id"]) == "client") {
 							$isReserved = isReserved($_SESSION["user_id"], 0, $_GET["coc"]);
 
 							echo '<button id="reserve-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" onclick="reserve(\'coc\')"> Reserve </button>';
@@ -182,7 +195,7 @@ if (isset($_SESSION["user_id"])) {
 						}
 						echo '</div>';
 					}
-				} else if (isset($_GET["client"]) and ($me or getUserType($_SESSION["user_id"]) == "coc" or getUserType($_SESSION["user_id"]) == "host")) {
+				} else if (isset($_GET["client"]) and ($me or (isset($_SESSION["user_id"]) and getUserType($_SESSION["user_id"]) == "coc" or getUserType($_SESSION["user_id"]) == "host"))) {
 					$client = getClient(intval($_GET["client"]));
 
 					function getAge($dob)
@@ -242,7 +255,7 @@ if (isset($_SESSION["user_id"])) {
 
 	<script>
 		function reserve(type) {
-			var userID = "<?php echo $_SESSION['user_id']; ?>";
+			var userID = "<?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '-1'; ?>";
 			var cocID = "<?php echo isset($_GET["coc"]) ? $_GET["coc"] : ''; ?>";
 
 			$.ajax({
@@ -266,7 +279,7 @@ if (isset($_SESSION["user_id"])) {
 		}
 
 		function cancel_reservation(type) {
-			var userID = "<?php echo $_SESSION['user_id']; ?>";
+			var userID = "<?php echo isset($_SESSION['user_id']) ? $_SESSION['user_id'] : ''; ?>";
 			var cocID = "<?php echo isset($_GET["coc"]) ? $_GET["coc"] : ''; ?>";
 
 			$.ajax({
