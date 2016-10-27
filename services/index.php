@@ -314,7 +314,7 @@ if (isset($_SESSION["user_id"])) {
 
 			info = new google.maps.InfoWindow();
 
-			google.maps.event.addListener(map, 'click', function () {
+			map.addListener('click', function () {
 				info.close();
 			});
 

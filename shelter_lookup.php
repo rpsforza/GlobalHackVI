@@ -6,7 +6,12 @@ if (isset($_POST)) {
 	if (isset($_POST['latitude']) && isset($_POST['longitude'])) {
 		$lat = $_POST['latitude'];
 		$lon = $_POST['longitude'];
-		echo json_encode(getCloseLocations($lat, $lon, 150));
+
+		$data = isset($_SESSION["user_id"])
+			? getCompatibleCloseShelters($_SESSION["user_id"], $lat, $lon, 150)
+			: getCloseLocations(getAllShelters(), $lat, $lon, 150);
+
+		echo json_encode($data);
 	}
 	return;
 }
@@ -19,77 +24,61 @@ function getAllShelters()
 	return array_merge($cocs, $hosts);
 }
 
-function getCloseLocations($lat, $lon, $maxDist)
+function getCloseLocations($data, $lat, $lon, $maxDist)
 {
-	$data = getAllShelters();
-	$locs = [];
-
-	foreach ($data as $loc) {
-		if (distance($lat, $lon, $loc["latitude"], $loc["longitude"]) < $maxDist) {
-			array_push($locs, $loc);
-		}
+	function distance($lat1, $lon1, $lat2, $lon2)
+	{
+		$theta = $lon1 - $lon2;
+		$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+		$dist = acos($dist);
+		$dist = rad2deg($dist);
+		$miles = $dist * 60 * 1.1515;
+		return $miles;
 	}
 
-	usort($locs, function ($loc1, $loc2) {
-		global $lat, $lon;
+	$locs = array_filter($data, function ($loc) use ($lat, $lon, $maxDist) {
+		return distance($lat, $lon, $loc["latitude"], $loc["longitude"]) < $maxDist;
+	});
+
+	usort($locs, function ($loc1, $loc2) use ($lat, $lon) {
 		return distance($lat, $lon, $loc1["latitude"], $loc1["longitude"]) - distance($lat, $lon, $loc2["latitude"], $loc2["longitude"]);
 	});
 
 	return $locs;
 }
 
-function distance($lat1, $lon1, $lat2, $lon2)
+function getCompatibleCloseShelters($client_id, $lat, $lon, $maxDist)
 {
-	$theta = $lon1 - $lon2;
-	$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
-	$dist = acos($dist);
-	$dist = rad2deg($dist);
-	$miles = $dist * 60 * 1.1515;
-	return $miles;
-}
+	if (is_string($client_id))
+		$client_id = intval($client_id);
 
-function getCompatibleShelters($client_id)
-{
 	$mysqli = getDB();
 	$client = $mysqli->query("SELECT * FROM client WHERE id=$client_id")->fetch_assoc();
 
-	$client_birthday = $client["dob"];
-	// date in mm/dd/yyyy format; or it can be in other formats as well
-	$birthDate = "12/17/1983";
-	// explode the date to get month, day and year
-	$birthDate = explode("/", $birthDate);
-	// get age from date or birthdate
-	$client_age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
-		? ((date("Y") - $birthDate[2]) - 1) : (date("Y") - $birthDate[2]));
+	return array_values(array_filter(getCloseLocations(getAllShelters(), $lat, $lon, $maxDist), function ($shelter) use ($client) {
+		return isCompatible($client, $shelter);
+	}));
+}
 
-	$client_abuse = $client["abuse"];
-	$client_male = $client["Gender"] === 1 ? 1 : 0;
-	$client_female = $client["Gender"] === 0 ? 1 : 0;
-	$client_veteran = $client["VeteranStatus"] === 1 ? 1 : 0;
+function isCompatible($client, $shelter)
+{
+	/* Client info */
+	$client_age = floor((time() - strtotime($client["DOB"])) / 31556926);
+	$client_abuse = intval($client["abuse"]);
+	$client_male = intval($client["Gender"]);
+	$client_female = $client["Gender"] === '0' ? 1 : 0;
+	$client_veteran = intval($client["VeteranStatus"]);
 
-	$shelters = getAllShelters();
-	$compatible_shelters = [];
+	/* Check shelter */
+	$minage = intval($shelter["condition_minage"]);
+	$maxage = intval($shelter["condition_maxage"]);
+	$male = intval($shelter["condition_male"]);
+	$female = intval($shelter["condition_female"]);
+	$abuse = intval($shelter["condition_abuse"]);
+	$veteran = intval($shelter["condition_veteran"]);
 
-	for ($i = 0; $i < count($shelters); $i++) {
-		$shelter = $shelters[$i];
-		$minage = $shelter["condition_minage"];
-		$maxage = $shelter["condition_maxage"];
-		$male = $shelter["condition_male"];
-		$female = $shelter["condition_female"];
-		$abuse = $shelter["condition_abuse"];
-		$veteran = $shelter["condition_veteran"];
-
-		$vacancy = $shelter["vacancy"];
-
-		// doesn't add this shelter if the conditions aren't met
-		if ($client_age < $minage || $client_age > $maxage) continue;
-		if (($male && !$client_male) || ($female && !$client_female)) continue;
-		if ($abuse && !$client_abuse) continue;
-		if ($veteran && !$client_veteran) continue;
-		if ($vacancy === 0) continue;
-
-		$compatible_shelters[] = $shelter;
-	}
-
-	return $compatible_shelters;
+	return !((($client_age < $minage) || ($client_age > $maxage))
+		|| ((!$male && $client_male) || (!$female && $client_female))
+		|| (!$abuse && $client_abuse)
+		|| (!$veteran && $client_veteran));
 }
