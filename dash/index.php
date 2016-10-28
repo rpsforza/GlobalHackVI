@@ -114,7 +114,7 @@ if (isset($_SESSION["user_id"])) {
 						</button>
 						<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
 							<li class="mdl-menu__item"><a id="logoutbuttonnav" href="../logout/">Logout</a></li>
-						</ul>";
+						</ul>
 					<?php
 					}
 					?>
