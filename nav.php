@@ -4,7 +4,7 @@
 
 <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
 	<div class="mdl-layout__header-row">
-		<span class="mdl-layout-title">Profile</span>
+		<span class="mdl-layout-title"><?php if (isset($PAGE_TITLE)) echo $PAGE_TITLE; ?></span>
 		<div class="mdl-layout-spacer"></div>
 
 		<button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">

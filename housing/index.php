@@ -1,6 +1,13 @@
 <!doctype html>
 <?php
 	require '../db_manager.php';
+
+	if (isset($_SESSION["user_id"])) {
+
+	} else {
+		header('Location: ../login');
+	}
+
 ?>
 <html lang="en">
 <head>

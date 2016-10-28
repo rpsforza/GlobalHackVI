@@ -1,12 +1,5 @@
 <!-- FOR IMPORT: HEADER INFO / AUTHENTICATION -->
 
-<?php
-	if (!isset($_SESSION["user_id"])) {
-		header('Location: ../login');
-		die();
-	}
-?>
-
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
