@@ -158,8 +158,8 @@ if (isset($_GET["query"])) {
 							$id = $services[$i]["client_id"];
 							$clients[] = $mysqli->query("SELECT * FROM client WHERE id=$id")->fetch_assoc();
 						}
-						$users = $clients;
-						foreach ($users as $person) {
+						foreach ($clients as $person) {
+							if (!$person) continue;
 							$name = $person["First_Name"] . " " . $person["Last_Name"];
 							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $name . "</td><td><a href=" . ("../profile/?client=" . $person["id"]) . "> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=" . ("remove.php?client=" . $person["id"]) . "> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td></tr>";
 						}
