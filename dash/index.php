@@ -115,7 +115,7 @@ if (isset($_SESSION["user_id"])) {
 						<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
 							<li class="mdl-menu__item"><a id="logoutbuttonnav" href="../logout/">Logout</a></li>
 						</ul>
-					<?php
+						<?php
 					}
 					?>
 				</div>
@@ -156,7 +156,7 @@ if (isset($_SESSION["user_id"])) {
 		</div>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
-				
+
 				<div id="srk" class="mdh-expandable-search">
 					<i class="material-icons">search</i>
 					<form action="./" method="GET">
@@ -190,32 +190,34 @@ if (isset($_SESSION["user_id"])) {
 				if (isset($_SESSION["user_id"])) {
 					if (getUserType($_SESSION["user_id"]) == "host" or getUserType($_SESSION["user_id"]) == "coc") {
 						?>
-							<div class="mdl-cell mdl-cell--6-col" style="margin-top: 25px">
-								<table id="tabel" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
-									<thead>
-										<tr><th>Reservation Requests</th></tr>
-										<tr>
-											<th class="mdl-data-table__cell--non-numeric">Name</th>
-											<th>Visit Profile</th>
-											<th>Accept</th>
-											<th>Deny</th>
-										</tr>
-									</thead>
-									<tbody>
-						<?php
-						// echoes table body data - reservation requests
-						if (isset($x) && count($x) > 0) {
-							for ($ix = 0; $ix < count($x); $ix++) {
-								echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $x[$ix]["First_Name"] . " " . $x[$ix]["Last_Name"] . "</td><td><a href=" . ("../profile/?client=" . $x[$ix]["id"]) . "> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=" . ("../availability/add.php?client=" . $x[$ix]["id"]) . "> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">check_circle</i></a></td><td><a href=" . ("../availability/remove.php?client=" . $x[$ix]["id"]) . "> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td></tr>";
-							}
-						}
+						<div class="mdl-cell mdl-cell--6-col" style="margin-top: 25px">
+							<table id="tabel" class="mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp">
+								<thead>
+								<tr>
+									<th>Reservation Requests</th>
+								</tr>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">Name</th>
+									<th>Visit Profile</th>
+									<th>Accept</th>
+									<th>Deny</th>
+								</tr>
+								</thead>
+								<tbody>
+								<?php
+								// echoes table body data - reservation requests
+								if (isset($x) && count($x) > 0) {
+									for ($ix = 0; $ix < count($x); $ix++) {
+										echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $x[$ix]["First_Name"] . " " . $x[$ix]["Last_Name"] . "</td><td><a href=" . ("../profile/?client=" . $x[$ix]["id"]) . "> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=" . ("../availability/add.php?client=" . $x[$ix]["id"]) . "> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">check_circle</i></a></td><td><a href=" . ("../availability/remove.php?client=" . $x[$ix]["id"]) . "> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td></tr>";
+									}
+								}
 
 
-						?>	
-									</tbody>
+								?>
+								</tbody>
 
-								</table>
-							</div>
+							</table>
+						</div>
 						<?php
 					}
 				}
@@ -225,37 +227,40 @@ if (isset($_SESSION["user_id"])) {
 				?>
 
 				<div class="mdl-cell mdl-cell--6-col" style="margin-top: 25px">
-					<table style="width: 500px; margin-right: auto; margin-left: auto; margin-bottom: 50px" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+					<table style="width: 500px; margin-right: auto; margin-left: auto; margin-bottom: 50px"
+						   class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
 						<thead>
-							<tr><th>Shelter Members</th></tr>
-							<tr>
-								<th class="mdl-data-table__cell--non-numeric">Name</th>
-								<th>Profile</th>
-								<th>Remove</th>
-							</tr>
+						<tr>
+							<th>Shelter Members</th>
+						</tr>
+						<tr>
+							<th class="mdl-data-table__cell--non-numeric">Name</th>
+							<th>Profile</th>
+							<th>Remove</th>
+						</tr>
 						</thead>
 						<tbody>
 
-				<?php
-				$mysqli = getDB();
-				$user_type = $_SESSION["user_type"];
-				$user_type_id = $_SESSION["user_type_id"];
-				$services = $mysqli->query("SELECT * FROM provided_services WHERE host_or_coc='$user_type' AND provider_id=$user_type_id")->fetch_all(MYSQLI_ASSOC);
-				$clients = [];
-				for ($i = 0; $i < sizeof($services); $i++) {
-					$id = $services[$i]["client_id"];
-					$clients[] = $mysqli->query("SELECT * FROM client WHERE id=$id")->fetch_assoc();
-				}
-				$users = $clients;
-				foreach ($users as $person) {
-					$name = $person["First_Name"] . " " . $person["Last_Name"];
-					echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $name . "</td><td><a href=" . ("../profile/?client=" . $person["id"]) . "> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=" . ("remove.php?client=" . $person["id"]) . "> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td></tr>";
-				}
-				echo "</tbody></table></div>";
-				?>
+						<?php
+						$mysqli = getDB();
+						$user_type = $_SESSION["user_type"];
+						$user_type_id = $_SESSION["user_type_id"];
+						$services = $mysqli->query("SELECT * FROM provided_services WHERE host_or_coc='$user_type' AND provider_id=$user_type_id")->fetch_all(MYSQLI_ASSOC);
+						$clients = [];
+						for ($i = 0; $i < sizeof($services); $i++) {
+							$id = $services[$i]["client_id"];
+							$clients[] = $mysqli->query("SELECT * FROM client WHERE id=$id")->fetch_assoc();
+						}
+						$users = $clients;
+						foreach ($users as $person) {
+							$name = $person["First_Name"] . " " . $person["Last_Name"];
+							echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $name . "</td><td><a href=" . ("../profile/?client=" . $person["id"]) . "> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=" . ("remove.php?client=" . $person["id"]) . "> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td></tr>";
+						}
+						echo "</tbody></table></div>";
+						?>
+				</div>
 			</div>
-	</div>
-	</main>
+		</main>
 	</div>
 	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 </body>
