@@ -17,8 +17,8 @@ if (isset($_SESSION["user_id"])) {
 <body>
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<?php
-			$PAGE_TITLE = "FAQ";
-			require "../nav.php";
+		$PAGE_TITLE = "FAQ";
+		require "../nav.php";
 		?>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">

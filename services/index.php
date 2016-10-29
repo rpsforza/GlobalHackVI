@@ -44,9 +44,9 @@ require '../db_manager.php';
 <body>
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<?php
-			$PAGE_TITLE = "Services";
-			require "../nav.php";
-		?>		
+		$PAGE_TITLE = "Services";
+		require "../nav.php";
+		?>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div id="grid" class="mdl-grid">
 				<div id="map"></div>

@@ -175,8 +175,8 @@ if (isset($_SESSION["user_id"])) {
 	</script>
 	<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 		<?php
-			$PAGE_TITLE = "Statistics";
-			require "../nav.php";
+		$PAGE_TITLE = "Statistics";
+		require "../nav.php";
 		?>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">

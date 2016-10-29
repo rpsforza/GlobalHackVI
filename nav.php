@@ -1,45 +1,44 @@
-
 <!-- FOR IMPORT: NAVBAR AND TITLE BAR -->
 <!-- To use: define variable $PAGE_TITLE to the title of the page -->
 
 <?php
-	// order matters: index of element corresponds to place in navbar of that element
-	$NAV_INDEX = [
-		"coc" => [
-			"Dashboard", "Profile", "Services", "Housing", "Statistics"
-		],
-		"host" => [
-			"Dashboard", "Profile", "Services", "Housing", "Statistics"
-		],
-		"client" => [
-			"Dashboard", "Profile", "Services", "Housing"
-		],
-		"clientNoAuth" => [
-			"Services", "Housing"
-		]
-	];
-	$NAV_DATA = [
-		"Dashboard" => [
-			"icon" => "dashboard",
-			"link" => "../dash"
-		],
-		"Profile" => [
-			"icon" => "account_box",
-			"link" => "../profile"
-		],
-		"Services" => [
-			"icon" => "domain",
-			"link" => "../services"
-		],
-		"Housing" => [
-			"icon" => "home",
-			"link" => "../housing"
-		],
-		"Statistics" => [
-			"icon" => "timeline",
-			"link" => "../statistics"
-		]
+// order matters: index of element corresponds to place in navbar of that element
+$NAV_INDEX = [
+	"coc" => [
+		"Dashboard", "Profile", "Services", "Housing", "Statistics"
+	],
+	"host" => [
+		"Dashboard", "Profile", "Services", "Housing", "Statistics"
+	],
+	"client" => [
+		"Dashboard", "Profile", "Services", "Housing"
+	],
+	"clientNoAuth" => [
+		"Services", "Housing"
 	]
+];
+$NAV_DATA = [
+	"Dashboard" => [
+		"icon" => "dashboard",
+		"link" => "../dash"
+	],
+	"Profile" => [
+		"icon" => "account_box",
+		"link" => "../profile"
+	],
+	"Services" => [
+		"icon" => "domain",
+		"link" => "../services"
+	],
+	"Housing" => [
+		"icon" => "home",
+		"link" => "../housing"
+	],
+	"Statistics" => [
+		"icon" => "timeline",
+		"link" => "../statistics"
+	]
+]
 ?>
 
 <!-- make sure to define $PAGE_TITLE before requiring this page
