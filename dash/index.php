@@ -1,4 +1,3 @@
-<!doctype html>
 <?php
 
 require '../db_manager.php';
@@ -18,6 +17,7 @@ if (isset($_SESSION["user_id"])) {
 }
 
 ?>
+<!doctype html>
 <html lang="en">
 <head>
 	<?php require "../header.php"; ?>
@@ -42,11 +42,20 @@ if (isset($_SESSION["user_id"])) {
 		?>
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
-
 				<?php
-				if (isset($_SESSION["user_id"])) {
-					if (getUserType($_SESSION["user_id"]) == "host" or getUserType($_SESSION["user_id"]) == "coc") {
+				$id = intval($_SESSION["user_id"]);
+				if (isset($id)) {
+					$userType = getUserType($id);
+					if ($userType == "host" or $userType == "coc") {
+
+						$mysqli = getDB();
+						$row = $mysqli->query("SELECT * FROM $userType WHERE id = $id")->fetch_assoc();
+						$capacity = intval($row['capacity']);
+						$vacancy = intval($row['vacancy']);
+						$occupancy = floor((($capacity - $vacancy) / $capacity) * 100);
+
 						?>
+
 						<div class="mdl-cell mdl-cell--12-col mdh-expandable-search">
 							<i class="material-icons">search</i>
 							<form action="./" method="GET">
@@ -55,17 +64,16 @@ if (isset($_SESSION["user_id"])) {
 						</div>
 
 						<?php
-
 						if (isset($_GET) && isset($x)) {
 							if (count($x) > 0) {
 								echo "<div class=\"mdl-cell mdl-cell--12-col\">";
 								echo "<table style='width: 100%; margin-right: auto; margin-left: auto; margin-top: 25px' id=\"tabel\" class=\"mdl-data-table mdl-js-data-table mdl-data-table mdl-shadow--2dp\"><thead><tr><th class=\"mdl-data-table__cell--non-numeric\">First Name</th><th>Middle Name</th><th>Last Name</th><th>User Profile</th><th>Add User</th></tr></thead><tbody>";
 								for ($ix = 0; $ix < count($x); $ix++) {
-
 									$id = $x[$ix]["id"];
 									$taken = "";
 									$mysqli = getDB();
-									if ($mysqli->query("SELECT * FROM provided_services WHERE client_id=$id")->fetch_assoc()) $taken = "style='color: rgb(255, 0, 0)'";
+									if ($mysqli->query("SELECT * FROM provided_services WHERE client_id=$id")->fetch_assoc())
+										$taken = "style='color: rgb(255, 0, 0)'";
 
 									echo "<tr $taken><td class=\"mdl-data-table__cell--non-numeric\">" . $x[$ix]["First_Name"] . "</td><td>" . $x[$ix]["Middle_Name"] . "</td><td>" . $x[$ix]["Last_Name"] . "</td><td><a href=" . ("../profile/?client=" . $x[$ix]["id"]) . "> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=" . ("add.php?client=" . $x[$ix]["id"]) . "> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">add</i></a></td></tr>";
 								}
@@ -88,7 +96,9 @@ if (isset($_SESSION["user_id"])) {
 										<use xlink:href="#piechart" mask="url(#piemask)"></use>
 										<text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888"
 											  text-anchor="middle" dy="0.1">
-											82
+											<?php
+											echo $occupancy;
+											?>
 											<tspan dy="-0.07" font-size="0.2">%</tspan>
 										</text>
 									</svg>
