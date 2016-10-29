@@ -71,7 +71,7 @@ if (isset($_SESSION["user_id"])) {
 			generateGraph = function () {
 				var option_params = getOptions();
 				$.ajax({
-					url: "../graph/graph-helper.php",
+					url: "graph-helper.php",
 					success: function (result) {
 						// console.log(result);
 						var ctx = document.getElementById("myChart");

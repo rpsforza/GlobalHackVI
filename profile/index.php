@@ -104,6 +104,7 @@ if (isset($_SESSION["user_id"])) {
 						"Race" => 'Prefer not to answer', // TODO: Implement
 						"Veteran" => ($client['VeteranStatus'] != 0) ? 'Yes' : 'No',
 						"Situation" => 'Waiting user input...' // TODO: Implement
+						// TODO: add "Current Shelter" variable
 					];
 					echo "<table class=\"mdl-data-table mdl-js-data-table mdl-shadow--2dp\"><tbody>";
 					foreach ($v as $key => $value) {
