@@ -65,7 +65,7 @@ $NAV_DATA = [
 			<span><?php if (isset($_SESSION["user_id"])) {
 					$name = getUsersName($_SESSION["user_id"]);
 				} else {
-					$name = "<a href=\"../login/\">Login</a>";
+					$name = "<a href='../login/' style='color: inherit;'>Login</a>";
 				}
 				echo $name; ?></span>
 			<div class="mdl-layout-spacer"></div>
