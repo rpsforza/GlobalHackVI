@@ -148,21 +148,38 @@ if (isset($_SESSION["user_id"])) {
 							</div>
 
 							<?php
-							if (isset($x) && count($x) > 0) {
+
+							$user_id = $_SESSION["user_id"];
+							$reservations = $mysqli->query("SELECT * FROM reservation_records WHERE provider_id=$user_id")->fetch_all(MYSQLI_ASSOC);
+
+							if ($reservations) {
 								?>
 								<table id="tabel" class="mdl-data-table mdl-js-data-table mdl-data-table">
 									<thead>
 									<tr>
 										<th class="mdl-data-table__cell--non-numeric">Name</th>
-										<th>Visit Profile</th>
+										<th>View Profile</th>
 										<th>Accept</th>
 										<th>Deny</th>
 									</tr>
 									</thead>
 									<tbody>
 									<?php
-									for ($ix = 0; $ix < count($x); $ix++) {
-										echo "<tr><td class=\"mdl-data-table__cell--non-numeric\">" . $x[$ix]["First_Name"] . " " . $x[$ix]["Last_Name"] . "</td><td><a href=" . ("../profile/?client=" . $x[$ix]["id"]) . "> <i class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">person</i></a></td><td><a href=" . ("./add.php?client=" . $x[$ix]["id"]) . "> <i style=\"color:red\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">check_circle</i></a></td><td><a href=" . ("./remove.php?client=" . $x[$ix]["id"]) . "> <i style=\"color:green\" class=\"mdl-color-text--blue-grey-400 material-icons\" role=\"presentation\">close</i></a></td></tr>";
+									for ($i = 0; $i < count($reservations); $i++) {
+										$client_id = $reservations[$i]["client_id"];
+										$client = $mysqli->query("SELECT * FROM client WHERE client_id=$client_id")->fetch_assoc();
+										echo "<tr>
+												<td class='mdl-data-table__cell--non-numeric'>$client[First_Name] $client[Last_Name]</td>
+												<td><a href='../profile/?client=$client_id'>
+													<i class='mdl-color-text--blue-grey-400 material-icons' role='presentation'>person</i>
+												</a></td>
+												<td><a href='../add.php?client=$client_id')>
+													<i style='color:red' class='mdl-color-text--blue-grey-400 material-icons' role='presentation'>check_circle</i>
+												</a></td>
+												<td><a href='../remove.php?client=$client_id'>
+													<i style='color:green' class='mdl-color-text--blue-grey-400 material-icons' role='presentation'>close</i>
+												</a></td>
+											  </tr>";
 									}
 									?>
 									</tbody>
