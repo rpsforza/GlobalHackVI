@@ -43,9 +43,9 @@ if (isset($_SESSION["user_id"])) {
 		<main class="mdl-layout__content mdl-color--grey-100">
 			<div class="mdl-grid">
 				<?php
-				$id = intval($_SESSION["user_id"]);
+				$id = intval($_SESSION["user_type_id"]);
 				if (isset($id)) {
-					$userType = getUserType($id);
+					$userType = $_SESSION["user_type"];
 					if ($userType == "host" or $userType == "coc") {
 
 						$mysqli = getDB();
