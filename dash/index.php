@@ -22,7 +22,8 @@ if (isset($_SESSION["user_id"])) {
 <head>
 	<?php require "../header.php"; ?>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
+	<script src="progressbar.min.js"></script>
+	
 	<style>
 		#tabel {
 			width: 90%;
@@ -53,8 +54,26 @@ if (isset($_SESSION["user_id"])) {
 						$capacity = intval($row['capacity']);
 						$vacancy = intval($row['vacancy']);
 						$occupancy = floor((($capacity - $vacancy) / $capacity) * 100);
-
+						$occupancy_display = "'$occupancy%'";
 						?>
+
+						<script>
+							$(document).ready(function() {
+								var circle = new ProgressBar.Circle('#percent-container', {
+								    color: '#FCB03C',
+								    strokeWidth: 3,
+								    trailWidth: 1,
+								    text: {
+								        value: <?php echo $occupancy_display; ?>
+								    }
+								});
+								circle.animate(<?php echo $occupancy * .01; ?>, {
+								    duration: 800
+								}, function() {
+								    console.log('Animation has finished');
+								});
+							});
+						</script>
 
 						<div class="mdl-cell mdl-cell--12-col mdh-expandable-search">
 							<i class="material-icons">search</i>
@@ -91,17 +110,7 @@ if (isset($_SESSION["user_id"])) {
 
 							<div class="mdl-grid">
 								<div class="mdl-cell mdl-cell--3-col mdl-color--white">
-									<svg fill="#39B54A" viewBox="0 0 1 1"
-										 class="demo-chart">
-										<use xlink:href="#piechart" mask="url(#piemask)"></use>
-										<text x="0.5" y="0.5" font-family="Roboto" font-size="0.3" fill="#888"
-											  text-anchor="middle" dy="0.1">
-											<?php
-											echo $occupancy;
-											?>
-											<tspan dy="-0.07" font-size="0.2">%</tspan>
-										</text>
-									</svg>
+									<div id="percent-container"></div>
 								</div>
 
 								<div class="mdl-cell mdl-cell--9-col">
@@ -202,7 +211,7 @@ if (isset($_SESSION["user_id"])) {
 		</main>
 	</div>
 
-	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+<!-- 	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
 		 style="position: fixed; left: -1000px; height: 1000px;">
 		<defs>
 			<mask id="piemask" maskContentUnits="objectBoundingBox">
@@ -215,7 +224,7 @@ if (isset($_SESSION["user_id"])) {
 					  fill="rgba(255, 255, 255, 0.75)"></path>
 			</g>
 		</defs>
-	</svg>
+	</svg> -->
 
 	<script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 </body>
