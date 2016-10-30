@@ -173,10 +173,10 @@ if (isset($_SESSION["user_id"])) {
 												<td><a href='../profile/?client=$client_id'>
 													<i class='mdl-color-text--blue-grey-400 material-icons' role='presentation'>person</i>
 												</a></td>
-												<td><a href='../add.php?client=$client_id')>
+												<td><a href='add.php?client=$client_id')>
 													<i style='color:red' class='mdl-color-text--blue-grey-400 material-icons' role='presentation'>check_circle</i>
 												</a></td>
-												<td><a href='../remove.php?client=$client_id'>
+												<td><a href='remove.php?client=$client_id'>
 													<i style='color:green' class='mdl-color-text--blue-grey-400 material-icons' role='presentation'>close</i>
 												</a></td>
 											  </tr>";

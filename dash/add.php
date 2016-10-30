@@ -3,7 +3,7 @@
 require("../db_manager.php");
 
 if (isset($_GET["client"])) {
-	$id = $_GET["client"];
+	$client_id = $_GET["client"];
 
 	$mysqli = getDB();
 	$coc_or_host = $_SESSION["user_type"];
@@ -26,7 +26,7 @@ if (isset($_GET["client"])) {
 
 	// creates a new service record
 	$statement = $mysqli->prepare("INSERT INTO provided_services (date, client_id, host_or_coc, provider_id) VALUES (?,?,?,?)");
-	$statement->bind_param("sisi", $date, $id, $coc_or_host, $provider_id);
+	$statement->bind_param("sisi", $date, $client_id, $coc_or_host, $provider_id);
 	$statement->execute();
 
 	// sets client "moved_on" to false
