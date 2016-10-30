@@ -272,7 +272,7 @@ require '../db_manager.php';
 				return marker;
 			});
 
-			document.getElementById("layout-title").innerHTML = "Services (" + markers.length + ")";
+			document.getElementsByClassName("mdl-layout-title").innerHTML = "Services (" + markers.length + ")";
 		}
 
 		var servMap = {
