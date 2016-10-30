@@ -22,6 +22,7 @@ if (isset($_SESSION["user_id"])) {
 <head>
 	<?php require "../header.php"; ?>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
 	<script src="progressbar.min.js"></script>
 
 	<style>
@@ -54,24 +55,54 @@ if (isset($_SESSION["user_id"])) {
 						$capacity = intval($row['capacity']);
 						$vacancy = intval($row['vacancy']);
 						$occupancy = (($capacity - $vacancy) / $capacity) * 100.0;
-						$occupancy_display = floor($occupancy) . "%";
+						$occupancy_display = round($occupancy) . "%";
 						?>
 
 						<script>
 							$(document).ready(function () {
-								var circle = new ProgressBar.Circle('#percent-container', {
-									color: '#FCB03C',
-									strokeWidth: 4,
-									easing: 'easeInOut',
-									trailWidth: 1,
-									duration: 1400,
-									text: {
-										value: '<?php echo $occupancy_display; ?>'
+								/*
+								 var circle = new ProgressBar.Circle('#percent-container', {
+								 color: '#FCB03C',
+								 strokeWidth: 4,
+								 easing: 'easeInOut',
+								 trailWidth: 1,
+								 duration: 1400,
+								 text: {
+								 value: '<?php echo $occupancy_display; ?>'
+								 }
+								 });
+
+								 circle.animate(<?php echo $occupancy * .01; ?>);
+								 circle.text.style.fontSize = '2rem';
+								 */
+
+								var ctx = document.getElementById("chart-area").getContext("2d");
+								var donut = new Chart(ctx, {
+									type: 'doughnut',
+									data: {
+										labels: [
+											'Served',
+											'Free'
+										],
+										datasets: [
+											{
+												data: [
+													<?php echo $capacity - $vacancy; ?>,
+													<?php echo $vacancy; ?>
+												],
+												backgroundColor: [
+													'rgb(247, 150, 34)',
+													'rgb(57, 181, 74)'
+												]
+											}
+										]
+									},
+									options: {
+										legend: {
+											position: 'bottom'
+										}
 									}
 								});
-
-								circle.animate(<?php echo $occupancy * .01; ?>);
-								circle.text.style.fontSize = '2rem';
 							});
 						</script>
 
@@ -109,11 +140,7 @@ if (isset($_SESSION["user_id"])) {
 							</div>
 
 							<div class="mdl-grid">
-								<div class="mdl-cell mdl-cell--3-col mdl-color--white">
-									<div id="percent-container"></div>
-								</div>
-
-								<div class="mdl-cell mdl-cell--9-col">
+								<div class="mdl-cell mdl-cell--8-col">
 									<table id="tabel" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
 										<thead>
 										<tr>
@@ -147,6 +174,11 @@ if (isset($_SESSION["user_id"])) {
 										?>
 										</tbody>
 									</table>
+								</div>
+
+								<div class="mdl-cell mdl-cell--4-col mdl-color--white">
+									<!-- <div id="percent-container"></div> -->
+									<canvas id="chart-area" style="width: 100%"></canvas>
 								</div>
 							</div>
 						</div>
