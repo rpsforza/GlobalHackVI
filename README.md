@@ -38,6 +38,6 @@ Develop civic technology directed towards addressing homelessness
 ## Team
 Clementine was developed by a team of [three (3) community-oriented, high-school seniors](https://github.com/bsforza70/GlobalHackVI/graphs/contributors) from [MICDS](http://www.micds.org/) in St. Louis, Missouri.
 
-<img src="https://i.imgur.com/DGSUjm8.jpg" width=50%></img>
+[<img src="https://i.imgur.com/DGSUjm8.jpg" width=50%></img>](http://www.micds.org/page/News-Detail?pk=1065407&fromId=207206)
 
 [logo]: https://github.com/bsforza70/GlobalHackVI/raw/master/img/name.png "Clementine"
